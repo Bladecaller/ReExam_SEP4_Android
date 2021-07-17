@@ -1,6 +1,7 @@
 package view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -33,6 +34,10 @@ public class SettingsView extends AppCompatActivity {
                 GoBack();
             }
         });
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.bgDark));
+        }
     }
 
     public void GoBack(){

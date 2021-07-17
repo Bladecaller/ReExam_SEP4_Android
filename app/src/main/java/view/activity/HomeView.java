@@ -14,19 +14,26 @@ import android.transition.Explode;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.sep4_android.R;
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.EventListener;
 import java.util.Objects;
 
 import adapter.PageTransformer;
 import adapter.SectionsPageAdapter;
+import view.fragment.HomeFragBo;
 
 public class HomeView extends AppCompatActivity {
 
 private ImageButton backBtn;
 private ImageButton settingsBtn;
+private TextView titleW;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +45,7 @@ private ImageButton settingsBtn;
         setContentView(R.layout.activity_home_view_bo);
         backBtn = findViewById(R.id.backBtnHome);
         settingsBtn = findViewById(R.id.settingsBtn);
+        titleW = findViewById(R.id.titleTxt);
         SectionsPageAdapter sectionsPagerAdapter = new SectionsPageAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
         PageTransformer pageT = new PageTransformer();
@@ -46,6 +54,7 @@ private ImageButton settingsBtn;
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
         Objects.requireNonNull(tabs.getTabAt(0)).select();
+
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.bgDark));
         }
@@ -62,6 +71,7 @@ private ImageButton settingsBtn;
                 openSettings();
             }
         });
+
 
 
     }

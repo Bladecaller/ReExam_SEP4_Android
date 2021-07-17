@@ -1,5 +1,6 @@
 package view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,8 +8,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.sep4_android.R;
+
+import view.activity.HomeView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,6 +43,7 @@ public class SaunasFrag extends Fragment {
      * @return A new instance of fragment SaunasFrag.
      */
     // TODO: Rename and change types and number of parameters
+    private TextView textView;
     public static SaunasFrag newInstance(String param1, String param2) {
         SaunasFrag fragment = new SaunasFrag();
         Bundle args = new Bundle();
@@ -61,6 +66,7 @@ public class SaunasFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_saunas, container, false);
+        View view = inflater.inflate(R.layout.fragment_saunas, container, false);
+        return view;
     }
 }

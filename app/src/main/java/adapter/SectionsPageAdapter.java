@@ -28,7 +28,9 @@ public class SectionsPageAdapter extends FragmentPagerAdapter {
     @StringRes
 
     private int [] imageId = {R.drawable.icon_home_white_large,R.drawable.icon_sauna_filled_white,R.drawable.icon_subcription,R.drawable.icon_user_white_large};
+    private String [] titleID ={"Home","Saunas","Booking","Users"};
     private final Context mContext;
+
 
     public SectionsPageAdapter(Context context, FragmentManager fm) {
         super(fm);
@@ -43,15 +45,15 @@ public class SectionsPageAdapter extends FragmentPagerAdapter {
                 frag = new HomeFragBo() ;
                 break;
             case 1:
-                frag = new UsersFragBo();
-                break;
-
-            case 2:
                 frag = new SaunasFrag();
                 break;
 
-            case 3:
+            case 2:
                 frag = new SubscriptionFragCu();
+                break;
+
+            case 3:
+                frag = new UsersFragBo();
                 break;
 
         }
@@ -63,6 +65,7 @@ public class SectionsPageAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         Drawable image = mContext.getDrawable(imageId[position]);
+
         image.setBounds(0, 0, 80, 80);
         SpannableString sb = new SpannableString(" ");
         ImageSpan imageSpan = new ImageSpan(image, ImageSpan.ALIGN_BOTTOM);

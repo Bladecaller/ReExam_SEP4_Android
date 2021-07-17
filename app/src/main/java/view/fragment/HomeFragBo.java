@@ -1,5 +1,9 @@
 package view.fragment;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,14 +11,19 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.example.sep4_android.R;
+
+import view.activity.HomeView;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link HomeFragBo#newInstance} factory method to
  * create an instance of this fragment.
  */
+
 public class HomeFragBo extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -39,6 +48,7 @@ public class HomeFragBo extends Fragment {
      * @return A new instance of fragment HomeFragBo.
      */
     // TODO: Rename and change types and number of parameters
+    private TextView textView;
     public static HomeFragBo newInstance(String param1, String param2) {
         HomeFragBo fragment = new HomeFragBo();
         Bundle args = new Bundle();
@@ -61,6 +71,9 @@ public class HomeFragBo extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home_frag_bo, container, false);
+        View view = inflater.inflate(R.layout.fragment_home_frag_bo, container, false);
+
+
+        return view;
     }
 }
