@@ -1,15 +1,16 @@
-package com.example.sep4_android.Model.Account;
+package Model.Account;
 
-import com.example.sep4_android.Model.Sauna.Sauna;
 
 import java.util.Date;
 import java.util.List;
+
+import Model.Sauna.Sauna;
 
 public class Employee extends Account {
     public boolean notifications = false;
     public List<Customer> customers;
 
-    public Employee(int ID, String username, String password, RightsEnum rights, List<Sauna> saunas,List<Account> accounts, String establishment) {
+    public Employee(int ID, String username, String password, RightsEnum rights, List<Sauna> saunas, List<Account> accounts, String establishment) {
         super(ID, username, password, rights, saunas, establishment);
         for(int i = 0; i<= accounts.size(); i++){
             if(accounts.get(i) instanceof Customer){
@@ -19,8 +20,8 @@ public class Employee extends Account {
 
     }
 
-    public void book(int roomNumber, Sauna sauna, Date bookTime){
-        Reservation booking = new Reservation(roomNumber,sauna,bookTime);
+    public void book(int roomNumber, Sauna sauna, Date from, Date to){
+        Reservation booking = new Reservation(roomNumber,sauna, from, to);
 
         for(int i = 0; i<= customers.size(); i++){
             if(roomNumber == customers.get(i).roomNumber){
@@ -32,7 +33,8 @@ public class Employee extends Account {
             if(sauna == saunas.get(i)){
                 saunas.get(i).reserved=true;
                 saunas.get(i).reservedForRoomNumber = roomNumber;
-                saunas.get(i).reservedTime = bookTime;
+                saunas.get(i).reservedTimeFrom = from;
+                saunas.get(i).reservedTimeTo = to;
             }
         }
     }

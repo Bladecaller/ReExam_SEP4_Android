@@ -1,4 +1,4 @@
-package com.example.sep4_android.Model.Sauna;
+package Model.Sauna;
 
 public enum UnitEnum {
     CENTIGRADE,

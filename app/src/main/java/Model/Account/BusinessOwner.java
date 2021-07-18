@@ -1,14 +1,14 @@
-package com.example.sep4_android.Model.Account;
-
-import com.example.sep4_android.Model.Sauna.Sauna;
+package Model.Account;
 
 import java.util.List;
+
+import Model.Sauna.Sauna;
 
 public class BusinessOwner extends Account{
 
     public List<Account> accounts;
 
-    public BusinessOwner(int ID, String username, String password, RightsEnum rights, List<Sauna> saunas,List<Account> accounts, String establishment) {
+    public BusinessOwner(int ID, String username, String password, RightsEnum rights, List<Sauna> saunas, List<Account> accounts, String establishment) {
         super(ID, username, password, rights, saunas, establishment);
     }
 

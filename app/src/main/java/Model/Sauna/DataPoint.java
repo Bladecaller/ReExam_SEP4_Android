@@ -1,10 +1,10 @@
-package com.example.sep4_android.Model.Sauna;
+package Model.Sauna;
 
 import java.util.Date;
 
 public class DataPoint {
     public Date time;
-    public com.example.sep4_android.Model.Sauna.CO2 CO2;
+    public CO2 CO2;
     public Humidity humidity;
     public Temperature temperature;
 

@@ -1,4 +1,4 @@
-package com.example.sep4_android.Model.Sauna;
+package Model.Sauna;
 
 public class Humidity {
     private float value;

@@ -1,4 +1,4 @@
-package com.example.sep4_android.Model.Account;
+package Model.Account;
 
 public enum RightsEnum {
     Customer,

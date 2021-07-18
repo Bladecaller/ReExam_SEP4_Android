@@ -1,7 +1,6 @@
-package com.example.sep4_android.Model.Account;
+package Model.Account;
 
-import com.example.sep4_android.Model.Sauna.DataPoint;
-import com.example.sep4_android.Model.Sauna.Sauna;
+import Model.Sauna.Sauna;
 
 import java.util.List;
 
