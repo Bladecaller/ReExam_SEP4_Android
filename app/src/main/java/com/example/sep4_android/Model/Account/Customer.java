@@ -15,14 +15,15 @@ public class Customer extends Account {
         this.roomNumber = roomNum;
     }
 
-    public void book(Sauna sauna, Date bookTime){
-        Reservation booking = new Reservation(this.roomNumber,sauna,bookTime);
+    public void book(Sauna sauna, Date from, Date to){
+        Reservation booking = new Reservation(this.roomNumber,sauna, from, to);
         reservations.add(booking);
         for(int i = 0; i<= saunas.size(); i++){
             if(sauna == saunas.get(i)){
                 saunas.get(i).reserved=true;
                 saunas.get(i).reservedForRoomNumber = this.roomNumber;
-                saunas.get(i).reservedTime = bookTime;
+                saunas.get(i).reservedTimeFrom = from;
+                saunas.get(i).reservedTimeTo = to;
             }
         }
     }

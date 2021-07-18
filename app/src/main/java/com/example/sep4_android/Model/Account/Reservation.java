@@ -7,11 +7,13 @@ import java.util.Date;
 public class Reservation {
     public int roomNumber;
     public Sauna sauna;
-    public Date time;
+    public Date bookTimeFrom;
+    public Date bookTimeTo;
 
-    public Reservation(int roomNumber, Sauna sauna, Date time){
+    public Reservation(int roomNumber, Sauna sauna, Date from, Date to){
         this.roomNumber = roomNumber;
         this.sauna = sauna;
-        this.time = time;
+        this.bookTimeFrom = from;
+        this.bookTimeTo = to;
     }
 }

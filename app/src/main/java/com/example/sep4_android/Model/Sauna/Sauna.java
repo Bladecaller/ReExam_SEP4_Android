@@ -8,7 +8,8 @@ import java.util.List;
 public class Sauna {
     public int saunaID;
     public int reservedForRoomNumber;
-    public Date reservedTime;
+    public Date reservedTimeFrom;
+    public Date reservedTimeTo;
     public boolean reserved;
     public List<DataPoint> data;
     public float humidityThreshold;
@@ -16,10 +17,11 @@ public class Sauna {
     public float temperatureThreshold;
     public Servo servo;
 
-    public Sauna(int ID,int roomNum, Date time, boolean reserved, List<DataPoint> list, float humTH, float CO2TH, float tempTH, Servo servo){
+    public Sauna(int ID,int roomNum, Date from, Date to, boolean reserved, List<DataPoint> list, float humTH, float CO2TH, float tempTH, Servo servo){
         this.saunaID = ID;
         this.reservedForRoomNumber = roomNum;
-        this.reservedTime = time;
+        this.reservedTimeFrom = from;
+        this.reservedTimeTo = to;
         this.reserved = reserved;
         this.data = list;
         this.humidityThreshold = humTH;

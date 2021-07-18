@@ -19,8 +19,8 @@ public class Employee extends Account {
 
     }
 
-    public void book(int roomNumber, Sauna sauna, Date bookTime){
-        Reservation booking = new Reservation(roomNumber,sauna,bookTime);
+    public void book(int roomNumber, Sauna sauna, Date from, Date to){
+        Reservation booking = new Reservation(roomNumber,sauna, from, to);
 
         for(int i = 0; i<= customers.size(); i++){
             if(roomNumber == customers.get(i).roomNumber){
@@ -32,7 +32,8 @@ public class Employee extends Account {
             if(sauna == saunas.get(i)){
                 saunas.get(i).reserved=true;
                 saunas.get(i).reservedForRoomNumber = roomNumber;
-                saunas.get(i).reservedTime = bookTime;
+                saunas.get(i).reservedTimeFrom = from;
+                saunas.get(i).reservedTimeTo = to;
             }
         }
     }
