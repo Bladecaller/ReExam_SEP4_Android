@@ -11,17 +11,32 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.transition.Explode;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import API.InterfaceAPI;
+import API.MyRetrofit;
 
 import com.example.sep4_android.R;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.Retrofit;
 
 public class LogInView extends AppCompatActivity {
 
     private Button logInButton;
     private ProgressBar pbar;
+    private MyRetrofit retrofit;
+    private InterfaceAPI api;
+    private EditText username;
 
 
     @Override
@@ -31,6 +46,11 @@ public class LogInView extends AppCompatActivity {
             getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
             getWindow().setExitTransition(new Explode());
         }
+        username = (EditText)findViewById(R.id.usernameText);
+        //Log.d("EDIT TEXT ", username.toString());
+        //retrofit = new MyRetrofit();
+        retrofit = new MyRetrofit();
+        api = retrofit.api;
         setContentView(R.layout.activity_log_in_view);
 
         logInButton = findViewById(R.id.logInButton);
@@ -51,12 +71,13 @@ public class LogInView extends AppCompatActivity {
 
                    @Override
                    public void onFinish() {
+                       postCall("Jack");//username.getText().toString());
                        openHomePage();
                        pbar.setVisibility(View.INVISIBLE);
                    }
                }.start();
-
             }
+
         });
 
 
@@ -70,5 +91,19 @@ public class LogInView extends AppCompatActivity {
             startActivity(intent);
         }
 
+    }
+    public void postCall(String id){
+        Call<String> call = api.Post(id);
+        call.enqueue(new Callback<String>(){
+            @Override
+            public void onResponse (Call <String> call, Response<String> response){
+                System.out.println("SUCCESS " + response.body());
+            }
+
+            @Override
+            public void onFailure (Call <String> call, Throwable t){
+                System.out.println("Failed controlled " + t);
+            }
+        });
     }
 }

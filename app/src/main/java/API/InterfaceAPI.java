@@ -13,9 +13,13 @@ import Model.Sauna.Servo;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface InterfaceAPI {
+
+    @POST("post")
+    Call<String> Post(@Query("username") String name);
 
     @GET()
     Call<List<Account>> getAllAccounts();
