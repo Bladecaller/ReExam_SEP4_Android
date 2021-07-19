@@ -93,7 +93,7 @@ public class LogInView extends AppCompatActivity {
 
     }
     public void postCall(String id){
-        Call<String> call = api.Post(id);
+        Call<String> call = api.post(id);
         call.enqueue(new Callback<String>(){
             @Override
             public void onResponse (Call <String> call, Response<String> response){

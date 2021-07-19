@@ -16,7 +16,7 @@ public class MyRetrofit{
         gson = new GsonBuilder()
                 .setLenient()
                 .create();
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://ptsv2.com/t/l3son-1626629720/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("https://ptsv2.com/t/j7up1-1626682771/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();

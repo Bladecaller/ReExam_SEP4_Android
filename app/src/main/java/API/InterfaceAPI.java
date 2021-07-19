@@ -19,12 +19,12 @@ import retrofit2.http.Query;
 public interface InterfaceAPI {
 
     @POST("post")
-    Call<String> Post(@Query("username") String name);
+    Call<String> post(@Query("username") String name);
 
-    @GET()
+    @GET("allAccounts")
     Call<List<Account>> getAllAccounts();
 
-    @GET()
+    @GET("allSaunas")
     Call<List<Sauna>> getAllSaunas();
 
     @POST()
