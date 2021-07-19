@@ -1,4 +1,4 @@
-package Model.Account;
+package model.Account;
 
 public enum RightsEnum {
     Customer,

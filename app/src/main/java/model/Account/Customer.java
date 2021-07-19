@@ -1,9 +1,9 @@
-package Model.Account;
+package model.Account;
 
 import java.util.List;
 import java.util.Date;
 
-import Model.Sauna.Sauna;
+import model.Sauna.Sauna;
 
 public class Customer extends Account {
     public int roomNumber;

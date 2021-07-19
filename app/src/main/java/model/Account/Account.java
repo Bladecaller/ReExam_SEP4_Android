@@ -1,6 +1,6 @@
-package Model.Account;
+package model.Account;
 
-import Model.Sauna.Sauna;
+import model.Sauna.Sauna;
 
 import java.util.List;
 

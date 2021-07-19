@@ -1,6 +1,4 @@
-package Model.Sauna;
-
-import Model.Sauna.DataPoint;
+package model.Sauna;
 
 import java.util.Date;
 import java.util.List;

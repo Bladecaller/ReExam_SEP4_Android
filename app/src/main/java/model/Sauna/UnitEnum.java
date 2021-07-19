@@ -1,4 +1,4 @@
-package Model.Sauna;
+package model.Sauna;
 
 public enum UnitEnum {
     CENTIGRADE,

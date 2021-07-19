@@ -1,19 +1,18 @@
-package API;
+package api;
 
 
 
 import java.util.Date;
 import java.util.List;
 
-import Model.Account.Account;
-import Model.Account.Reservation;
-import Model.Account.RightsEnum;
-import Model.Sauna.Sauna;
-import Model.Sauna.Servo;
+import model.Account.Account;
+import model.Account.Reservation;
+import model.Account.RightsEnum;
+import model.Sauna.Sauna;
+import model.Sauna.Servo;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface InterfaceAPI {
@@ -27,18 +26,18 @@ public interface InterfaceAPI {
     @GET("allSaunas")
     Call<List<Sauna>> getAllSaunas();
 
-    @POST()
+    @POST("login")
     Call<Account> logIn(
             @Query("username") String username,
             @Query("password") String password
     );
 
-    @POST()
+    @POST("openDoor")
     Call<Servo> openTheDoor(
             @Query("saunaID") int saunaID
     );
 
-    @POST()
+    @POST("createReservation")
     Call<Reservation> createReservation(
             @Query("saunaID") int sauinaID,
             @Query("roomNumber") String roomNum,
@@ -46,7 +45,7 @@ public interface InterfaceAPI {
             @Query("to") Date timeTo
     );
 
-    @POST()
+    @POST("createAccount")
     Call<Account> createNewAccount(
             @Query("username") String username,
             @Query("password") String password,
@@ -54,21 +53,21 @@ public interface InterfaceAPI {
             @Query("saunas") List<Sauna> saunas
     );
 
-    @POST()
+    @POST("retrofit")
     Call<Account> removeUser(
             @Query("userID") int userID
     );
 
-    @POST()
+    @POST("setRights")
     Call<Account> setRights(
           @Query("rights") RightsEnum rights,
           @Query("userID") int userID
     );
 
-    @POST()
+    @POST("setThresholds")
     Call<List<Sauna>> setThresholds(
             @Query("temperature") float temperature,
-            @Query("humidity") float humidiry,
+            @Query("humidity") float humidity,
             @Query("CO2") float CO2
     );
 }

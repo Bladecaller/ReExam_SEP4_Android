@@ -1,8 +1,8 @@
-package Model.Account;
+package model.Account;
 
 import java.util.List;
 
-import Model.Sauna.Sauna;
+import model.Sauna.Sauna;
 
 public class BusinessOwner extends Account{
 

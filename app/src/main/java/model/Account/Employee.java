@@ -1,10 +1,10 @@
-package Model.Account;
+package model.Account;
 
 
 import java.util.Date;
 import java.util.List;
 
-import Model.Sauna.Sauna;
+import model.Sauna.Sauna;
 
 public class Employee extends Account {
     public boolean notifications = false;

@@ -1,4 +1,4 @@
-package Model.Sauna;
+package model.Sauna;
 
 import java.util.Date;
 
