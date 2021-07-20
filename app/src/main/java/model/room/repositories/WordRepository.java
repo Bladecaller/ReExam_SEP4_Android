@@ -28,9 +28,6 @@ public class WordRepository {
     public LiveData<List<WordEntity>> getAllWords() {
         return mAllWords;
     }
-    public LiveData<WordEntity> getFirstWord(){
-        return mWordDao.getFirstWord();
-    }
 
     public void setAllWords(){
 

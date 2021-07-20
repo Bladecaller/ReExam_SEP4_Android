@@ -10,9 +10,9 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class MyRetrofit{
 
     public InterfaceAPI api;
+    public Gson gson;
 
     public MyRetrofit(){
-        Gson gson;
         gson = new GsonBuilder()
                 .setLenient()
                 .create();

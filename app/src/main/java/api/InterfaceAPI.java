@@ -5,11 +5,12 @@ package api;
 import java.util.Date;
 import java.util.List;
 
-import model.Account.Account;
-import model.Account.Reservation;
-import model.Account.RightsEnum;
-import model.Sauna.Sauna;
-import model.Sauna.Servo;
+import model.room.entity.Account.Account;
+import model.room.entity.Account.Reservation;
+import model.room.entity.Account.RightsEnum;
+import model.room.entity.Sauna.DataPoint;
+import model.room.entity.Sauna.Sauna;
+import model.room.entity.Sauna.Servo;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -26,48 +27,60 @@ public interface InterfaceAPI {
     @GET("allSaunas")
     Call<List<Sauna>> getAllSaunas();
 
-    @POST("login")
+    @GET("allEeservations")
+    Call<List<Reservation>> getAllReservations();
+
+    @GET("allDatapoints")
+    Call<List<DataPoint>> getAllDataPoints(
+            @Query("saunaId") int saunaId
+    );
+
+    @GET("login")
     Call<Account> logIn(
             @Query("username") String username,
             @Query("password") String password
     );
 
-    @POST("openDoor")
-    Call<Servo> openTheDoor(
+    @GET("openDoor")
+    Call openTheDoor(
             @Query("saunaID") int saunaID
     );
 
     @POST("createReservation")
-    Call<Reservation> createReservation(
-            @Query("saunaID") int sauinaID,
-            @Query("roomNumber") String roomNum,
+    Call createReservation(
+            @Query("saunaID") int saunaID,
+            @Query("customerId") int customerID,
+            @Query("roomNumber") int roomNum,
             @Query("from")Date timeFrom,
             @Query("to") Date timeTo
     );
 
     @POST("createAccount")
-    Call<Account> createNewAccount(
+    Call createNewAccount(
             @Query("username") String username,
             @Query("password") String password,
-            @Query("rights") RightsEnum rights,
-            @Query("saunas") List<Sauna> saunas
+            @Query("rights") RightsEnum rights
     );
 
-    @POST("retrofit")
-    Call<Account> removeUser(
+    @POST("removeUser")
+    Call removeUser(
             @Query("userID") int userID
     );
 
     @POST("setRights")
-    Call<Account> setRights(
+    Call setRights(
           @Query("rights") RightsEnum rights,
           @Query("userID") int userID
     );
 
-    @POST("setThresholds")
-    Call<List<Sauna>> setThresholds(
+    @GET("setThresholds")
+    Call setThresholds(
             @Query("temperature") float temperature,
             @Query("humidity") float humidity,
             @Query("CO2") float CO2
     );
+
+    @GET("notification")
+    Call<Sauna> checkNotification();
+
 }

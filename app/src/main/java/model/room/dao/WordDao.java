@@ -24,6 +24,4 @@ public interface WordDao {
     @Query("SELECT * FROM word_table ORDER BY word ASC")
     LiveData<List<WordEntity>> getAlphabetizedWords();
 
-    @Query("SELECT * FROM word_table WHERE id = '0'")
-    LiveData<WordEntity> getFirstWord();
 }
