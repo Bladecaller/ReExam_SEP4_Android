@@ -21,30 +21,21 @@ import api.MyRetrofit;
 
 import com.example.sep4_android.R;
 
-import model.room.entity.WordEntity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import viewmodel.WordViewModel;
 
 public class LogInView extends AppCompatActivity {
 
     private Button logInButton;
     private ProgressBar pbar;
-    private MyRetrofit retrofit;
-    private InterfaceAPI api;
     private EditText username;
-    private WordViewModel mWordViewModel;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mWordViewModel = new ViewModelProvider(this).get(WordViewModel.class);
-
-        mWordViewModel.getAllWords().observe(this, words -> {
-            System.out.println("UPDATED");
-        });
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
             getWindow().setExitTransition(new Explode());
@@ -52,8 +43,6 @@ public class LogInView extends AppCompatActivity {
         setContentView(R.layout.activity_log_in_view);
 
         username = (EditText)findViewById(R.id.usernameText);
-        retrofit = new MyRetrofit();
-        api = retrofit.api;
 
         logInButton = findViewById(R.id.logInButton);
         pbar = findViewById(R.id.progressBar);
@@ -73,7 +62,6 @@ public class LogInView extends AppCompatActivity {
 
                    @Override
                    public void onFinish() {
-                       postCall(username.getText().toString());
                        openHomePage();
                        pbar.setVisibility(View.INVISIBLE);
                    }
@@ -93,23 +81,5 @@ public class LogInView extends AppCompatActivity {
             startActivity(intent);
         }
 
-    }
-    public void postCall(String id){
-        Call<String> call = api.post(id);
-        call.enqueue(new Callback<String>(){
-            @Override
-            public void onResponse (Call <String> call, Response<String> response){
-                System.out.println("SUCCESS " + response.body());
-                mWordViewModel.insert(new WordEntity(response.body()));
-                //System.out.println("First word " + mWordViewModel.getFirstWord().getValue().getWord());
-                System.out.println("first word " + mWordViewModel.getAllWords().getValue().get(0).getWord());
-                System.out.println("second word " + mWordViewModel.getAllWords().getValue().get(1).getWord());
-            }
-
-            @Override
-            public void onFailure (Call <String> call, Throwable t){
-                System.out.println("Controlled fail" + t);
-            }
-        });
     }
 }

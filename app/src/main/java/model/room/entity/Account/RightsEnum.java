@@ -1,10 +1,17 @@
 package model.room.entity.Account;
 
-import androidx.room.Entity;
-
-@Entity
 public enum RightsEnum {
-    Customer,
-    Employee,
-    BusinessOwner
+    Customer(0),
+    Employee(1),
+    BusinessOwner(2);
+
+    public final int value;
+
+    RightsEnum(int value){
+        this.value = value;
+    }
+    public int getValue(){
+        return  value;
+    }
+
 }

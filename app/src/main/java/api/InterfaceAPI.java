@@ -51,15 +51,15 @@ public interface InterfaceAPI {
             @Query("saunaID") int saunaID,
             @Query("customerId") int customerID,
             @Query("roomNumber") int roomNum,
-            @Query("from")Date timeFrom,
-            @Query("to") Date timeTo
+            @Query("from")String timeFrom,
+            @Query("to") String timeTo
     );
 
     @POST("createAccount")
     Call createNewAccount(
             @Query("username") String username,
             @Query("password") String password,
-            @Query("rights") RightsEnum rights
+            @Query("rights") int rights
     );
 
     @POST("removeUser")
@@ -69,7 +69,7 @@ public interface InterfaceAPI {
 
     @POST("setRights")
     Call setRights(
-          @Query("rights") RightsEnum rights,
+          @Query("rights") int rights,
           @Query("userID") int userID
     );
 

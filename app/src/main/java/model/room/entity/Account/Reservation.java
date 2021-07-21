@@ -17,17 +17,16 @@ public class Reservation {
     private int customerId;
     private int saunaId;
     private int roomNumber;
-    private Sauna sauna;
-    private Date bookTimeFrom;
-    private Date bookTimeTo;
+    private String bookTimeFrom;
+    private String bookTimeTo;
 
-    public Reservation(@NonNull int roomNumber,int customerId, Sauna sauna, Date from, Date to){
+    public Reservation(@NonNull int id,int roomNumber,int customerId,int saunaId, String bookTimeFrom, String bookTimeTo){
+        this.id = id;
         this.roomNumber = roomNumber;
-        this.saunaId = sauna.getId();
+        this.saunaId = saunaId;
         this.customerId = customerId;
-        this.sauna = sauna;
-        this.bookTimeFrom = from;
-        this.bookTimeTo = to;
+        this.bookTimeFrom = bookTimeFrom;
+        this.bookTimeTo = bookTimeTo;
     }
 
     public int getCustomerId() {
@@ -62,27 +61,21 @@ public class Reservation {
         this.roomNumber = roomNumber;
     }
 
-    public Sauna getSauna() {
-        return sauna;
-    }
 
-    public void setSauna(Sauna sauna) {
-        this.sauna = sauna;
-    }
-
-    public Date getBookTimeFrom() {
+    public String getBookTimeFrom() {
         return bookTimeFrom;
     }
 
-    public void setBookTimeFrom(Date bookTimeFrom) {
+    public void setBookTimeFrom(String bookTimeFrom) {
         this.bookTimeFrom = bookTimeFrom;
     }
 
-    public Date getBookTimeTo() {
+    public String getBookTimeTo() {
         return bookTimeTo;
     }
 
-    public void setBookTimeTo(Date bookTimeTo) {
+    public void setBookTimeTo(String bookTimeTo) {
         this.bookTimeTo = bookTimeTo;
     }
+
 }

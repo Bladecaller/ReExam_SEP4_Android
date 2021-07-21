@@ -11,17 +11,17 @@ public class DataPoint {
     @NonNull
     private int id;
     private int saunaId;
-    private Date time;
-    private CO2 CO2;
-    private Humidity humidity;
-    private Temperature temperature;
+    private String time;
+    private int CO2iD;
+    private int humidityiD;
+    private int temperatureiD;
 
-    public DataPoint(@NonNull int id,int saunaId, CO2 co2, Humidity hum, Temperature temp){
+    public DataPoint(@NonNull int id,int saunaId, int CO2iD, int humidityiD, int temperatureiD){
         this.id = id;
         this.saunaId = saunaId;
-        this.CO2 = co2;
-        this.humidity = hum;
-        this.temperature = temp;
+        this.CO2iD = CO2iD;
+        this.humidityiD = humidityiD;
+        this.temperatureiD = temperatureiD;
     }
 
     public int getId() {
@@ -32,36 +32,36 @@ public class DataPoint {
         this.id = id;
     }
 
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
-    public model.room.entity.Sauna.CO2 getCO2() {
-        return CO2;
+    public int getCO2iD() {
+        return CO2iD;
     }
 
-    public void setCO2(model.room.entity.Sauna.CO2 CO2) {
-        this.CO2 = CO2;
+    public void setCO2iD(int CO2iD) {
+        this.CO2iD = CO2iD;
     }
 
-    public Humidity getHumidity() {
-        return humidity;
+    public int getHumidityiD() {
+        return humidityiD;
     }
 
-    public void setHumidity(Humidity humidity) {
-        this.humidity = humidity;
+    public void setHumidityiD(int humidityiD) {
+        this.humidityiD = humidityiD;
     }
 
-    public Temperature getTemperature() {
-        return temperature;
+    public int getTemperatureiD() {
+        return temperatureiD;
     }
 
-    public void setTemperature(Temperature temperature) {
-        this.temperature = temperature;
+    public void setTemperatureiD(int temperatureiD) {
+        this.temperatureiD = temperatureiD;
     }
 
     public int getSaunaId() {

@@ -12,71 +12,24 @@ public class Sauna {
     @NonNull
     private int id;
     private int reservedForRoomNumber;
-    private Date reservedTimeFrom;
-    private Date reservedTimeTo;
+    private String reservedTimeFrom;
+    private String reservedTimeTo;
     private boolean reserved;
-    private List<DataPoint> data;
     private float humidityThreshold;
     private float CO2Threshold;
     private float temperatureThreshold;
-    private Servo servo;
+    private int servoID;
 
-    public Sauna(@NonNull int ID,int roomNum, Date from, Date to, boolean reserved, List<DataPoint> list, float humTH, float CO2TH, float tempTH, Servo servo){
-        this.id = ID;
-        this.reservedForRoomNumber = roomNum;
-        this.reservedTimeFrom = from;
-        this.reservedTimeTo = to;
+    public Sauna(@NonNull int id,int reservedForRoomNumber, String reservedTimeFrom, String reservedTimeTo, boolean reserved, float humidityThreshold, float CO2Threshold, float temperatureThreshold, int servoID){
+        this.id = id;
+        this.reservedForRoomNumber = reservedForRoomNumber;
+        this.reservedTimeFrom = reservedTimeFrom;
+        this.reservedTimeTo = reservedTimeTo;
         this.reserved = reserved;
-        this.data = list;
-        this.humidityThreshold = humTH;
-        this.CO2Threshold = CO2TH;
-        this.temperatureThreshold = tempTH;
-        this.servo = servo;
-    }
-
-    public List<CO2> getCO2(){
-        List<CO2> Values = null;
-            for(int i = 0; i <= data.size(); i++){
-                Values.add(data.get(i).getCO2());
-            }
-        return Values;
-    }
-
-    public List<Humidity> getHumidity(){
-        List<Humidity> Values = null;
-        for(int i = 0; i <= data.size(); i++){
-            Values.add(data.get(i).getHumidity());
-        }
-        return Values;
-    }
-
-    public List<Temperature> getTemperature(){
-        List<Temperature> Values = null;
-        for(int i = 0; i <= data.size(); i++){
-            Values.add(data.get(i).getTemperature());
-        }
-        return Values;
-    }
-
-    public void notifyDanger(){
-        for(int i = 0; i <= data.size(); i++){
-            if(data.get(i).getCO2().getValue() >= this.CO2Threshold){
-                System.out.println("CO2 is too high for sauna " + getId());
-                break;
-            }
-        }
-        for(int i = 0; i <= data.size(); i++){
-            if(data.get(i).getHumidity().getValue() >= humidityThreshold){
-                System.out.println("Humidity is too high for sauna " + getId());
-                break;
-            }
-        }
-        for(int i = 0; i <= data.size(); i++){
-            if(data.get(i).getTemperature().getValue() >= temperatureThreshold){
-                System.out.println("Temperature is too high for sauna " + getId());
-                break;
-            }
-        }
+        this.humidityThreshold = humidityThreshold;
+        this.CO2Threshold = CO2Threshold;
+        this.temperatureThreshold = temperatureThreshold;
+        this.servoID = servoID;
     }
 
     public int getId() {
@@ -95,19 +48,19 @@ public class Sauna {
         this.reservedForRoomNumber = reservedForRoomNumber;
     }
 
-    public Date getReservedTimeFrom() {
+    public String getReservedTimeFrom() {
         return reservedTimeFrom;
     }
 
-    public void setReservedTimeFrom(Date reservedTimeFrom) {
+    public void setReservedTimeFrom(String reservedTimeFrom) {
         this.reservedTimeFrom = reservedTimeFrom;
     }
 
-    public Date getReservedTimeTo() {
+    public String getReservedTimeTo() {
         return reservedTimeTo;
     }
 
-    public void setReservedTimeTo(Date reservedTimeTo) {
+    public void setReservedTimeTo(String reservedTimeTo) {
         this.reservedTimeTo = reservedTimeTo;
     }
 
@@ -117,14 +70,6 @@ public class Sauna {
 
     public void setReserved(boolean reserved) {
         this.reserved = reserved;
-    }
-
-    public List<DataPoint> getData() {
-        return data;
-    }
-
-    public void setData(List<DataPoint> data) {
-        this.data = data;
     }
 
     public float getHumidityThreshold() {
@@ -151,11 +96,11 @@ public class Sauna {
         this.temperatureThreshold = temperatureThreshold;
     }
 
-    public Servo getServo() {
-        return servo;
+    public int getServoID() {
+        return servoID;
     }
 
-    public void setServo(Servo servo) {
-        this.servo = servo;
+    public void setServoID(int servoID) {
+        this.servoID = servoID;
     }
 }

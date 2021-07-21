@@ -9,9 +9,7 @@ import java.util.List;
 
 import model.room.entity.Sauna.DataPoint;
 import model.room.entity.Sauna.Sauna;
-import model.room.entity.WordEntity;
 import model.room.repositories.MyRepository;
-import model.room.repositories.WordRepository;
 
 public class SaunaViewModel extends AndroidViewModel {
     public MyRepository repository;

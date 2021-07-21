@@ -4,9 +4,6 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,16 +12,16 @@ import model.room.dao.AccountsDao;
 import model.room.dao.DataPointDao;
 import model.room.dao.ReservationDao;
 import model.room.dao.SaunasDao;
-import model.room.dao.WordDao;
 import model.room.entity.Account.Account;
+import model.room.entity.Account.BusinessOwner;
 import model.room.entity.Account.Customer;
+import model.room.entity.Account.Employee;
 import model.room.entity.Account.Reservation;
 import model.room.entity.Account.RightsEnum;
+import model.room.entity.Account.RightsEnumConverter;
 import model.room.entity.Sauna.DataPoint;
 import model.room.entity.Sauna.Sauna;
-import model.room.entity.WordEntity;
 import model.room.roomdatabase.MyRoomDatabase;
-import model.room.roomdatabase.WordRoomDatabase;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,8 +52,17 @@ public class MyRepository {
         dataPointDao = db.dataPointDao();
         reservationDao = db.reservationDao();
         saunasDao = db.saunaDao();
-
-        accounts = accountsDao.getAllAccounts();
+        LiveData<List<Account>> temp = null;
+        for(BusinessOwner acc:accountsDao.getAllBusinessOwners().getValue()){
+            temp.getValue().add(acc);
+        }
+        for(Customer acc:accountsDao.getAllCustomers().getValue()){
+            temp.getValue().add(acc);
+        }
+        for(Employee acc:accountsDao.getAllEmployees().getValue()){
+            temp.getValue().add(acc);
+        }
+        accounts = temp;
         datapoints = dataPointDao.getAllDataPoints();
         reservations = reservationDao.getAllReservations();
         saunas = saunasDao.getAllSaunas();
@@ -89,7 +95,35 @@ public class MyRepository {
         });
     }
 
-    public void addASingleAccount(Account account){
+    public void addACustomerAccount(Customer account){
+        Call call = retrofit.api.createNewAccount(account.getUsername(),account.getPassword(), account.getRights());
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                populateAccountsRepo();
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                System.out.println("Failed at addASingleAccount");
+            }
+        });
+    }
+    public void addAEmployeeAccount(Employee account){
+        Call call = retrofit.api.createNewAccount(account.getUsername(),account.getPassword(), account.getRights());
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                populateAccountsRepo();
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                System.out.println("Failed at addASingleAccount");
+            }
+        });
+    }
+    public void addABusinessOwnerAccount(BusinessOwner account){
         Call call = retrofit.api.createNewAccount(account.getUsername(),account.getPassword(), account.getRights());
         call.enqueue(new Callback() {
             @Override
@@ -104,8 +138,8 @@ public class MyRepository {
         });
     }
 
-    public void removeASingleAccount(Account account){
-        Call call = retrofit.api.removeUser(account.getUserID());
+    public void removeASingleAccount(int accountID){
+        Call call = retrofit.api.removeUser(accountID);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
@@ -118,8 +152,8 @@ public class MyRepository {
             }
         });
     }
-    public void setRights(Account account, RightsEnum rightsEnum){
-        Call call = retrofit.api.setRights(rightsEnum, account.getUserID());
+    public void setRights(int accountID, RightsEnum rightsEnum){
+        Call call = retrofit.api.setRights(RightsEnumConverter.fromRightsEnumToInt(rightsEnum), accountID);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
@@ -310,9 +344,16 @@ public class MyRepository {
     }
 
     // return a list of all accounts to the viewmodel
-    public LiveData<List<Account>> getAccounts(){
-        return accountsDao.getAllAccounts();
+    public LiveData<List<Customer>> getCustomers(){
+        return accountsDao.getAllCustomers();
     }
+    public LiveData<List<Employee>> getEmployees(){
+        return accountsDao.getAllEmployees();
+    }
+    public LiveData<List<BusinessOwner>> getBusinessOwners(){
+        return accountsDao.getAllBusinessOwners();
+    }
+    public LiveData<List<Account>> getAllAccounts(){ return accounts;}
 
     //------------Datapoint---------------------------------------------------------------------------------
 

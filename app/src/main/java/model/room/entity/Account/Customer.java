@@ -10,25 +10,10 @@ import model.room.entity.Sauna.Sauna;
 @Entity
 public class Customer extends Account {
     private int roomNumber;
-    private List<Reservation> reservations;
 
-    public Customer(@NonNull int roomNum, int ID, String username, String password, RightsEnum rights, List<Sauna> saunas, List<Reservation> reservations, String establishment) {
-        super(ID, username, password, rights, saunas, establishment);
-        this.reservations = reservations;
-        this.roomNumber = roomNum;
-    }
-
-    public void book(Sauna sauna, Date from, Date to){
-        Reservation booking = new Reservation(this.roomNumber,this.getUserID(),sauna, from, to);
-        reservations.add(booking);
-        for(int i = 0; i<= getSaunas().size(); i++){
-            if(sauna == getSaunas().get(i)){
-                getSaunas().get(i).setReserved(true);
-                getSaunas().get(i).setReservedForRoomNumber(this.roomNumber);
-                getSaunas().get(i).setReservedTimeFrom(from);
-                getSaunas().get(i).setReservedTimeTo(to);
-            }
-        }
+    public Customer(@NonNull int userID, String username, String password, int rights, String establishmentName, int roomNumber) {
+        super(userID, username, password, rights, establishmentName);
+        this.roomNumber = roomNumber;
     }
 
     public int getRoomNumber() {
@@ -37,13 +22,5 @@ public class Customer extends Account {
 
     public void setRoomNumber(int roomNumber) {
         this.roomNumber = roomNumber;
-    }
-
-    public List<Reservation> getReservations() {
-        return reservations;
-    }
-
-    public void setReservations(List<Reservation> reservations) {
-        this.reservations = reservations;
     }
 }

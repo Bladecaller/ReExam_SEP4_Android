@@ -3,6 +3,7 @@ package model.room.dao;
 import android.provider.ContactsContract;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -13,7 +14,7 @@ import model.room.entity.Account.Account;
 import model.room.entity.Account.RightsEnum;
 import model.room.entity.Sauna.DataPoint;
 import model.room.entity.Sauna.Sauna;
-
+@Dao
 public interface SaunasDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

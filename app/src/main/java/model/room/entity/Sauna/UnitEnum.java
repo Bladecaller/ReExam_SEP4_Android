@@ -1,10 +1,17 @@
 package model.room.entity.Sauna;
 
-import androidx.room.Entity;
-
-@Entity
 public enum UnitEnum {
-    CENTIGRADE,
-    PPM,
-    PERCENT
+    CENTIGRADE(0),
+    PPM(1),
+    PERCENT(2);
+
+
+    public final int value;
+
+    UnitEnum(int value){
+        this.value = value;
+    }
+    public int getValue(){
+        return  value;
+    }
 }
