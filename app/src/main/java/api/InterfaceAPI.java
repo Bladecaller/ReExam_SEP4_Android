@@ -62,6 +62,14 @@ public interface InterfaceAPI {
             @Query("rights") int rights
     );
 
+    @POST("createAccount")
+    Call createNewCustomerAccount(
+            @Query("username") String username,
+            @Query("password") String password,
+            @Query("rights") int rights,
+            @Query("roomNumber") int roomNumber
+    );
+
     @POST("removeUser")
     Call removeUser(
             @Query("userID") int userID

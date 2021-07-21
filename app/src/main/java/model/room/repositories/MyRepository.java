@@ -96,7 +96,7 @@ public class MyRepository {
     }
 
     public void addACustomerAccount(Customer account){
-        Call call = retrofit.api.createNewAccount(account.getUsername(),account.getPassword(), account.getRights());
+        Call call = retrofit.api.createNewCustomerAccount(account.getUsername(),account.getPassword(), account.getRights(), account.getRoomNumber());
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
