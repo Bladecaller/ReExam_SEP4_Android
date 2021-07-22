@@ -307,21 +307,32 @@ public class MyRepository {
         });
     }
 
-    public Sauna checkNotifications(){
-        Sauna[] sauna = {null};
-        Call<Sauna> call = retrofit.api.checkNotification();
-        call.enqueue(new Callback<Sauna>() {
+    public List<Sauna> checkNotifications(){
+        final Integer[] temp = {null};
+        List<Sauna> notifiedSaunas = null;
+        Call<List<Integer>> call = retrofit.api.checkNotification();
+        call.enqueue(new Callback<List<Integer>>() {
             @Override
-            public void onResponse(Call<Sauna> call, Response<Sauna> response) {
-                sauna[0] = retrofit.gson.fromJson(response.body().toString(), Sauna.class);
+            public void onResponse(Call<List<Integer>> call, Response<List<Integer>> response) {
+                populateSaunasRepo();
+                List<Integer> temp;
+                Integer[] array = retrofit.gson.fromJson(response.body().toString(), Integer[].class);
+                temp = Arrays.asList(array);
+                for(Integer obj : temp){
+                    for(Sauna sauna: getAllSaunas().getValue()) {
+                        if (obj.intValue() == sauna.getId()) {
+                            notifiedSaunas.add(sauna);
+                        }
+                    }
+                }
             }
 
             @Override
-            public void onFailure(Call<Sauna> call, Throwable t) {
-                System.out.println("Failed at Notifications: No notifications");
+            public void onFailure(Call<List<Integer>> call, Throwable t) {
+
             }
         });
-        return sauna[0];
+        return notifiedSaunas;
     }
 
     public LiveData<List<Reservation>> getPersonalReservations(){

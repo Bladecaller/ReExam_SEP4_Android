@@ -36,5 +36,5 @@ public class EmployeeViewModel extends AndroidViewModel {
         repository.populateSaunasRepo();
     }
     public void changeNotificationsStatus(){repository.changeNotifications();};
-    public void notificationCheck(){ repository.checkNotifications();}
+    public List<Sauna> notificationCheck(){ return repository.checkNotifications();}
 }

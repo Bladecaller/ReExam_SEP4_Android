@@ -89,6 +89,6 @@ public interface InterfaceAPI {
     );
 
     @GET("notification")
-    Call<Sauna> checkNotification();
+    Call<List<Integer>>  checkNotification();
 
 }
