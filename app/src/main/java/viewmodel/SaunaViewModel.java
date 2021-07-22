@@ -14,16 +14,16 @@ import model.room.repositories.MyRepository;
 public class SaunaViewModel extends AndroidViewModel {
     public MyRepository repository;
 
-    private final LiveData<List<Sauna>> saunas;
-
     public SaunaViewModel (Application application) {
         super(application);
        repository = new MyRepository(application);
-        saunas = repository.getAllSaunas();
     }
 
-    public LiveData<List<Sauna>> getAllSaunas() { return saunas; }
+    public LiveData<List<Sauna>> getAllSaunas() { return repository.getAllSaunas(); }
     public LiveData<List<DataPoint>> getAllDatapointsForASauna(Sauna sauna){
         repository.populateDatapointRepo(sauna);
         return repository.getAllDataPoints();}
+    public void spinServo(Sauna sauna){
+        //unimplemented
+    }
 }

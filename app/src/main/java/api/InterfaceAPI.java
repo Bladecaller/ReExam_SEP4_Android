@@ -27,7 +27,7 @@ public interface InterfaceAPI {
     @GET("allSaunas")
     Call<List<Sauna>> getAllSaunas();
 
-    @GET("allEeservations")
+    @GET("allReservations")
     Call<List<Reservation>> getAllReservations();
 
     @GET("allDatapoints")

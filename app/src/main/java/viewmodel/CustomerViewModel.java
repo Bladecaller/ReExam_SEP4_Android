@@ -16,17 +16,22 @@ import model.room.repositories.MyRepository;
 public class CustomerViewModel extends AndroidViewModel {
     public MyRepository repository;
 
-    private final LiveData<List<Sauna>> saunas;
-
     public CustomerViewModel (Application application) {
         super(application);
-
         repository = new MyRepository(application);
-        saunas = repository.getAllSaunas();
     }
 
-    public LiveData<List<Sauna>> getAllSaunas() { return saunas; }
-    public void book(Reservation reservation){ repository.createReservation(reservation);}
-    public LiveData<List<Reservation>> getPersonalReservations(){ return repository.getPersonalReservations();}
+    public LiveData<List<Sauna>> getAllSaunas() {
+        repository.populateSaunasRepo();
+        return repository.getAllSaunas();
+    }
+    public void book(Reservation reservation){
+        repository.createReservation(reservation);
+        repository.populateReservationRepo();
+    }
+    public LiveData<List<Reservation>> getPersonalReservations(){
+        repository.populateReservationRepo();
+        return repository.getPersonalReservations();
+    }
 
 }

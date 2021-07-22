@@ -16,14 +16,6 @@ public class Servo {
         spun = false;
     }
 
-    public void spin(){
-        if(spun){
-            spun = false;
-        }else{
-            spun = true;
-        }
-    }
-
     public int getId() {
         return id;
     }

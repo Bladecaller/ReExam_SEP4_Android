@@ -95,6 +95,75 @@ public class MyRepository {
         });
     }
 
+    public void populateSaunasRepo(){
+        Call<List<Sauna>> call = retrofit.api.getAllSaunas();
+        call.enqueue(new Callback<List<Sauna>>(){
+            @Override
+            public void onResponse (Call <List<Sauna>> call, Response<List<Sauna>> response){
+                System.out.println("SUCCESS " + response.body());
+                emptySaunaRepo();
+                List<Sauna> temp;
+                Sauna[] array = retrofit.gson.fromJson(response.body().toString(), Sauna[].class);
+                temp = Arrays.asList(array);
+                for(Sauna obj : temp){
+                    saunaInsert(obj);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Sauna>> call, Throwable t) {
+                System.out.println("Failed at populateSaunasRepo");
+            }
+
+        });
+    }
+
+    public void populateReservationRepo(){
+        Call<List<Reservation>> call = retrofit.api.getAllReservations();
+        call.enqueue(new Callback<List<Reservation>>(){
+            @Override
+            public void onResponse (Call <List<Reservation>> call, Response<List<Reservation>> response){
+                System.out.println("SUCCESS " + response.body());
+                emptyReservationRepo();
+                List<Reservation> temp;
+                Reservation[] array = retrofit.gson.fromJson(response.body().toString(), Reservation[].class);
+                temp = Arrays.asList(array);
+                for(Reservation obj : temp){
+                    reservationInsert(obj);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Reservation>> call, Throwable t) {
+                System.out.println("Failed at populateReservationRepo");
+            }
+
+        });
+    }
+
+    public void populateDatapointRepo(Sauna sauna){
+        Call<List<DataPoint>> call = retrofit.api.getAllDataPoints(sauna.getId());
+        call.enqueue(new Callback<List<DataPoint>>(){
+            @Override
+            public void onResponse (Call <List<DataPoint>> call, Response<List<DataPoint>> response){
+                System.out.println("SUCCESS " + response.body());
+                emptyDataRepo();
+                List<DataPoint> temp;
+                DataPoint[] array = retrofit.gson.fromJson(response.body().toString(), DataPoint[].class);
+                temp = Arrays.asList(array);
+                for(DataPoint obj : temp){
+                    datapointInsert(obj);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<DataPoint>> call, Throwable t) {
+                System.out.println("Failed at populateDatapointRepo");
+            }
+
+        });
+    }
+
     public void addACustomerAccount(Customer account){
         Call call = retrofit.api.createNewCustomerAccount(account.getUsername(),account.getPassword(), account.getRights(), account.getRoomNumber());
         call.enqueue(new Callback() {
@@ -167,72 +236,6 @@ public class MyRepository {
         });
 
     }
-    public void populateSaunasRepo(){
-        Call<List<Sauna>> call = retrofit.api.getAllSaunas();
-        call.enqueue(new Callback<List<Sauna>>(){
-            @Override
-            public void onResponse (Call <List<Sauna>> call, Response<List<Sauna>> response){
-                System.out.println("SUCCESS " + response.body());
-                emptySaunaRepo();
-                List<Sauna> temp;
-                Sauna[] array = retrofit.gson.fromJson(response.body().toString(), Sauna[].class);
-                temp = Arrays.asList(array);
-                for(Sauna obj : temp){
-                    saunaInsert(obj);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Sauna>> call, Throwable t) {
-                System.out.println("Failed at populateSaunasRepo");
-            }
-
-        });
-    }
-    public void populateReservationRepo(){
-        Call<List<Reservation>> call = retrofit.api.getAllReservations();
-        call.enqueue(new Callback<List<Reservation>>(){
-            @Override
-            public void onResponse (Call <List<Reservation>> call, Response<List<Reservation>> response){
-                System.out.println("SUCCESS " + response.body());
-                emptyReservationRepo();
-                List<Reservation> temp;
-                Reservation[] array = retrofit.gson.fromJson(response.body().toString(), Reservation[].class);
-                temp = Arrays.asList(array);
-                for(Reservation obj : temp){
-                    reservationInsert(obj);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Reservation>> call, Throwable t) {
-                System.out.println("Failed at populateReservationRepo");
-            }
-
-        });
-    }
-    public void populateDatapointRepo(Sauna sauna){
-        Call<List<DataPoint>> call = retrofit.api.getAllDataPoints(sauna.getId());
-        call.enqueue(new Callback<List<DataPoint>>(){
-            @Override
-            public void onResponse (Call <List<DataPoint>> call, Response<List<DataPoint>> response){
-                System.out.println("SUCCESS " + response.body());
-                emptyDataRepo();
-                List<DataPoint> temp;
-                DataPoint[] array = retrofit.gson.fromJson(response.body().toString(), DataPoint[].class);
-                temp = Arrays.asList(array);
-                for(DataPoint obj : temp){
-                    datapointInsert(obj);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<DataPoint>> call, Throwable t) {
-                System.out.println("Failed at populateDatapointRepo");
-            }
-
-        });
-    }
 
     public void login(String username, String password){
         final Account[] acc = {null};
@@ -253,7 +256,7 @@ public class MyRepository {
         });
     }
 
-    public void setTresholds(float CO2, float humidity, float temperature){
+    public void setThresholds(float CO2, float humidity, float temperature){
         Call call = retrofit.api.setThresholds(temperature,humidity,CO2);
         call.enqueue(new Callback() {
             @Override
@@ -315,7 +318,7 @@ public class MyRepository {
 
             @Override
             public void onFailure(Call<Sauna> call, Throwable t) {
-                System.out.println("Failed at Notifications");
+                System.out.println("Failed at Notifications: No notifications");
             }
         });
         return sauna[0];
@@ -398,7 +401,7 @@ public class MyRepository {
     }
 
     // return all reservations for a specific customer
-    public LiveData<List<Reservation>> getReservationsForCustomer(Customer customer){
+    private LiveData<List<Reservation>> getReservationsForCustomer(Customer customer){
         return reservationDao.getReservationsByCustomerId(customer.getUserID());
     }
 
@@ -422,5 +425,14 @@ public class MyRepository {
     public LiveData<List<Sauna>> getAllSaunas(){
         return saunasDao.getAllSaunas();
     }
-
+    //--------Notifications-------------------------------------------------------------------------------------
+    public void changeNotifications(){
+        if(currentAccount instanceof Employee){
+            if(((Employee) currentAccount).notifications==false){
+                ((Employee) currentAccount).notifications=true;
+            } else{
+                ((Employee) currentAccount).notifications=false;
+            }
+        }
+    }
 }

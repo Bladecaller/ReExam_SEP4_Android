@@ -16,19 +16,25 @@ import model.room.repositories.MyRepository;
 public class EmployeeViewModel extends AndroidViewModel {
     public MyRepository repository;
 
-    private final LiveData<List<Sauna>> saunas;
-    private final LiveData<List<Customer>> customers;
-
     public EmployeeViewModel (Application application) {
         super(application);
         repository = new MyRepository(application);
-        saunas = repository.getAllSaunas();
-        customers = repository.getCustomers();
     }
 
-    public LiveData<List<Sauna>> getAllSaunas() { return saunas; }
-    public LiveData<List<Customer>> getCustomers(){return customers; }
-    public void book(Reservation reservation){repository.createReservation(reservation);}
-    public void openDoor(Sauna sauna){repository.openDoor(sauna);}
+    public LiveData<List<Sauna>> getAllSaunas() {
+        repository.populateSaunasRepo();
+        return repository.getAllSaunas(); }
+    public LiveData<List<Customer>> getCustomers(){
+        repository.populateAccountsRepo();
+        return repository.getCustomers(); }
+    public void book(Reservation reservation){
+        repository.createReservation(reservation);
+        repository.populateReservationRepo();
+    }
+    public void openDoor(Sauna sauna){
+        repository.openDoor(sauna);
+        repository.populateSaunasRepo();
+    }
+    public void changeNotificationsStatus(){repository.changeNotifications();};
     public void notificationCheck(){ repository.checkNotifications();}
 }
