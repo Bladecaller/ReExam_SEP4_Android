@@ -1,10 +1,5 @@
-package view.activity;
+package view.activity.employee;
 
-
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.viewpager.widget.ViewPager;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -16,17 +11,21 @@ import android.view.Window;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.ViewPager;
+
 import com.example.sep4_android.R;
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.EventListener;
 import java.util.Objects;
 
 import adapter.PageTransformer;
-import adapter.SectionsPageAdapter;
-import view.fragment.HomeFragBo;
+import adapter.SectionsPageAdapterEm;
+import view.activity.LogInView;
+import view.activity.owner.SettingsViewBo;
 
-public class HomeView extends AppCompatActivity {
+public class HomeViewEm extends AppCompatActivity {
 
 private ImageButton backBtn;
 private ImageButton settingsBtn;
@@ -46,7 +45,7 @@ private TextView titleW;
         backBtn = findViewById(R.id.backBtnHome);
         settingsBtn = findViewById(R.id.settingsBtn);
         titleW = findViewById(R.id.titleTxt);
-        SectionsPageAdapter sectionsPagerAdapter = new SectionsPageAdapter(this, getSupportFragmentManager());
+        SectionsPageAdapterEm sectionsPagerAdapter = new SectionsPageAdapterEm(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
         PageTransformer pageT = new PageTransformer();
         viewPager.setPageTransformer(true,pageT);
@@ -77,7 +76,7 @@ private TextView titleW;
     }
 
     public void openSettings(){
-        Intent intent = new Intent(this,SettingsView.class);
+        Intent intent = new Intent(this, SettingsViewEm.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         }
@@ -87,7 +86,7 @@ private TextView titleW;
     }
 
     public void GoBack(){
-        Intent intent = new Intent(this,LogInView.class);
+        Intent intent = new Intent(this, LogInView.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         }

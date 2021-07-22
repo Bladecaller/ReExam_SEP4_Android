@@ -19,20 +19,18 @@ import com.example.sep4_android.R;
 import view.fragment.HomeFragBo;
 import view.fragment.SaunasFrag;
 import view.fragment.SubscriptionFragCu;
-import view.fragment.SubscritionFragEmp;
-import view.fragment.UsersFragBo;
 
 
-public class SectionsPageAdapter extends FragmentPagerAdapter {
+public class SectionsPageAdapterEm extends FragmentPagerAdapter {
 
     @StringRes
 
-    private int [] imageId = {R.drawable.icon_home_white_large,R.drawable.icon_sauna_filled_white,R.drawable.icon_subcription,R.drawable.icon_user_white_large};
+    private int [] imageId = {R.drawable.icon_home_white_large,R.drawable.icon_sauna_filled_white};
     private String [] titleID ={"Home","Saunas","Booking","Users"};
     private final Context mContext;
 
 
-    public SectionsPageAdapter(Context context, FragmentManager fm) {
+    public SectionsPageAdapterEm(Context context, FragmentManager fm) {
         super(fm);
         mContext = context;
     }
@@ -46,14 +44,6 @@ public class SectionsPageAdapter extends FragmentPagerAdapter {
                 break;
             case 1:
                 frag = new SaunasFrag();
-                break;
-
-            case 2:
-                frag = new SubscriptionFragCu();
-                break;
-
-            case 3:
-                frag = new UsersFragBo();
                 break;
 
         }

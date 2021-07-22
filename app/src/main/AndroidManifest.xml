@@ -10,8 +10,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.NoActionBar">
-        <activity android:name="view.activity.SettingsView"></activity>
-        <activity android:name="view.activity.HomeView" />
+        <activity android:name="view.activity.owner.SettingsViewBo"/>
+        <activity android:name="view.activity.customer.SettingsViewCu"/>
+        <activity android:name="view.activity.employee.SettingsViewEm"/>
+        <activity android:name="view.activity.owner.HomeViewBo" />
+        <activity android:name="view.activity.customer.HomeViewCu" />
+        <activity android:name="view.activity.employee.HomeViewEm" />
         <activity android:name="view.activity.LogInView">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
