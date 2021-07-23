@@ -9,20 +9,24 @@ import java.util.List;
 
 import model.room.entity.Sauna.DataPoint;
 import model.room.entity.Sauna.Sauna;
+import model.room.repositories.DataPointRepository;
 import model.room.repositories.MyRepository;
+import model.room.repositories.SaunaRepository;
 
 public class SaunaViewModel extends AndroidViewModel {
-    public MyRepository repository;
+    private SaunaRepository repositorySauna;
+    private DataPointRepository repositoryData;
 
     public SaunaViewModel (Application application) {
         super(application);
-       repository = new MyRepository(application);
+       repositorySauna = new SaunaRepository(application);
+       repositoryData = new DataPointRepository(application);
     }
 
-    public LiveData<List<Sauna>> getAllSaunas() { return repository.getAllSaunas(); }
+    public LiveData<List<Sauna>> getAllSaunas() { return repositorySauna.getAllSaunas(); }
     public LiveData<List<DataPoint>> getAllDatapointsForASauna(Sauna sauna){
-        repository.populateDatapointRepo(sauna);
-        return repository.getAllDataPoints();}
+        repositoryData.populateDatapointRepo(sauna);
+        return repositoryData.getAllDataPoints();}
     public void spinServo(Sauna sauna){
         //unimplemented
     }

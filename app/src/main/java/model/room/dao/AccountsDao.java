@@ -21,6 +21,9 @@ public interface AccountsDao {
     @Query("DELETE FROM Account")
     void deleteAll();
 
+    @Query("SELECT * FROM Account")
+    LiveData<List<Account>> getAllAccounts();
+
     @Query("SELECT * FROM Customer ")
     LiveData<List<Customer>> getAllCustomers();
 

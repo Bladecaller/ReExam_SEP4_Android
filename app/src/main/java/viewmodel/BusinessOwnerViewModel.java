@@ -15,39 +15,42 @@ import model.room.entity.Account.BusinessOwner;
 import model.room.entity.Account.Customer;
 import model.room.entity.Account.Employee;
 import model.room.entity.Account.RightsEnum;
-import model.room.repositories.MyRepository;
+import model.room.repositories.AccountRepository;
+import model.room.repositories.SaunaRepository;
 
 public class BusinessOwnerViewModel extends AndroidViewModel {
-    public MyRepository repository;
+    private AccountRepository repositoryAccount;
+    private SaunaRepository repositorySauna;
 
     public BusinessOwnerViewModel(@NonNull @NotNull Application application) {
         super(application);
-        repository = new MyRepository(application);
+        repositoryAccount = new AccountRepository(application);
+        repositorySauna = new SaunaRepository(application);
     }
 
     public void setRights(RightsEnum rights, int accountID){
-        repository.setRights(accountID, rights);
-        repository.populateAccountsRepo();
+        repositoryAccount.setRights(accountID, rights);
+        repositoryAccount.populateAccountsRepo();
     }
-    public LiveData<List<Account>> getAccounts(){return repository.getAllAccounts();}
+    public LiveData<List<Account>> getAccounts(){return repositoryAccount.getAllAccounts();}
     public void addCustomerAccount(Customer account){
-        repository.addACustomerAccount(account);
-        repository.populateAccountsRepo();
+        repositoryAccount.addACustomerAccount(account);
+        repositoryAccount.populateAccountsRepo();
     }
     public void addEmployeeAccount(Employee account){
-        repository.addAEmployeeAccount(account);
-        repository.populateAccountsRepo();
+        repositoryAccount.addAEmployeeAccount(account);
+        repositoryAccount.populateAccountsRepo();
     }
     public void addBusinessOwnerAccount(BusinessOwner account){
-        repository.addABusinessOwnerAccount(account);
-        repository.populateAccountsRepo();
+        repositoryAccount.addABusinessOwnerAccount(account);
+        repositoryAccount.populateAccountsRepo();
     }
     public void removeAccount(int id){
-        repository.removeASingleAccount(id);
-        repository.populateAccountsRepo();
+        repositoryAccount.removeASingleAccount(id);
+        repositoryAccount.populateAccountsRepo();
     }
     public void setThresholds(float CO2,float humidity,float temp){
-        repository.setThresholds(CO2, humidity, temp);
-        repository.populateSaunasRepo();
+        repositoryAccount.setThresholds(CO2, humidity, temp);
+        repositorySauna.populateSaunasRepo();
     }
 }

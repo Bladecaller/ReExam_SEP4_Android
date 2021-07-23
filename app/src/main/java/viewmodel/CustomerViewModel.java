@@ -7,31 +7,32 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import model.room.entity.Account.Account;
 import model.room.entity.Account.Reservation;
-import model.room.entity.Account.RightsEnum;
 import model.room.entity.Sauna.Sauna;
-import model.room.repositories.MyRepository;
+import model.room.repositories.ReservationRepository;
+import model.room.repositories.SaunaRepository;
 
 public class CustomerViewModel extends AndroidViewModel {
-    public MyRepository repository;
+    private SaunaRepository repositorySauna;
+    private ReservationRepository repositoryReservation;
 
     public CustomerViewModel (Application application) {
         super(application);
-        repository = new MyRepository(application);
+        repositorySauna = new SaunaRepository(application);
+        repositoryReservation = new ReservationRepository(application);
     }
 
     public LiveData<List<Sauna>> getAllSaunas() {
-        repository.populateSaunasRepo();
-        return repository.getAllSaunas();
+        repositorySauna.populateSaunasRepo();
+        return repositorySauna.getAllSaunas();
     }
     public void book(Reservation reservation){
-        repository.createReservation(reservation);
-        repository.populateReservationRepo();
+        repositoryReservation.createReservation(reservation);
+        repositoryReservation.populateReservationRepo();
     }
     public LiveData<List<Reservation>> getPersonalReservations(){
-        repository.populateReservationRepo();
-        return repository.getPersonalReservations();
+        repositoryReservation.populateReservationRepo();
+        return repositoryReservation.getPersonalReservations();
     }
 
 }

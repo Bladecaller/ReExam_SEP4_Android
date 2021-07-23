@@ -6,14 +6,15 @@ import androidx.lifecycle.AndroidViewModel;
 
 import model.room.entity.Account.RightsEnum;
 import model.room.entity.Account.RightsEnumConverter;
+import model.room.repositories.LoginRepository;
 import model.room.repositories.MyRepository;
 
 public class LoginViewModel extends AndroidViewModel {
-    public MyRepository repository;
+        private LoginRepository repository;
 
     public LoginViewModel (Application application) {
         super(application);
-        repository = new MyRepository(application);
+        repository = LoginRepository.getLoginRepositoryInstance();
     }
 
     public void login(String username, String password){ repository.login(username,password);}
