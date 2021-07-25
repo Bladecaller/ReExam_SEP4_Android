@@ -11,7 +11,7 @@ import model.room.entity.Sauna.Sauna;
 public class Customer extends Account {
     private int roomNumber;
 
-    public Customer(@NonNull int userID, String username, String password, int rights, String establishmentName, int roomNumber) {
+    public Customer(@NonNull int userID, String username, String password, RightsEnum rights, String establishmentName, int roomNumber) {
         super(userID, username, password, rights, establishmentName);
         this.roomNumber = roomNumber;
     }

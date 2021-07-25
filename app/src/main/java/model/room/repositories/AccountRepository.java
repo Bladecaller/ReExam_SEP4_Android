@@ -54,7 +54,7 @@ public class AccountRepository {
     }
 
     public void addACustomerAccount(Customer account){
-        Call call = retrofit.api.createNewCustomerAccount(account.getUsername(),account.getPassword(), account.getRights(), account.getRoomNumber());
+        Call call = retrofit.api.createNewCustomerAccount(account.getUsername(),account.getPassword(), RightsEnumConverter.fromRightsEnumToInt(account.getRights()), account.getRoomNumber());
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
@@ -69,7 +69,7 @@ public class AccountRepository {
     }
 
     public void addAEmployeeAccount(Employee account){
-        Call call = retrofit.api.createNewAccount(account.getUsername(),account.getPassword(), account.getRights());
+        Call call = retrofit.api.createNewAccount(account.getUsername(),account.getPassword(), RightsEnumConverter.fromRightsEnumToInt(account.getRights()));
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
@@ -84,7 +84,7 @@ public class AccountRepository {
     }
 
     public void addABusinessOwnerAccount(BusinessOwner account){
-        Call call = retrofit.api.createNewAccount(account.getUsername(),account.getPassword(), account.getRights());
+        Call call = retrofit.api.createNewAccount(account.getUsername(),account.getPassword(), RightsEnumConverter.fromRightsEnumToInt(account.getRights()));
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
@@ -147,7 +147,18 @@ public class AccountRepository {
 
     public void accountInsert(Account account) {
         MyRoomDatabase.databaseWriteExecutor.execute(() -> {
-            accountsDao.insert(account);
+            if(account instanceof Customer){
+                accountsDao.insertCustomer((Customer)account);
+            }
+
+            if(account instanceof Employee){
+                accountsDao.insertEmployee((Employee) account);
+            }
+
+            if(account instanceof BusinessOwner){
+                accountsDao.insertBusinessOwner((BusinessOwner) account);
+            }
+
         });
     }
 
@@ -168,5 +179,20 @@ public class AccountRepository {
     public LiveData<List<BusinessOwner>> getBusinessOwners(){
         return accountsDao.getAllBusinessOwners();
     }
-    public LiveData<List<Account>> getAllAccounts(){ return accountsDao.getAllAccounts(); }
+    public LiveData<List<Account>> getAllAccounts(){
+        LiveData<List<Account>> temp = null;
+        for (Customer cust : accountsDao.getAllCustomers().getValue()){
+            temp.getValue().add(cust);
+        }
+        for (Employee cust : accountsDao.getAllEmployees().getValue()){
+            temp.getValue().add(cust);
+        }
+        for (BusinessOwner cust : accountsDao.getAllBusinessOwners().getValue()){
+            temp.getValue().add(cust);
+        }
+        return temp;
+    }
+    public Customer getCustomerTEST(){
+        return accountsDao.getCustomerTest();
+    }
 }

@@ -12,10 +12,10 @@ public abstract class Account {
     private String username;
     private String password;
 
-    private int rights;
+    private RightsEnum rights;
     private String establishmentName;
 
-    public Account(@NonNull int userID, String username, String password,int rights, String establishmentName){
+    public Account(@NonNull int userID, String username, String password,RightsEnum rights, String establishmentName){
         this.userID = userID;
         this.username = username;
         this.password = password;
@@ -47,7 +47,7 @@ public abstract class Account {
         this.password = password;
     }
 
-    public void setRights(int rights) {
+    public void setRights(RightsEnum rights) {
         this.rights = rights;
     }
 
@@ -59,7 +59,7 @@ public abstract class Account {
         this.establishmentName = establishmentName;
     }
 
-    public int getRights() {
+    public RightsEnum getRights() {
         return rights;
     }
 }

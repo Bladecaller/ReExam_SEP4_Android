@@ -7,12 +7,10 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-import model.room.entity.Account.Account;
 import model.room.entity.Account.Customer;
 import model.room.entity.Account.Reservation;
 import model.room.entity.Sauna.Sauna;
 import model.room.repositories.AccountRepository;
-import model.room.repositories.MyRepository;
 import model.room.repositories.ReservationRepository;
 import model.room.repositories.SaunaRepository;
 

@@ -19,7 +19,7 @@ import model.room.repositories.AccountRepository;
 import model.room.repositories.SaunaRepository;
 
 public class BusinessOwnerViewModel extends AndroidViewModel {
-    private AccountRepository repositoryAccount;
+    public AccountRepository repositoryAccount;
     private SaunaRepository repositorySauna;
 
     public BusinessOwnerViewModel(@NonNull @NotNull Application application) {
@@ -52,5 +52,9 @@ public class BusinessOwnerViewModel extends AndroidViewModel {
     public void setThresholds(float CO2,float humidity,float temp){
         repositoryAccount.setThresholds(CO2, humidity, temp);
         repositorySauna.populateSaunasRepo();
+    }
+
+    public Customer getCustomerTest(){
+        return repositoryAccount.getCustomerTEST();
     }
 }

@@ -15,14 +15,20 @@ import model.room.entity.Account.Employee;
 import model.room.entity.Account.RightsEnum;
 @Dao
 public interface AccountsDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertCustomer(Customer account);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertEmployee(Employee account);
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insert(Account account);
+    void insertBusinessOwner(BusinessOwner account);
 
     @Query("DELETE FROM Account")
     void deleteAll();
 
-    @Query("SELECT * FROM Account")
-    LiveData<List<Account>> getAllAccounts();
+    //@Query("SELECT * FROM Account")
+    //LiveData<List<Account>> getAllAccounts();
 
     @Query("SELECT * FROM Customer ")
     LiveData<List<Customer>> getAllCustomers();
@@ -32,4 +38,7 @@ public interface AccountsDao {
 
     @Query("SELECT * FROM BusinessOwner ")
     LiveData<List<BusinessOwner>> getAllBusinessOwners();
+
+    @Query("SELECT * FROM Customer LIMIT 1")
+    Customer getCustomerTest();
 }
