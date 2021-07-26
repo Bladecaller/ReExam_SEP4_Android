@@ -16,8 +16,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import API.InterfaceAPI;
-import API.MyRetrofit;
+import api.InterfaceAPI;
+import api.MyRetrofit;
 
 import com.example.sep4_android.R;
 
