@@ -1,7 +1,4 @@
-package view.activity;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
+package view.activity.employee;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -12,9 +9,14 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageButton;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.example.sep4_android.R;
 
-public class SettingsView extends AppCompatActivity {
+import view.activity.employee.HomeViewEm;
+
+public class SettingsViewEm extends AppCompatActivity {
 
     private ImageButton backBtn;
 
@@ -25,7 +27,7 @@ public class SettingsView extends AppCompatActivity {
             getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
             getWindow().setExitTransition(new Explode());
         }
-        setContentView(R.layout.activity_settings_view);
+        setContentView(R.layout.activity_settings_view_em);
         backBtn = findViewById(R.id.backBtnSettings);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -41,7 +43,7 @@ public class SettingsView extends AppCompatActivity {
     }
 
     public void GoBack(){
-        Intent intent = new Intent(this,HomeView.class);
+        Intent intent = new Intent(this, HomeViewEm.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         }
