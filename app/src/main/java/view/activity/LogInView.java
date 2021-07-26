@@ -62,38 +62,38 @@ public class LogInView extends AppCompatActivity {
         logInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               new CountDownTimer(2000,2000){
+                new CountDownTimer(2000,2000){
 
-                   @Override
-                   public void onTick(long millisUntilFinished) {
-                       pbar.setVisibility(View.VISIBLE);
-                   }
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        pbar.setVisibility(View.VISIBLE);
+                    }
 
-                   @Override
-                   public void onFinish() {
-                       username = usernameField.getText().toString();
-                       postCall(username);
-                      switch (username){
+                    @Override
+                    public void onFinish() {
+                        username = usernameField.getText().toString();
+                        postCall(username);
+                        switch (username){
 
-                          case "":
-                              Toast.makeText(v.getContext(),"Fill In All The Fields",Toast.LENGTH_SHORT).show();
-                              break;
+                            case "":
+                                Toast.makeText(v.getContext(),"Fill In All The Fields",Toast.LENGTH_SHORT).show();
+                                break;
 
-                          case "Owner":
-                              openHomePageBo();
-                              break;
+                            case "Owner":
+                                openHomePageBo();
+                                break;
 
-                          case "Employee":
-                              openHomePageEm();
-                              break;
+                            case "Employee":
+                                openHomePageEm();
+                                break;
 
-                          case "Customer":
-                              openHomePageCu();
-                              break;
-                      }
-                       pbar.setVisibility(View.INVISIBLE);
-                   }
-               }.start();
+                            case "Customer":
+                                openHomePageCu();
+                                break;
+                        }
+                        pbar.setVisibility(View.INVISIBLE);
+                    }
+                }.start();
             }
 
         });
