@@ -17,27 +17,30 @@ import java.util.List;
 import model.room.entity.Account.BusinessOwner;
 import model.room.entity.Account.Customer;
 import model.room.entity.Account.RightsEnum;
+import model.room.entity.Sauna.DataPoint;
+import model.room.entity.Sauna.Sauna;
 import model.room.repositories.AccountRepository;
 import viewmodel.BusinessOwnerViewModel;
+import viewmodel.SaunaViewModel;
 
 import static org.junit.Assert.*;
 
-public class BusinessOwnerViewModelTest {
+public class SaunaViewModelTest {
     @Rule
     public TestRule rule = new InstantTaskExecutorRule();
 
     //@Mock
-    BusinessOwnerViewModel vm;
-    Observer<List<Customer>> observer;
-    List<Customer> list;
+    SaunaViewModel vm;
+    Observer<List<DataPoint>> observer;
+    List<DataPoint> list;
 
     @Before
     public void setUp() throws Exception {
-        vm = new BusinessOwnerViewModel(ApplicationProvider.getApplicationContext());
-        observer = new Observer<List<Customer>>() {
+        vm = new SaunaViewModel(ApplicationProvider.getApplicationContext());
+        observer = new Observer<List<DataPoint>>() {
             @Override
-            public void onChanged(List<Customer> customers) {
-                list = customers;
+            public void onChanged(List<DataPoint> dataPoints) {
+                list = dataPoints;
             }
         };
     }
@@ -48,17 +51,14 @@ public class BusinessOwnerViewModelTest {
 
     @Test
     public void addCustomerAccount() {
-        Customer cust = new Customer(2,"lily", "lilipass", RightsEnum.Customer, "coldTub", 15);
-        Customer cust2 = new Customer(3,"lily", "lilipass", RightsEnum.Customer, "coldTub", 15);
+        DataPoint dp = new DataPoint(1,2,3,4,5);
+        Sauna sauna = new Sauna(2,2,"1","2",true,1,1,1,1);
+        vm.getAllDatapointsForASauna(sauna).observeForever(observer);
 
-        vm.getCustomerAccounts().observeForever(observer);
+        vm.repositoryData.datapointInsert(dp);
+        System.out.println(list.get(0).getCO2());
 
-        vm.repositoryAccount.accountInsert(cust);
-        vm.repositoryAccount.accountInsert(cust2);
-        System.out.println(list.size());
-
-        vm.repositoryAccount.emptyAccountRepo();
-        System.out.println(list.size());
-
+        vm.repositoryData.emptyDataRepo();
+        System.out.println(list.isEmpty());
     }
 }

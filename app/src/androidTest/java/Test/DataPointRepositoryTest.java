@@ -19,42 +19,46 @@ import java.util.List;
 
 import model.room.entity.Account.Customer;
 import model.room.entity.Account.RightsEnum;
+import model.room.entity.Sauna.DataPoint;
 import model.room.repositories.AccountRepository;
+import model.room.repositories.DataPointRepository;
 import model.room.roomdatabase.MyRoomDatabase;
 
 import static org.junit.Assert.*;
 
-public class AccountRepositoryTest {
+public class DataPointRepositoryTest {
     @Rule
     public TestRule rule = new InstantTaskExecutorRule();
 
-    //@Mock
-    AccountRepository accountRepository;
-    Observer<List<Customer>> observer;
-    List<Customer> list;
+
+    DataPointRepository repository;
+    Observer<List<DataPoint>> observer;
+    List<DataPoint> list;
+
 
     @Before
     public void setUp() throws Exception {
         //MockitoAnnotations.initMocks(this);
-        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext();
-        accountRepository = new AccountRepository(ApplicationProvider.getApplicationContext());
-        observer = new Observer<List<Customer>>() {
+        observer = new Observer<List<DataPoint>>() {
             @Override
-            public void onChanged(List<Customer> customers) {
-                list = customers;
+            public void onChanged(List<DataPoint> dataPoints) {
+                list = dataPoints;
             }
         };
+        Context context = InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext();
+        repository = new DataPointRepository(ApplicationProvider.getApplicationContext());
+
     }
     @Test
     public void addAndRemoveCustomerAccount() {
-        Customer cust = new Customer(3,"lilian", "lilipass", RightsEnum.Customer, "coldTub", 15);
+        DataPoint dp = new DataPoint(1,2,3,4,5);
 
-        accountRepository.getCustomers().observeForever(observer);
+        repository.getAllDataPoints().observeForever(observer);
 
-        accountRepository.accountInsert(cust);
-        System.out.println(list.get(0).getUsername());
-        
-        accountRepository.emptyAccountRepo();
+        repository.datapointInsert(dp);
+        System.out.println(list.get(0).getCO2());
+
+        repository.emptyDataRepo();
         System.out.println(list.isEmpty());
 
     }

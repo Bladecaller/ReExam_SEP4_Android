@@ -10,6 +10,7 @@ import java.util.List;
 import api.MyRetrofit;
 import model.room.dao.AccountsDao;
 import model.room.dao.DataPointDao;
+import model.room.entity.Account.Customer;
 import model.room.entity.Sauna.DataPoint;
 import model.room.entity.Sauna.Sauna;
 import model.room.roomdatabase.MyRoomDatabase;
@@ -19,7 +20,7 @@ import retrofit2.Response;
 
 public class DataPointRepository {
     private MyRetrofit retrofit;
-    private DataPointDao dataPointDao;
+    public DataPointDao dataPointDao;
 
     public DataPointRepository(Application application) {
         retrofit = new MyRetrofit();
@@ -27,8 +28,8 @@ public class DataPointRepository {
         dataPointDao = db.dataPointDao();
     }
 
-    public void populateDatapointRepo(Sauna sauna){
-        Call<List<DataPoint>> call = retrofit.api.getAllDataPoints(sauna.getId());
+    public void emptyAndPpopulateDatapointRepoAPI(int saunaId){
+        Call<List<DataPoint>> call = retrofit.api.getAllDataPoints(saunaId);
         call.enqueue(new Callback<List<DataPoint>>(){
             @Override
             public void onResponse (Call <List<DataPoint>> call, Response<List<DataPoint>> response){
@@ -54,16 +55,16 @@ public class DataPointRepository {
 
     //store a single datapoint
     public void datapointInsert(DataPoint dataPoint){
-        MyRoomDatabase.databaseWriteExecutor.execute(() -> {
+        //MyRoomDatabase.databaseWriteExecutor.execute(() -> {
             dataPointDao.insert(dataPoint);
-        });
+        //});
     }
 
     //delete all datapoints
     public void emptyDataRepo(){
-        MyRoomDatabase.databaseWriteExecutor.execute(() -> {
+        //MyRoomDatabase.databaseWriteExecutor.execute(() -> {
             dataPointDao.deleteAll();
-        });
+        //});
     }
 
     // return all datapoints for a specific sauna

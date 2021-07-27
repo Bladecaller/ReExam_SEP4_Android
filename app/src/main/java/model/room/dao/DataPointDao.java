@@ -9,6 +9,7 @@ import androidx.room.Query;
 import java.util.List;
 
 import model.room.entity.Account.Account;
+import model.room.entity.Account.Customer;
 import model.room.entity.Sauna.DataPoint;
 @Dao
 public interface DataPointDao {

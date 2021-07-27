@@ -33,7 +33,7 @@ android {
 }
 
 dependencies {
-
+    testImplementation 'com.jraska.livedata:testing:1.2.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     testImplementation 'androidx.arch.core:core-testing:2.0.1'
     androidTestImplementation "org.mockito:mockito-android:2.24.5"

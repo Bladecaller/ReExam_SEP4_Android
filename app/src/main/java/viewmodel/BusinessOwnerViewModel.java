@@ -10,7 +10,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import model.room.entity.Account.Account;
 import model.room.entity.Account.BusinessOwner;
 import model.room.entity.Account.Customer;
 import model.room.entity.Account.Employee;
@@ -29,32 +28,30 @@ public class BusinessOwnerViewModel extends AndroidViewModel {
     }
 
     public void setRights(RightsEnum rights, int accountID){
-        repositoryAccount.setRights(accountID, rights);
-        repositoryAccount.populateAccountsRepo();
+        repositoryAccount.setRightsAPI(accountID, rights);
+        repositoryAccount.emptyAndPopulateAccountsRepoAPI();
     }
-    public LiveData<List<Account>> getAccounts(){return repositoryAccount.getAllAccounts();}
+    public LiveData<List<Customer>> getCustomerAccounts(){return repositoryAccount.getCustomers();}
+    public LiveData<List<Employee>> getEmployeeAccounts(){return repositoryAccount.getEmployees();}
+    public LiveData<List<BusinessOwner>> getBusinessOwnerAccounts(){return repositoryAccount.getBusinessOwners();}
     public void addCustomerAccount(Customer account){
-        repositoryAccount.addACustomerAccount(account);
-        repositoryAccount.populateAccountsRepo();
+        repositoryAccount.addACustomerAccountAPI(account);
+        repositoryAccount.emptyAndPopulateAccountsRepoAPI();
     }
     public void addEmployeeAccount(Employee account){
-        repositoryAccount.addAEmployeeAccount(account);
-        repositoryAccount.populateAccountsRepo();
+        repositoryAccount.addAEmployeeAccountAPI(account);
+        repositoryAccount.emptyAndPopulateAccountsRepoAPI();
     }
     public void addBusinessOwnerAccount(BusinessOwner account){
-        repositoryAccount.addABusinessOwnerAccount(account);
-        repositoryAccount.populateAccountsRepo();
+        repositoryAccount.addABusinessOwnerAccountAPI(account);
+        repositoryAccount.emptyAndPopulateAccountsRepoAPI();
     }
     public void removeAccount(int id){
-        repositoryAccount.removeASingleAccount(id);
-        repositoryAccount.populateAccountsRepo();
+        repositoryAccount.removeASingleAccountAPI(id);
+        repositoryAccount.emptyAndPopulateAccountsRepoAPI();
     }
     public void setThresholds(float CO2,float humidity,float temp){
-        repositoryAccount.setThresholds(CO2, humidity, temp);
-        repositorySauna.populateSaunasRepo();
-    }
-
-    public Customer getCustomerTest(){
-        return repositoryAccount.getCustomerTEST();
+        repositoryAccount.setThresholdsAPI(CO2, humidity, temp);
+        repositorySauna.emptyAndPopulateSaunasRepoAPI();
     }
 }

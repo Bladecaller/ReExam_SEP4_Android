@@ -12,16 +12,16 @@ public class DataPoint {
     private int id;
     private int saunaId;
     private String time;
-    private int CO2iD;
-    private int humidityiD;
-    private int temperatureiD;
+    private int CO2;
+    private int humidity;
+    private int temperature;
 
-    public DataPoint(@NonNull int id,int saunaId, int CO2iD, int humidityiD, int temperatureiD){
+    public DataPoint(@NonNull int id,int saunaId, int CO2, int humidity, int temperature){
         this.id = id;
         this.saunaId = saunaId;
-        this.CO2iD = CO2iD;
-        this.humidityiD = humidityiD;
-        this.temperatureiD = temperatureiD;
+        this.CO2 = CO2;
+        this.humidity = humidity;
+        this.temperature = temperature;
     }
 
     public int getId() {
@@ -40,28 +40,28 @@ public class DataPoint {
         this.time = time;
     }
 
-    public int getCO2iD() {
-        return CO2iD;
+    public int getCO2() {
+        return CO2;
     }
 
-    public void setCO2iD(int CO2iD) {
-        this.CO2iD = CO2iD;
+    public void setCO2(int CO2) {
+        this.CO2 = CO2;
     }
 
-    public int getHumidityiD() {
-        return humidityiD;
+    public int getHumidity() {
+        return humidity;
     }
 
-    public void setHumidityiD(int humidityiD) {
-        this.humidityiD = humidityiD;
+    public void setHumidityiD(int humidity) {
+        this.humidity = humidity;
     }
 
-    public int getTemperatureiD() {
-        return temperatureiD;
+    public int getTemperature() {
+        return temperature;
     }
 
-    public void setTemperatureiD(int temperatureiD) {
-        this.temperatureiD = temperatureiD;
+    public void setTemperature(int temperatureiD) {
+        this.temperature = temperature;
     }
 
     public int getSaunaId() {

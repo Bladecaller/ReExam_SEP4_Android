@@ -24,8 +24,15 @@ public interface AccountsDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertBusinessOwner(BusinessOwner account);
 
-    @Query("DELETE FROM Account")
-    void deleteAll();
+    @Query("DELETE FROM Customer")
+    void deleteAllCustomers();
+
+    @Query("DELETE FROM Employee")
+    void deleteAllEmployees();
+
+    @Query("DELETE FROM BusinessOwner")
+    void deleteAllBusinessOwners();
+
 
     //@Query("SELECT * FROM Account")
     //LiveData<List<Account>> getAllAccounts();
@@ -39,6 +46,4 @@ public interface AccountsDao {
     @Query("SELECT * FROM BusinessOwner ")
     LiveData<List<BusinessOwner>> getAllBusinessOwners();
 
-    @Query("SELECT * FROM Customer LIMIT 1")
-    Customer getCustomerTest();
 }

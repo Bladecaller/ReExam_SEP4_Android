@@ -8,12 +8,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import api.MyRetrofit;
-import model.room.dao.ReservationDao;
 import model.room.dao.SaunasDao;
 import model.room.entity.Account.Account;
-import model.room.entity.Account.Customer;
 import model.room.entity.Account.Employee;
-import model.room.entity.Account.Reservation;
 import model.room.entity.Sauna.Sauna;
 import model.room.roomdatabase.MyRoomDatabase;
 import retrofit2.Call;
@@ -35,7 +32,7 @@ public class SaunaRepository {
         currentAccount = lg.currentAccount;
     }
 
-    public void populateSaunasRepo(){
+    public void emptyAndPopulateSaunasRepoAPI(){
         Call<List<Sauna>> call = retrofit.api.getAllSaunas();
         call.enqueue(new Callback<List<Sauna>>(){
             @Override
@@ -58,12 +55,12 @@ public class SaunaRepository {
         });
     }
 
-    public void openDoor(Sauna sauna){
+    public void openDoorAPI(Sauna sauna){
         Call call = retrofit.api.openTheDoor(sauna.getId());
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
-                populateSaunasRepo();
+                emptyAndPopulateSaunasRepoAPI();
             }
 
             @Override
@@ -73,14 +70,14 @@ public class SaunaRepository {
         });
     }
 
-    public List<Sauna> checkNotifications(){
+    public List<Sauna> checkNotificationsAPI(){
         final Integer[] temp = {null};
         List<Sauna> notifiedSaunas = null;
         Call<List<Integer>> call = retrofit.api.checkNotification();
         call.enqueue(new Callback<List<Integer>>() {
             @Override
             public void onResponse(Call<List<Integer>> call, Response<List<Integer>> response) {
-                populateSaunasRepo();
+                emptyAndPopulateSaunasRepoAPI();
                 List<Integer> temp;
                 Integer[] array = retrofit.gson.fromJson(response.body().toString(), Integer[].class);
                 temp = Arrays.asList(array);
@@ -103,22 +100,23 @@ public class SaunaRepository {
     //-------------Sauna-------------------------------------------------------------------------------------
 
     public void saunaInsert(Sauna sauna){
-        MyRoomDatabase.databaseWriteExecutor.execute(() -> {
+       // MyRoomDatabase.databaseWriteExecutor.execute(() -> {
             saunasDao.insert(sauna);
-        });
+        //});
     }
 
     //delete all saunas
     public void emptySaunaRepo(){
-        MyRoomDatabase.databaseWriteExecutor.execute(() -> {
+        //MyRoomDatabase.databaseWriteExecutor.execute(() -> {
             saunasDao.deleteAll();
-        });
+        //});
     }
 
     //return all saunas
     public LiveData<List<Sauna>> getAllSaunas(){
         return saunasDao.getAllSaunas();
     }
+
     //--------Notifications-------------------------------------------------------------------------------------
     public void changeNotifications(){
         if(currentAccount instanceof Employee){

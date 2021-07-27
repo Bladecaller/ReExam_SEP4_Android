@@ -22,7 +22,7 @@ import retrofit2.Response;
 
 public class AccountRepository {
     private MyRetrofit retrofit;
-    private AccountsDao accountsDao;
+    public AccountsDao accountsDao;
 
     public AccountRepository(Application application) {
         retrofit = new MyRetrofit();
@@ -30,7 +30,7 @@ public class AccountRepository {
         accountsDao = db.accountsDao();
     }
 
-    public void populateAccountsRepo(){
+    public void emptyAndPopulateAccountsRepoAPI(){
         Call<List<Account>> call = retrofit.api.getAllAccounts();
         call.enqueue(new Callback<List<Account>>(){
             @Override
@@ -53,12 +53,12 @@ public class AccountRepository {
         });
     }
 
-    public void addACustomerAccount(Customer account){
+    public void addACustomerAccountAPI(Customer account){
         Call call = retrofit.api.createNewCustomerAccount(account.getUsername(),account.getPassword(), RightsEnumConverter.fromRightsEnumToInt(account.getRights()), account.getRoomNumber());
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
-                populateAccountsRepo();
+                emptyAndPopulateAccountsRepoAPI();
             }
 
             @Override
@@ -68,12 +68,12 @@ public class AccountRepository {
         });
     }
 
-    public void addAEmployeeAccount(Employee account){
+    public void addAEmployeeAccountAPI(Employee account){
         Call call = retrofit.api.createNewAccount(account.getUsername(),account.getPassword(), RightsEnumConverter.fromRightsEnumToInt(account.getRights()));
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
-                populateAccountsRepo();
+                emptyAndPopulateAccountsRepoAPI();
             }
 
             @Override
@@ -83,12 +83,12 @@ public class AccountRepository {
         });
     }
 
-    public void addABusinessOwnerAccount(BusinessOwner account){
+    public void addABusinessOwnerAccountAPI(BusinessOwner account){
         Call call = retrofit.api.createNewAccount(account.getUsername(),account.getPassword(), RightsEnumConverter.fromRightsEnumToInt(account.getRights()));
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
-                populateAccountsRepo();
+                emptyAndPopulateAccountsRepoAPI();
             }
 
             @Override
@@ -98,12 +98,12 @@ public class AccountRepository {
         });
     }
 
-    public void removeASingleAccount(int accountID){
+    public void removeASingleAccountAPI(int accountID){
         Call call = retrofit.api.removeUser(accountID);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
-                populateAccountsRepo();
+                emptyAndPopulateAccountsRepoAPI();
             }
 
             @Override
@@ -113,12 +113,12 @@ public class AccountRepository {
         });
     }
 
-    public void setRights(int accountID, RightsEnum rightsEnum){
+    public void setRightsAPI(int accountID, RightsEnum rightsEnum){
         Call call = retrofit.api.setRights(RightsEnumConverter.fromRightsEnumToInt(rightsEnum), accountID);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
-                populateAccountsRepo();
+                emptyAndPopulateAccountsRepoAPI();
             }
 
             @Override
@@ -129,12 +129,12 @@ public class AccountRepository {
 
     }
 
-    public void setThresholds(float CO2, float humidity, float temperature){
+    public void setThresholdsAPI(float CO2, float humidity, float temperature){
         Call call = retrofit.api.setThresholds(temperature,humidity,CO2);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
-                populateAccountsRepo();
+                emptyAndPopulateAccountsRepoAPI();
             }
 
             @Override
@@ -146,7 +146,7 @@ public class AccountRepository {
     //-----------------------------------------------------------------------------------------------
 
     public void accountInsert(Account account) {
-        MyRoomDatabase.databaseWriteExecutor.execute(() -> {
+        //MyRoomDatabase.databaseWriteExecutor.execute(() -> {
             if(account instanceof Customer){
                 accountsDao.insertCustomer((Customer)account);
             }
@@ -159,14 +159,14 @@ public class AccountRepository {
                 accountsDao.insertBusinessOwner((BusinessOwner) account);
             }
 
-        });
+       // });
     }
 
     //delete all accounts
     public void emptyAccountRepo(){
-        MyRoomDatabase.databaseWriteExecutor.execute(() -> {
-            accountsDao.deleteAll();
-        });
+        //MyRoomDatabase.databaseWriteExecutor.execute(() -> {
+            accountsDao.deleteAllCustomers();
+        //});
     }
 
     // return a list of all accounts to the viewmodel
@@ -178,21 +178,5 @@ public class AccountRepository {
     }
     public LiveData<List<BusinessOwner>> getBusinessOwners(){
         return accountsDao.getAllBusinessOwners();
-    }
-    public LiveData<List<Account>> getAllAccounts(){
-        LiveData<List<Account>> temp = null;
-        for (Customer cust : accountsDao.getAllCustomers().getValue()){
-            temp.getValue().add(cust);
-        }
-        for (Employee cust : accountsDao.getAllEmployees().getValue()){
-            temp.getValue().add(cust);
-        }
-        for (BusinessOwner cust : accountsDao.getAllBusinessOwners().getValue()){
-            temp.getValue().add(cust);
-        }
-        return temp;
-    }
-    public Customer getCustomerTEST(){
-        return accountsDao.getCustomerTest();
     }
 }

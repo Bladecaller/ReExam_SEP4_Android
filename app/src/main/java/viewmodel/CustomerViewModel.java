@@ -23,16 +23,16 @@ public class CustomerViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Sauna>> getAllSaunas() {
-        repositorySauna.populateSaunasRepo();
+        repositorySauna.emptyAndPopulateSaunasRepoAPI();
         return repositorySauna.getAllSaunas();
     }
     public void book(Reservation reservation){
-        repositoryReservation.createReservation(reservation);
-        repositoryReservation.populateReservationRepo();
+        repositoryReservation.createReservationAPI(reservation);
+        repositoryReservation.emptyAndPopulateReservationRepoAPI();
     }
     public LiveData<List<Reservation>> getPersonalReservations(){
-        repositoryReservation.populateReservationRepo();
-        return repositoryReservation.getPersonalReservations();
+        repositoryReservation.emptyAndPopulateReservationRepoAPI();
+        return repositoryReservation.getReservationsForCustomer();
     }
 
 }

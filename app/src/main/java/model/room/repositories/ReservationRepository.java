@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import api.MyRetrofit;
-import model.room.dao.DataPointDao;
 import model.room.dao.ReservationDao;
 import model.room.entity.Account.Account;
 import model.room.entity.Account.Customer;
@@ -27,11 +26,10 @@ public class ReservationRepository {
         retrofit = new MyRetrofit();
         MyRoomDatabase db = MyRoomDatabase.getDatabase(application);
         reservationDao = db.reservationDao();
-        LoginRepository lg = LoginRepository.getLoginRepositoryInstance();
-        currentAccount = lg.currentAccount;
+        currentAccount = LoginRepository.getLoginRepositoryInstance().currentAccount;
     }
 
-    public void populateReservationRepo(){
+    public void emptyAndPopulateReservationRepoAPI(){
         Call<List<Reservation>> call = retrofit.api.getAllReservations();
         call.enqueue(new Callback<List<Reservation>>(){
             @Override
@@ -54,14 +52,14 @@ public class ReservationRepository {
         });
     }
 
-    public void createReservation(Reservation reservation){
+    public void createReservationAPI(Reservation reservation){
         Call call = retrofit.api.createReservation(reservation.getCustomerId(),
                 reservation.getSaunaId(),reservation.getRoomNumber(),
                 reservation.getBookTimeFrom(), reservation.getBookTimeTo());
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
-                populateReservationRepo();
+                emptyAndPopulateReservationRepoAPI();
             }
 
             @Override
@@ -70,24 +68,20 @@ public class ReservationRepository {
             }
         });
     }
-    public LiveData<List<Reservation>> getPersonalReservations(){
-        return getReservationsForCustomer((Customer)currentAccount);
-    }
-
     //--------Reservation--------------------------------------------------------------------------------------
 
     //store a single reservation
     public void reservationInsert(Reservation reservation){
-        MyRoomDatabase.databaseWriteExecutor.execute(() -> {
+        //MyRoomDatabase.databaseWriteExecutor.execute(() -> {
             reservationDao.insertReservation(reservation);
-        });
+        //});
     }
 
     //delete all reservations
     public void emptyReservationRepo(){
-        MyRoomDatabase.databaseWriteExecutor.execute(() -> {
+       // MyRoomDatabase.databaseWriteExecutor.execute(() -> {
             reservationDao.deleteAll();
-        });
+        //});
     }
 
     //return all reservations
@@ -96,8 +90,8 @@ public class ReservationRepository {
     }
 
     // return all reservations for a specific customer
-    private LiveData<List<Reservation>> getReservationsForCustomer(Customer customer){
-        return reservationDao.getReservationsByCustomerId(customer.getUserID());
+    public LiveData<List<Reservation>> getReservationsForCustomer(){
+        return reservationDao.getReservationsByCustomerId(currentAccount.getUserID());
     }
 
 }
