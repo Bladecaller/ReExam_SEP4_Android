@@ -41,7 +41,7 @@ public class SaunaViewModelTest {
     }
 
     @Test
-    public void addCustomerAccount() {
+    public void addAndRemoveSauna() {
         DataPoint dp = new DataPoint(1,2,3,4,5);
         Sauna sauna = new Sauna(2,2,"1","2",true,1,1,1);
         vm.getAllDatapointsForASauna(sauna.getId()).observeForever(observer);

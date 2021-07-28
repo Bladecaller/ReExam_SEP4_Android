@@ -72,7 +72,6 @@ public class ReservationDaoTest {
 
     @Test
     public void insertGetALLRemoveGet(){
-        DataPoint dp = new DataPoint(1,2,3,4,5);
         Reservation book = new Reservation(1,11,12,4,"11:20","11:35");
         dao.getAllReservations().observeForever(observer);
         dao.insertReservation(book);

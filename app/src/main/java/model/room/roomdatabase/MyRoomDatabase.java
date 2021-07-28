@@ -21,9 +21,9 @@ import model.room.entity.Sauna.DataPoint;
 import model.room.entity.Sauna.Sauna;
 import model.room.entity.Sauna.UnitEnumConverter;
 
-@Database(entities = {Account.class, BusinessOwner.class, Customer.class, Employee.class,
-        Reservation.class, DataPoint.class,
-        Sauna.class, },
+@Database(entities = {Account.class, BusinessOwner.class, Customer.class,
+        Employee.class, Reservation.class, DataPoint.class, Sauna.class,
+},
         version = 1, exportSchema = false)
 @TypeConverters({RightsEnumConverter.class, UnitEnumConverter.class})
 public abstract class MyRoomDatabase extends RoomDatabase {

@@ -19,7 +19,7 @@ import retrofit2.Response;
 
 public class ReservationRepository {
     private MyRetrofit retrofit;
-    private Account currentAccount;
+    public Account currentAccount;
     private ReservationDao reservationDao;
 
     public ReservationRepository(Application application) {
@@ -90,7 +90,7 @@ public class ReservationRepository {
     }
 
     // return all reservations for a specific customer
-    public LiveData<List<Reservation>> getReservationsForCustomer(){
+    public LiveData<List<Reservation>> getReservationsForCurrentAccount(){
         return reservationDao.getReservationsByCustomerId(currentAccount.getUserID());
     }
 
