@@ -27,6 +27,7 @@ public class EmployeeViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Sauna>> getAllSaunas() {
+        repositorySauna.emptyAndPopulateSaunasRepoAPI();
         return repositorySauna.getAllSaunas(); }
 
     public LiveData<List<Customer>> getCustomers(){

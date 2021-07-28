@@ -7,6 +7,9 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import model.room.dao.AccountsDao;
 import model.room.dao.DataPointDao;
 import model.room.dao.ReservationDao;
@@ -33,9 +36,9 @@ public abstract class MyRoomDatabase extends RoomDatabase {
     public abstract ReservationDao reservationDao();
 
     private static volatile MyRoomDatabase INSTANCE;
-    //private static final int NUMBER_OF_THREADS = 4;
-    //public static final ExecutorService databaseWriteExecutor =
-            //Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    private static final int NUMBER_OF_THREADS = 4;
+    public static final ExecutorService databaseWriteExecutor =
+            Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
     public static MyRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {

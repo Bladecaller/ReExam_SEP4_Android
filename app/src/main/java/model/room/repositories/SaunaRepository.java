@@ -1,9 +1,14 @@
 package model.room.repositories;
 
 import android.app.Application;
+import android.os.PowerManager;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,17 +40,19 @@ public class SaunaRepository {
             public void onResponse (Call <List<Sauna>> call, Response<List<Sauna>> response){
                 System.out.println("SUCCESS " + response.body());
                 emptySaunaRepo();
-                List<Sauna> temp;
-                Sauna[] array = retrofit.gson.fromJson(response.body().toString(), Sauna[].class);
-                temp = Arrays.asList(array);
+                List<Sauna> temp = response.body();
                 for(Sauna obj : temp){
                     saunaInsert(obj);
+                    Log.d("RESPONSE API",obj.getReservedTimeTo());
                 }
+
+
             }
 
             @Override
             public void onFailure(Call<List<Sauna>> call, Throwable t) {
                 System.out.println("Failed at populateSaunasRepo");
+
             }
 
         });
@@ -99,16 +106,16 @@ public class SaunaRepository {
     //-------------Sauna-------------------------------------------------------------------------------------
 
     public void saunaInsert(Sauna sauna){
-       // MyRoomDatabase.databaseWriteExecutor.execute(() -> {
+       MyRoomDatabase.databaseWriteExecutor.execute(() -> {
             saunasDao.insert(sauna);
-        //});
+        });
     }
 
     //delete all saunas
     public void emptySaunaRepo(){
-        //MyRoomDatabase.databaseWriteExecutor.execute(() -> {
+        MyRoomDatabase.databaseWriteExecutor.execute(() -> {
             saunasDao.deleteAll();
-        //});
+        });
     }
 
     //return all saunas

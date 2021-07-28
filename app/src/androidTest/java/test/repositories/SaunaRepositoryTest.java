@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -55,6 +56,16 @@ public class SaunaRepositoryTest {
 
         repository.emptySaunaRepo();
         System.out.println(list.isEmpty());
+    }
+
+    @Test
+    public void populateAllSaunasAPI() throws InterruptedException {
+        repository.getAllSaunas().observeForever(observer);
+
+        repository.emptyAndPopulateSaunasRepoAPI();
+        Thread.sleep(10000);
+        System.out.println(list.get(2).getReservedTimeTo());
 
     }
+
 }

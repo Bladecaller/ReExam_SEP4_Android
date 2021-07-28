@@ -21,12 +21,16 @@ import api.MyRetrofit;
 
 import com.example.sep4_android.R;
 
+import java.util.List;
+
+import model.room.entity.Sauna.Sauna;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import view.activity.customer.HomeViewCu;
 import view.activity.employee.HomeViewEm;
 import view.activity.owner.HomeViewBo;
+import viewmodel.EmployeeViewModel;
 
 public class LogInView extends AppCompatActivity {
 
@@ -36,6 +40,7 @@ public class LogInView extends AppCompatActivity {
     private InterfaceAPI api;
     private EditText usernameField, pwField;
     private String username, pw;
+    private EmployeeViewModel employeeViewModel;
 
 
     @Override
@@ -45,6 +50,7 @@ public class LogInView extends AppCompatActivity {
             getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
             getWindow().setExitTransition(new Explode());
         }
+        employeeViewModel = new EmployeeViewModel(this.getApplication());
         setContentView(R.layout.activity_log_in_view);
         usernameField = findViewById(R.id.usernameText);
         //Log.d("EDIT TEXT ", username.toString());
@@ -72,7 +78,7 @@ public class LogInView extends AppCompatActivity {
                     @Override
                     public void onFinish() {
                         username = usernameField.getText().toString();
-                        postCall(username);
+                        employeeViewModel.getAllSaunas();
                         switch (username){
 
                             case "":
@@ -130,19 +136,5 @@ public class LogInView extends AppCompatActivity {
             startActivity(intent);
         }
 
-    }
-    public void postCall(String id){
-        Call<String> call = api.post(id);
-        call.enqueue(new Callback<String>(){
-            @Override
-            public void onResponse (Call <String> call, Response<String> response){
-                System.out.println("SUCCESS " + response.body());
-            }
-
-            @Override
-            public void onFailure (Call <String> call, Throwable t){
-                System.out.println("Failed controlled " + t);
-            }
-        });
     }
 }
