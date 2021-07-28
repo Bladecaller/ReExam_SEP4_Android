@@ -1,6 +1,5 @@
-package Test;
+package test.repositories;
 
-import android.app.Application;
 import android.content.Context;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
@@ -12,17 +11,12 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
 import model.room.entity.Account.Customer;
 import model.room.entity.Account.RightsEnum;
 import model.room.repositories.AccountRepository;
-import model.room.roomdatabase.MyRoomDatabase;
-
-import static org.junit.Assert.*;
 
 public class AccountRepositoryTest {
     @Rule

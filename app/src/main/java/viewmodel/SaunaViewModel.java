@@ -23,10 +23,9 @@ public class SaunaViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Sauna>> getAllSaunas() { return repositorySauna.getAllSaunas(); }
+
     public LiveData<List<DataPoint>> getAllDatapointsForASauna(int saunaID){
-        repositoryData.emptyAndPpopulateDatapointRepoAPI(saunaID);
+
+        repositoryData.emptyAndPopulateDatapointRepoAPI(saunaID);
         return repositoryData.getAllDataPoints();}
-    public void spinServo(Sauna sauna){
-        //unimplemented
-    }
 }

@@ -28,7 +28,7 @@ public class DataPointRepository {
         dataPointDao = db.dataPointDao();
     }
 
-    public void emptyAndPpopulateDatapointRepoAPI(int saunaId){
+    public void emptyAndPopulateDatapointRepoAPI(int saunaId){
         Call<List<DataPoint>> call = retrofit.api.getAllDataPoints(saunaId);
         call.enqueue(new Callback<List<DataPoint>>(){
             @Override

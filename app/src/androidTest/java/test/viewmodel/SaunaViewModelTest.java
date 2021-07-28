@@ -1,4 +1,4 @@
-package Test;
+package test.viewmodel;
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.Observer;
@@ -9,21 +9,12 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
-import model.room.entity.Account.BusinessOwner;
-import model.room.entity.Account.Customer;
-import model.room.entity.Account.RightsEnum;
 import model.room.entity.Sauna.DataPoint;
 import model.room.entity.Sauna.Sauna;
-import model.room.repositories.AccountRepository;
-import viewmodel.BusinessOwnerViewModel;
 import viewmodel.SaunaViewModel;
-
-import static org.junit.Assert.*;
 
 public class SaunaViewModelTest {
     @Rule
@@ -52,8 +43,8 @@ public class SaunaViewModelTest {
     @Test
     public void addCustomerAccount() {
         DataPoint dp = new DataPoint(1,2,3,4,5);
-        Sauna sauna = new Sauna(2,2,"1","2",true,1,1,1,1);
-        vm.getAllDatapointsForASauna(sauna).observeForever(observer);
+        Sauna sauna = new Sauna(2,2,"1","2",true,1,1,1);
+        vm.getAllDatapointsForASauna(sauna.getId()).observeForever(observer);
 
         vm.repositoryData.datapointInsert(dp);
         System.out.println(list.get(0).getCO2());

@@ -22,14 +22,10 @@ public class SaunaRepository {
 
     private SaunasDao saunasDao;
 
-    private Account currentAccount;
-
     public SaunaRepository(Application application) {
         retrofit = new MyRetrofit();
         MyRoomDatabase db = MyRoomDatabase.getDatabase(application);
         saunasDao = db.saunaDao();
-        LoginRepository lg = LoginRepository.getLoginRepositoryInstance();
-        currentAccount = lg.currentAccount;
     }
 
     public void emptyAndPopulateSaunasRepoAPI(){
@@ -55,19 +51,22 @@ public class SaunaRepository {
         });
     }
 
-    public void openDoorAPI(Sauna sauna){
-        Call call = retrofit.api.openTheDoor(sauna.getId());
-        call.enqueue(new Callback() {
+    public String openDoorAPI(Sauna sauna){
+        final String[] temp = {null};
+        Call <String> call = retrofit.api.openDoor(sauna.getId());
+        call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call call, Response response) {
-                emptyAndPopulateSaunasRepoAPI();
+            public void onResponse(Call<String> call, Response<String> response) {
+                temp[0] = response.body();
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
+                temp[0] = "Failed opening door";
                 System.out.println("Failed at OpenDoor");
             }
         });
+        return temp[0];
     }
 
     public List<Sauna> checkNotificationsAPI(){
@@ -116,17 +115,4 @@ public class SaunaRepository {
     public LiveData<List<Sauna>> getAllSaunas(){
         return saunasDao.getAllSaunas();
     }
-
-    //--------Notifications-------------------------------------------------------------------------------------
-    public void changeNotifications(){
-        if(currentAccount instanceof Employee){
-            if(((Employee) currentAccount).notifications==false){
-                ((Employee) currentAccount).notifications=true;
-            } else{
-                ((Employee) currentAccount).notifications=false;
-            }
-        }
-    }
-
-
 }

@@ -27,19 +27,20 @@ public class EmployeeViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Sauna>> getAllSaunas() {
-        repositorySauna.emptyAndPopulateSaunasRepoAPI();
         return repositorySauna.getAllSaunas(); }
+
     public LiveData<List<Customer>> getCustomers(){
-        repositoryAccount.emptyAndPopulateAccountsRepoAPI();
         return repositoryAccount.getCustomers(); }
+
     public void book(Reservation reservation){
         repositoryReservation.createReservationAPI(reservation);
-        repositoryReservation.emptyAndPopulateReservationRepoAPI();
     }
+
     public void openDoor(Sauna sauna){
         repositorySauna.openDoorAPI(sauna);
-        repositorySauna.emptyAndPopulateSaunasRepoAPI();
     }
-    public void changeNotificationsStatus(){repositorySauna.changeNotifications();};
+
+    public void changeNotificationsStatus(){repositoryAccount.changeNotifications();};
+
     public List<Sauna> notificationCheck(){ return repositorySauna.checkNotificationsAPI();}
 }

@@ -23,11 +23,14 @@ import retrofit2.Response;
 public class AccountRepository {
     private MyRetrofit retrofit;
     public AccountsDao accountsDao;
+    private Account currentAccount;
 
     public AccountRepository(Application application) {
         retrofit = new MyRetrofit();
         MyRoomDatabase db = MyRoomDatabase.getDatabase(application);
         accountsDao = db.accountsDao();
+        LoginRepository lg = LoginRepository.getLoginRepositoryInstance();
+        currentAccount = lg.currentAccount;
     }
 
     public void emptyAndPopulateAccountsRepoAPI(){
@@ -134,7 +137,6 @@ public class AccountRepository {
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
-                emptyAndPopulateAccountsRepoAPI();
             }
 
             @Override
@@ -178,5 +180,16 @@ public class AccountRepository {
     }
     public LiveData<List<BusinessOwner>> getBusinessOwners(){
         return accountsDao.getAllBusinessOwners();
+    }
+
+    //--------Notifications-------------------------------------------------------------------------------------
+    public void changeNotifications(){
+        if(currentAccount instanceof Employee){
+            if(((Employee) currentAccount).notifications==false){
+                ((Employee) currentAccount).notifications=true;
+            } else{
+                ((Employee) currentAccount).notifications=false;
+            }
+        }
     }
 }

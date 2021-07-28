@@ -33,7 +33,6 @@ public interface AccountsDao {
     @Query("DELETE FROM BusinessOwner")
     void deleteAllBusinessOwners();
 
-
     //@Query("SELECT * FROM Account")
     //LiveData<List<Account>> getAllAccounts();
 

@@ -7,9 +7,6 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import model.room.dao.AccountsDao;
 import model.room.dao.DataPointDao;
 import model.room.dao.ReservationDao;
@@ -22,12 +19,11 @@ import model.room.entity.Account.Reservation;
 import model.room.entity.Account.RightsEnumConverter;
 import model.room.entity.Sauna.DataPoint;
 import model.room.entity.Sauna.Sauna;
-import model.room.entity.Sauna.Servo;
 import model.room.entity.Sauna.UnitEnumConverter;
 
 @Database(entities = {Account.class, BusinessOwner.class, Customer.class, Employee.class,
         Reservation.class, DataPoint.class,
-        Sauna.class, Servo.class,},
+        Sauna.class, },
         version = 1, exportSchema = false)
 @TypeConverters({RightsEnumConverter.class, UnitEnumConverter.class})
 public abstract class MyRoomDatabase extends RoomDatabase {

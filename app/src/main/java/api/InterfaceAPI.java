@@ -2,15 +2,12 @@ package api;
 
 
 
-import java.util.Date;
 import java.util.List;
 
 import model.room.entity.Account.Account;
 import model.room.entity.Account.Reservation;
-import model.room.entity.Account.RightsEnum;
 import model.room.entity.Sauna.DataPoint;
 import model.room.entity.Sauna.Sauna;
-import model.room.entity.Sauna.Servo;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -39,11 +36,6 @@ public interface InterfaceAPI {
     Call<Account> logIn(
             @Query("username") String username,
             @Query("password") String password
-    );
-
-    @GET("openDoor")
-    Call openTheDoor(
-            @Query("saunaID") int saunaID
     );
 
     @POST("createReservation")
@@ -90,5 +82,10 @@ public interface InterfaceAPI {
 
     @GET("notification")
     Call<List<Integer>>  checkNotification();
+
+    @GET("openDoor")
+    Call <String> openDoor(
+            @Query("saunaId") int saunaId
+    );
 
 }

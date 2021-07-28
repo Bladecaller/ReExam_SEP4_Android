@@ -18,9 +18,8 @@ public class Sauna {
     private float humidityThreshold;
     private float CO2Threshold;
     private float temperatureThreshold;
-    private int servoID;
 
-    public Sauna(@NonNull int id,int reservedForRoomNumber, String reservedTimeFrom, String reservedTimeTo, boolean reserved, float humidityThreshold, float CO2Threshold, float temperatureThreshold, int servoID){
+    public Sauna(@NonNull int id,int reservedForRoomNumber, String reservedTimeFrom, String reservedTimeTo, boolean reserved, float humidityThreshold, float CO2Threshold, float temperatureThreshold){
         this.id = id;
         this.reservedForRoomNumber = reservedForRoomNumber;
         this.reservedTimeFrom = reservedTimeFrom;
@@ -29,7 +28,6 @@ public class Sauna {
         this.humidityThreshold = humidityThreshold;
         this.CO2Threshold = CO2Threshold;
         this.temperatureThreshold = temperatureThreshold;
-        this.servoID = servoID;
     }
 
     public int getId() {
@@ -94,13 +92,5 @@ public class Sauna {
 
     public void setTemperatureThreshold(float temperatureThreshold) {
         this.temperatureThreshold = temperatureThreshold;
-    }
-
-    public int getServoID() {
-        return servoID;
-    }
-
-    public void setServoID(int servoID) {
-        this.servoID = servoID;
     }
 }
