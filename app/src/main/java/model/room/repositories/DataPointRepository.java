@@ -1,6 +1,7 @@
 package model.room.repositories;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -36,10 +37,10 @@ public class DataPointRepository {
                 System.out.println("SUCCESS " + response.body());
                 emptyDataRepo();
                 List<DataPoint> temp;
-                DataPoint[] array = retrofit.gson.fromJson(response.body().toString(), DataPoint[].class);
-                temp = Arrays.asList(array);
+                temp = response.body();
                 for(DataPoint obj : temp){
                     datapointInsert(obj);
+                    Log.d("RESPONSE API",obj.getTime());
                 }
             }
 
@@ -55,16 +56,16 @@ public class DataPointRepository {
 
     //store a single datapoint
     public void datapointInsert(DataPoint dataPoint){
-        //MyRoomDatabase.databaseWriteExecutor.execute(() -> {
+        MyRoomDatabase.databaseWriteExecutor.execute(() -> {
             dataPointDao.insert(dataPoint);
-        //});
+        });
     }
 
     //delete all datapoints
     public void emptyDataRepo(){
-        //MyRoomDatabase.databaseWriteExecutor.execute(() -> {
+        MyRoomDatabase.databaseWriteExecutor.execute(() -> {
             dataPointDao.deleteAll();
-        //});
+        });
     }
 
     // return all datapoints for a specific sauna

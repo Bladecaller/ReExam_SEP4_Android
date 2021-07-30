@@ -36,7 +36,7 @@ public abstract class MyRoomDatabase extends RoomDatabase {
     public abstract ReservationDao reservationDao();
 
     private static volatile MyRoomDatabase INSTANCE;
-    private static final int NUMBER_OF_THREADS = 4;
+    private static final int NUMBER_OF_THREADS = 7;
     public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 

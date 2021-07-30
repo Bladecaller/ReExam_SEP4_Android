@@ -40,17 +40,14 @@ public class DataPointRepositoryTest {
         repository = new DataPointRepository(ApplicationProvider.getApplicationContext());
 
     }
-    @Test
-    public void addAndRemoveCustomerAccount() {
-        DataPoint dp = new DataPoint(1,2,3,4,5);
 
+    @Test
+    public void populateDataPointAPI() throws InterruptedException {
         repository.getAllDataPoints().observeForever(observer);
 
-        repository.datapointInsert(dp);
-        System.out.println(list.get(0).getCO2());
-
-        repository.emptyDataRepo();
-        System.out.println(list.isEmpty());
+        repository.emptyAndPopulateDatapointRepoAPI(1);
+        Thread.sleep(20000);
+        System.out.println(list.get(1).getTime());
 
     }
 }

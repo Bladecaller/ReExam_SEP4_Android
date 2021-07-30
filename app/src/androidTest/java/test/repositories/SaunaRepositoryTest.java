@@ -46,24 +46,13 @@ public class SaunaRepositoryTest {
         repository = new SaunaRepository(ApplicationProvider.getApplicationContext());
     }
 
-    @Test
-    public void addAndRemoveSaunas() {
-        Sauna sauna = new Sauna(1,2,"11:10","12:00",true,12,12,4);
-        repository.getAllSaunas().observeForever(observer);
-
-        repository.saunaInsert(sauna);
-        System.out.println(list.get(0).getReservedTimeTo());
-
-        repository.emptySaunaRepo();
-        System.out.println(list.isEmpty());
-    }
 
     @Test
     public void populateAllSaunasAPI() throws InterruptedException {
         repository.getAllSaunas().observeForever(observer);
 
         repository.emptyAndPopulateSaunasRepoAPI();
-        Thread.sleep(10000);
+        Thread.sleep(20000);
         System.out.println(list.get(2).getReservedTimeTo());
 
     }

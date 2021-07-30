@@ -42,8 +42,8 @@ public class BusinessOwnerViewModelTest {
 
     @Test
     public void addCustomerAccount() {
-        Customer cust = new Customer(2,"lily", "lilipass", RightsEnum.Customer, "coldTub", 15);
-        Customer cust2 = new Customer(3,"lily", "lilipass", RightsEnum.Customer, "coldTub", 15);
+        Customer cust = new Customer(2,"lily", "lilipass",0, "coldTub", 15);
+        Customer cust2 = new Customer(3,"lily", "lilipass", 0, "coldTub", 15);
 
         vm.getCustomerAccounts().observeForever(observer);
 

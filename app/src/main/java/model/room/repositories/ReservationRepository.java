@@ -1,6 +1,7 @@
 package model.room.repositories;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -12,6 +13,7 @@ import model.room.dao.ReservationDao;
 import model.room.entity.Account.Account;
 import model.room.entity.Account.Customer;
 import model.room.entity.Account.Reservation;
+import model.room.entity.Sauna.Sauna;
 import model.room.roomdatabase.MyRoomDatabase;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,11 +38,10 @@ public class ReservationRepository {
             public void onResponse (Call <List<Reservation>> call, Response<List<Reservation>> response){
                 System.out.println("SUCCESS " + response.body());
                 emptyReservationRepo();
-                List<Reservation> temp;
-                Reservation[] array = retrofit.gson.fromJson(response.body().toString(), Reservation[].class);
-                temp = Arrays.asList(array);
+                List<Reservation> temp = response.body();
                 for(Reservation obj : temp){
                     reservationInsert(obj);
+                    Log.d("RESPONSE API",obj.getBookTimeTo());
                 }
             }
 
@@ -72,16 +73,16 @@ public class ReservationRepository {
 
     //store a single reservation
     public void reservationInsert(Reservation reservation){
-        //MyRoomDatabase.databaseWriteExecutor.execute(() -> {
+        MyRoomDatabase.databaseWriteExecutor.execute(() -> {
             reservationDao.insertReservation(reservation);
-        //});
+        });
     }
 
     //delete all reservations
     public void emptyReservationRepo(){
-       // MyRoomDatabase.databaseWriteExecutor.execute(() -> {
+        MyRoomDatabase.databaseWriteExecutor.execute(() -> {
             reservationDao.deleteAll();
-        //});
+        });
     }
 
     //return all reservations

@@ -44,27 +44,12 @@ public class ReservationRepositoryTest {
     }
 
     @Test
-    public void addAndRemoveReservationCurrentAccount() {
-        Reservation book = new Reservation(1,11,12,4,"11:20","11:35");
+    public void populateReservationsAPI() throws InterruptedException {
         repository.getAllReservations().observeForever(observer);
 
-        repository.reservationInsert(book);
-        System.out.println(list.get(0).getBookTimeFrom());
+        repository.emptyAndPopulateReservationRepoAPI();
+        Thread.sleep(20000);
+        System.out.println(list.get(2).getBookTimeTo());
 
-        repository.emptyReservationRepo();
-        System.out.println(list.isEmpty());
-
-    }
-
-    @Test
-    public void addAndRemoveReservation() {
-        Reservation book = new Reservation(1,11,12,4,"11:20","11:35");
-        repository.getAllReservations().observeForever(observer);
-
-        repository.reservationInsert(book);
-        System.out.println(list.get(0).getBookTimeFrom());
-
-        repository.emptyReservationRepo();
-        System.out.println(list.isEmpty());
     }
 }

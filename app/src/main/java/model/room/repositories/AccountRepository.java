@@ -1,6 +1,7 @@
 package model.room.repositories;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -41,10 +42,10 @@ public class AccountRepository {
                 System.out.println("SUCCESS " + response.body());
                 emptyAccountRepo();
                 List<Account> temp;
-                Account[] accArray = retrofit.gson.fromJson(response.body().toString(), Account[].class);
-                temp = Arrays.asList(accArray);
+                temp = response.body();
                 for(Account acc : temp){
                     accountInsert(acc);
+                    Log.d("RESPONSE API",acc.getClass().toString());
                 }
             }
 
@@ -57,7 +58,7 @@ public class AccountRepository {
     }
 
     public void addACustomerAccountAPI(Customer account){
-        Call call = retrofit.api.createNewCustomerAccount(account.getUsername(),account.getPassword(), RightsEnumConverter.fromRightsEnumToInt(account.getRights()), account.getRoomNumber());
+        Call call = retrofit.api.createNewCustomerAccount(account.getUsername(),account.getPassword(), account.getRights(), account.getRoomNumber());
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
@@ -72,7 +73,7 @@ public class AccountRepository {
     }
 
     public void addAEmployeeAccountAPI(Employee account){
-        Call call = retrofit.api.createNewAccount(account.getUsername(),account.getPassword(), RightsEnumConverter.fromRightsEnumToInt(account.getRights()));
+        Call call = retrofit.api.createNewAccount(account.getUsername(),account.getPassword(), account.getRights());
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
@@ -87,7 +88,7 @@ public class AccountRepository {
     }
 
     public void addABusinessOwnerAccountAPI(BusinessOwner account){
-        Call call = retrofit.api.createNewAccount(account.getUsername(),account.getPassword(), RightsEnumConverter.fromRightsEnumToInt(account.getRights()));
+        Call call = retrofit.api.createNewAccount(account.getUsername(),account.getPassword(), account.getRights());
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
@@ -148,7 +149,7 @@ public class AccountRepository {
     //-----------------------------------------------------------------------------------------------
 
     public void accountInsert(Account account) {
-        //MyRoomDatabase.databaseWriteExecutor.execute(() -> {
+        MyRoomDatabase.databaseWriteExecutor.execute(() -> {
             if(account instanceof Customer){
                 accountsDao.insertCustomer((Customer)account);
             }
@@ -160,15 +161,20 @@ public class AccountRepository {
             if(account instanceof BusinessOwner){
                 accountsDao.insertBusinessOwner((BusinessOwner) account);
             }
-
-       // });
+        });
     }
 
     //delete all accounts
     public void emptyAccountRepo(){
-        //MyRoomDatabase.databaseWriteExecutor.execute(() -> {
+        MyRoomDatabase.databaseWriteExecutor.execute(() -> {
             accountsDao.deleteAllCustomers();
-        //});
+        });
+        MyRoomDatabase.databaseWriteExecutor.execute(() -> {
+            accountsDao.deleteAllEmployees();
+        });
+        MyRoomDatabase.databaseWriteExecutor.execute(() -> {
+            accountsDao.deleteAllBusinessOwners();
+        });
     }
 
     // return a list of all accounts to the viewmodel
