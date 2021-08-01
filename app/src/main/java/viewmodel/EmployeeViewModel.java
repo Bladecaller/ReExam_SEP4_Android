@@ -15,9 +15,9 @@ import model.room.repositories.ReservationRepository;
 import model.room.repositories.SaunaRepository;
 
 public class EmployeeViewModel extends AndroidViewModel {
-    private SaunaRepository repositorySauna;
-    private ReservationRepository repositoryReservation;
-    private AccountRepository repositoryAccount;
+    public SaunaRepository repositorySauna;
+    public ReservationRepository repositoryReservation;
+    public AccountRepository repositoryAccount;
 
     public EmployeeViewModel (Application application) {
         super(application);

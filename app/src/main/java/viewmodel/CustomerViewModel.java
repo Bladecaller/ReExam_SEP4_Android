@@ -15,9 +15,9 @@ import model.room.repositories.ReservationRepository;
 import model.room.repositories.SaunaRepository;
 
 public class CustomerViewModel extends AndroidViewModel {
-    private SaunaRepository repositorySauna;
-    private ReservationRepository repositoryReservation;
-    private Account currentAccount = LoginRepository.getLoginRepositoryInstance().currentAccount;
+    public SaunaRepository repositorySauna;
+    public ReservationRepository repositoryReservation;
+    public Account currentAccount = LoginRepository.getLoginRepositoryInstance().currentAccount;
 
     public CustomerViewModel (Application application) {
         super(application);
@@ -32,7 +32,7 @@ public class CustomerViewModel extends AndroidViewModel {
         repositoryReservation.createReservationAPI(reservation);
     }
     public LiveData<List<Reservation>> getPersonalReservations(){
-        return repositoryReservation.getReservationsForCurrentAccount();
+        return repositoryReservation.getReservationsForCurrentAccount(currentAccount.getUserID());
     }
     public Account getCurrentAccount(){
         return  currentAccount;

@@ -41,17 +41,16 @@ public class BusinessOwnerViewModelTest {
     }
 
     @Test
-    public void addCustomerAccount() {
-        Customer cust = new Customer(2,"lily", "lilipass",0, "coldTub", 15);
-        Customer cust2 = new Customer(3,"lily", "lilipass", 0, "coldTub", 15);
-
+    public void getCustomersAccount() throws InterruptedException {
+        vm.repositoryAccount.emptyAndPopulateAccountsRepoAPI();
         vm.getCustomerAccounts().observeForever(observer);
 
-        vm.repositoryAccount.accountInsert(cust);
-        vm.repositoryAccount.accountInsert(cust2);
-        System.out.println(list.size());
+
+        Thread.sleep(10000);
+        System.out.println(list.get(0).getRoomNumber());
 
         vm.repositoryAccount.emptyAccountRepo();
+        Thread.sleep(2000);
         System.out.println(list.size());
 
     }

@@ -21,14 +21,12 @@ import retrofit2.Response;
 
 public class ReservationRepository {
     private MyRetrofit retrofit;
-    public Account currentAccount;
     private ReservationDao reservationDao;
 
     public ReservationRepository(Application application) {
         retrofit = new MyRetrofit();
         MyRoomDatabase db = MyRoomDatabase.getDatabase(application);
         reservationDao = db.reservationDao();
-        currentAccount = LoginRepository.getLoginRepositoryInstance().currentAccount;
     }
 
     public void emptyAndPopulateReservationRepoAPI(){
@@ -91,8 +89,8 @@ public class ReservationRepository {
     }
 
     // return all reservations for a specific customer
-    public LiveData<List<Reservation>> getReservationsForCurrentAccount(){
-        return reservationDao.getReservationsByCustomerId(currentAccount.getUserID());
+    public LiveData<List<Reservation>> getReservationsForCurrentAccount(int accId){
+        return reservationDao.getReservationsByCustomerId(accId);
     }
 
 }

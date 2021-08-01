@@ -41,15 +41,14 @@ public class SaunaViewModelTest {
     }
 
     @Test
-    public void addAndRemoveSauna() {
-        DataPoint dp = new DataPoint(1,2,3,4,5);
-        Sauna sauna = new Sauna(2,2,"1","2",true,1,1,1);
-        vm.getAllDatapointsForASauna(sauna.getId()).observeForever(observer);
-
-        vm.repositoryData.datapointInsert(dp);
-        System.out.println(list.get(0).getCO2());
+    public void addAndRemoveSauna() throws InterruptedException {
+        vm.getAllDatapointsForASauna(2).observeForever(observer);
+        vm.getAllDatapointsForASauna(2);
+        Thread.sleep(10000);
+        System.out.println("CO2 lvl "+list.get(0).getCO2());
 
         vm.repositoryData.emptyDataRepo();
+        Thread.sleep(2000);
         System.out.println(list.isEmpty());
     }
 }

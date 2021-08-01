@@ -26,14 +26,12 @@ public class LoginRepository {
     }
 
     public void login(String username, String password){
-        final Account[] acc = {null};
         Call<Account> call = retrofit.api.logIn(username,password);
         call.enqueue(new Callback<Account>(){
             @Override
             public void onResponse (Call <Account> call, Response<Account> response){
                 System.out.println("SUCCESS " + response.body());
-                acc[0] = retrofit.gson.fromJson(response.body().toString(), Account.class);
-                currentAccount = acc[0];
+                currentAccount = response.body();
             }
 
             @Override
