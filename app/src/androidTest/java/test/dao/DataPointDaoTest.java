@@ -59,10 +59,10 @@ public class DataPointDaoTest {
 
     @Test
     public void insertGetRemoveGet(){
-        DataPoint dp = new DataPoint(1,2,3,4,5);
+        DataPoint dp = new DataPoint(1,2,"12","3","4","5");
         dao.getAllDataPoints().observeForever(observer);
         dao.insert(dp);
-        System.out.println(list.get(0).getCO2());
+        System.out.println(list.get(0).getCo2());
         dao.deleteAll();
         System.out.println(list.isEmpty());
     }

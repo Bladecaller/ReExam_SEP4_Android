@@ -3,79 +3,61 @@ package model.room.entity.Account;
 
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.Date;
-
-import model.room.entity.Sauna.Sauna;
-@Entity
+@Entity(primaryKeys = {"UserID","SaunaID","FromDateTime"})
 public class Reservation {
-    @PrimaryKey
     @NonNull
-    private int id;
-    private int customerId;
-    private int saunaId;
-    private int roomNumber;
-    private String bookTimeFrom;
-    private String bookTimeTo;
+    @ColumnInfo(name = "UserID")
+    private int UserID;
+    @NonNull
+    @ColumnInfo(name = "SaunaID")
+    private int SaunaID;
+    @NonNull
+    @ColumnInfo(name = "FromDateTime")
+    private String FromDateTime;
+    @ColumnInfo(name = "ToDateTime")
+    private String ToDateTime;
 
-    public Reservation(@NonNull int id,int roomNumber,int customerId,int saunaId, String bookTimeFrom, String bookTimeTo){
-        this.id = id;
-        this.roomNumber = roomNumber;
-        this.saunaId = saunaId;
-        this.customerId = customerId;
-        this.bookTimeFrom = bookTimeFrom;
-        this.bookTimeTo = bookTimeTo;
+    public Reservation(@NonNull int UserID,@NonNull int SaunaID,@NonNull String FromDateTime, String ToDateTime){
+        this.SaunaID = SaunaID;
+        this.UserID = UserID;
+        this.FromDateTime = FromDateTime;
+        this.ToDateTime = ToDateTime;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public int getUserID() {
+        return UserID;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setUserID(int userID) {
+        this.UserID = userID;
     }
 
-    public int getSaunaId() {
-        return saunaId;
+    public int getSaunaID() {
+        return SaunaID;
     }
 
-    public void setSaunaId(int saunaId) {
-        this.saunaId = saunaId;
+    public void setSaunaID(int saunaID) {
+        this.SaunaID = saunaID;
     }
 
-    public int getId() {
-        return id;
+    public String getFromDateTime() {
+        return FromDateTime;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setFromDateTime(String fromDateTime) {
+        this.FromDateTime = fromDateTime;
     }
 
-    public int getRoomNumber() {
-        return roomNumber;
+    public String getToDateTime() {
+        return ToDateTime;
     }
 
-    public void setRoomNumber(int roomNumber) {
-        this.roomNumber = roomNumber;
-    }
-
-
-    public String getBookTimeFrom() {
-        return bookTimeFrom;
-    }
-
-    public void setBookTimeFrom(String bookTimeFrom) {
-        this.bookTimeFrom = bookTimeFrom;
-    }
-
-    public String getBookTimeTo() {
-        return bookTimeTo;
-    }
-
-    public void setBookTimeTo(String bookTimeTo) {
-        this.bookTimeTo = bookTimeTo;
+    public void setToDateTime(String toDateTime) {
+        this.ToDateTime = toDateTime;
     }
 
 }

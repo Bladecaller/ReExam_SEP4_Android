@@ -1,74 +1,83 @@
 package model.room.entity.Sauna;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.Date;
 @Entity
 public class DataPoint {
     @PrimaryKey
     @NonNull
-    private int id;
-    private int saunaId;
-    private String time;
-    private int CO2;
-    private int humidity;
-    private int temperature;
+    @ColumnInfo(name = "DatapointID")
+    private int DatapointID;
+    @ColumnInfo(name = "SaunaID")
+    private int SaunaID;
+    @ColumnInfo(name = "DateTime")
+    private String DateTime;
+    @ColumnInfo(name = "Temperature")
+    private String Temperature;
+    @ColumnInfo(name = "Co2")
+    private String Co2;
+    @ColumnInfo(name = "Humidity")
+    private String Humidity;
 
-    public DataPoint(@NonNull int id,int saunaId, int CO2, int humidity, int temperature){
-        this.id = id;
-        this.saunaId = saunaId;
-        this.CO2 = CO2;
-        this.humidity = humidity;
-        this.temperature = temperature;
+
+    public DataPoint(@NonNull int DatapointID, int SaunaID, String DateTime, String Temperature, String Co2, String Humidity){
+        this.DatapointID = DatapointID;
+        this.SaunaID = SaunaID;
+        this.DateTime = DateTime;
+        this.Temperature = Temperature;
+        this.Co2 = Co2;
+        this.Humidity = Humidity;
+
     }
 
-    public int getId() {
-        return id;
+    public int getDatapointID() {
+        return DatapointID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setDatapointID(int datapointID) {
+        this.DatapointID = datapointID;
     }
 
-    public String getTime() {
-        return time;
+    public String getDateTime() {
+        return DateTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setDateTime(String dateTime) {
+        this.DateTime = dateTime;
     }
 
-    public int getCO2() {
-        return CO2;
+    public String getCo2() {
+        return Co2;
     }
 
-    public void setCO2(int CO2) {
-        this.CO2 = CO2;
+    public void setCo2(String co2) {
+        this.Co2 = co2;
     }
 
-    public int getHumidity() {
-        return humidity;
+    public String getHumidity() {
+        return Humidity;
     }
 
-    public void setHumidityiD(int humidity) {
-        this.humidity = humidity;
+    public void setHumidity(String humidity) {
+        this.Humidity = humidity;
     }
 
-    public int getTemperature() {
-        return temperature;
+    public String getTemperature() {
+        return Temperature;
     }
 
-    public void setTemperature(int temperatureiD) {
-        this.temperature = temperature;
+    public void setTemperature(String Temperature) {
+        this.Temperature = Temperature;
     }
 
-    public int getSaunaId() {
-        return saunaId;
+    public int getSaunaID() {
+        return SaunaID;
     }
 
-    public void setSaunaId(int saunaId) {
-        this.saunaId = saunaId;
+    public void setSaunaID(int saunaID) {
+        this.SaunaID = saunaID;
     }
 }

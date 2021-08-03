@@ -1,19 +1,14 @@
 package model.room.repositories;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
-import java.util.Arrays;
 import java.util.List;
 
 import api.MyRetrofit;
 import model.room.dao.ReservationDao;
-import model.room.entity.Account.Account;
-import model.room.entity.Account.Customer;
 import model.room.entity.Account.Reservation;
-import model.room.entity.Sauna.Sauna;
 import model.room.roomdatabase.MyRoomDatabase;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,10 +31,9 @@ public class ReservationRepository {
             public void onResponse (Call <List<Reservation>> call, Response<List<Reservation>> response){
                 System.out.println("SUCCESS " + response.body());
                 emptyReservationRepo();
-                List<Reservation> temp = response.body();
-                for(Reservation obj : temp){
+                for(Reservation obj : response.body()){
                     reservationInsert(obj);
-                    Log.d("RESPONSE API",obj.getBookTimeTo());
+                    System.out.println("RESPONSE API " + obj.getUserID());
                 }
             }
 
@@ -52,9 +46,9 @@ public class ReservationRepository {
     }
 
     public void createReservationAPI(Reservation reservation){
-        Call call = retrofit.api.createReservation(reservation.getCustomerId(),
-                reservation.getSaunaId(),reservation.getRoomNumber(),
-                reservation.getBookTimeFrom(), reservation.getBookTimeTo());
+        Call call = retrofit.api.createReservation(reservation.getUserID(),
+                reservation.getSaunaID(),
+                reservation.getFromDateTime(), reservation.getToDateTime());
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {

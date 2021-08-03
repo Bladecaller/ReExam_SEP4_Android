@@ -5,7 +5,6 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
-import java.util.Arrays;
 import java.util.List;
 
 import api.MyRetrofit;
@@ -15,7 +14,6 @@ import model.room.entity.Account.BusinessOwner;
 import model.room.entity.Account.Customer;
 import model.room.entity.Account.Employee;
 import model.room.entity.Account.RightsEnum;
-import model.room.entity.Account.RightsEnumConverter;
 import model.room.roomdatabase.MyRoomDatabase;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,34 +38,38 @@ public class AccountRepository {
             @Override
             public void onResponse (Call <List<Account>> call, Response<List<Account>> response){
                 System.out.println("SUCCESS " + response.body());
-                emptyAccountRepo();
-                List<Account> temp;
-                temp = response.body();
-                for(Account acc : temp){
+                for(Account acc : response.body()){
+                    if(acc instanceof Customer) acc.setRights("User");
+                    if(acc instanceof Employee) acc.setRights("Supervisor");
+                    if(acc instanceof BusinessOwner) acc.setRights("Owner");
                     accountInsert(acc);
-                    Log.d("RESPONSE API",acc.getClass().toString());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Account>> call, Throwable t) {
                 System.out.println("Failed at populateAccountsRepo");
+                System.out.println(t.getCause());
+                System.out.println(t.getMessage());
+                System.out.println(t.getStackTrace());
             }
 
         });
     }
 
     public void addACustomerAccountAPI(Customer account){
-        Call call = retrofit.api.createNewCustomerAccount(account.getUsername(),account.getPassword(), account.getRights(), account.getRoomNumber());
+        Call call = retrofit.api.createNewCustomerAccount(account.getUsername(),account.getPassword(), account.getRights());
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
+                System.out.println("SUCCESS " + response.body());
                 emptyAndPopulateAccountsRepoAPI();
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
                 System.out.println("Failed at addASingleAccount");
+                System.out.println(t.getMessage());
             }
         });
     }
@@ -118,7 +120,7 @@ public class AccountRepository {
     }
 
     public void setRightsAPI(int accountID, RightsEnum rightsEnum){
-        Call call = retrofit.api.setRights(RightsEnumConverter.fromRightsEnumToInt(rightsEnum), accountID);
+        Call call = retrofit.api.setRights(rightsEnum.toString(), accountID);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
@@ -128,6 +130,7 @@ public class AccountRepository {
             @Override
             public void onFailure(Call call, Throwable t) {
                 System.out.println("Failed at setRights");
+
             }
         });
 
@@ -152,6 +155,7 @@ public class AccountRepository {
     public void accountInsert(Account account) {
         MyRoomDatabase.databaseWriteExecutor.execute(() -> {
             if(account instanceof Customer){
+                ((Customer) account).setRoomNumber(account.getUserID());
                 accountsDao.insertCustomer((Customer)account);
             }
 

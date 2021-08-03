@@ -61,7 +61,7 @@ public class AccountsDaoTest {
 
     @Test
     public void insertGetRemoveGet() {
-        Customer cust = new Customer(0,"lily", "lilipass", 0, "coldTub", 15);
+        Customer cust = new Customer(0,"lily", "lilipass", "User");
         dao.getAllCustomers().observeForever(observer);
         dao.insertCustomer(cust);
         System.out.println(list.get(0).getUsername());

@@ -47,7 +47,12 @@ public class DataPointRepositoryTest {
 
         repository.emptyAndPopulateDatapointRepoAPI(1);
         Thread.sleep(20000);
-        System.out.println(list.get(1).getTime());
+        System.out.println("SUCCESSSSSSS   "+list.get(30).getDatapointID());
+        System.out.println("SUCCESSSSSSS   "+list.get(30).getCo2());
+        System.out.println("SUCCESSSSSSS   "+list.get(30).getHumidity());
+        System.out.println("SUCCESSSSSSS   "+list.get(30).getSaunaID());
+        System.out.println("SUCCESSSSSSS   "+list.get(30).getTemperature());
+        System.out.println("SUCCESSSSSSS   "+list.get(30).getDateTime());
 
     }
 }

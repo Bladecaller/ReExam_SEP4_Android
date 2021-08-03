@@ -13,7 +13,6 @@ import org.junit.rules.TestRule;
 import java.util.List;
 
 import model.room.entity.Sauna.DataPoint;
-import model.room.entity.Sauna.Sauna;
 import viewmodel.SaunaViewModel;
 
 public class SaunaViewModelTest {
@@ -45,7 +44,7 @@ public class SaunaViewModelTest {
         vm.getAllDatapointsForASauna(2).observeForever(observer);
         vm.getAllDatapointsForASauna(2);
         Thread.sleep(10000);
-        System.out.println("CO2 lvl "+list.get(0).getCO2());
+        System.out.println("CO2 lvl "+list.get(0).getCo2());
 
         vm.repositoryData.emptyDataRepo();
         Thread.sleep(2000);

@@ -1,21 +1,15 @@
 package model.room.repositories;
 
 import android.app.Application;
-import android.os.PowerManager;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 
 import api.MyRetrofit;
 import model.room.dao.SaunasDao;
-import model.room.entity.Account.Account;
-import model.room.entity.Account.Employee;
 import model.room.entity.Sauna.Sauna;
 import model.room.roomdatabase.MyRoomDatabase;
 import retrofit2.Call;
@@ -40,10 +34,9 @@ public class SaunaRepository {
             public void onResponse (Call <List<Sauna>> call, Response<List<Sauna>> response){
                 System.out.println("SUCCESS " + response.body());
                 emptySaunaRepo();
-                List<Sauna> temp = response.body();
-                for(Sauna obj : temp){
+                for(Sauna obj : response.body()){
                     saunaInsert(obj);
-                    Log.d("RESPONSE API",obj.getReservedTimeTo());
+                    Log.d("RESPONSE API",Float.toString(obj.getCO2Threshold()));
                 }
 
 
@@ -60,7 +53,7 @@ public class SaunaRepository {
 
     public String openDoorAPI(Sauna sauna){
         final String[] temp = {null};
-        Call <String> call = retrofit.api.openDoor(sauna.getId());
+        Call <String> call = retrofit.api.openDoor(sauna.getSaunaID());
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -89,7 +82,7 @@ public class SaunaRepository {
                 temp = Arrays.asList(array);
                 for(Integer obj : temp){
                     for(Sauna sauna: getAllSaunas().getValue()) {
-                        if (obj.intValue() == sauna.getId()) {
+                        if (obj.intValue() == sauna.getSaunaID()) {
                             notifiedSaunas.add(sauna);
                         }
                     }

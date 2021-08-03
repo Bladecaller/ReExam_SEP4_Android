@@ -5,12 +5,15 @@ package api;
 import java.util.List;
 
 import model.room.entity.Account.Account;
+import model.room.entity.Account.Customer;
 import model.room.entity.Account.Reservation;
+import model.room.entity.Account.RightsEnum;
 import model.room.entity.Sauna.DataPoint;
 import model.room.entity.Sauna.Sauna;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface InterfaceAPI {
@@ -18,48 +21,47 @@ public interface InterfaceAPI {
     @POST("post")
     Call<String> post(@Query("username") String name);
 
-    @GET("allAccounts")
+    @GET("APIUsers")
     Call<List<Account>> getAllAccounts();
 
-    @GET("allSaunas")
+    @GET("APISaunas")
     Call<List<Sauna>> getAllSaunas();
 
-    @GET("allReservations")
+    @GET("APIReservations")
     Call<List<Reservation>> getAllReservations();
 
-    @GET("allDatapoints")
-    Call<List<DataPoint>> getAllDataPoints(
-            @Query("saunaId") int saunaId
+    @GET("APISauna/{id}")
+    Call<Sauna> getAllDataPoints(
+            @Path(value = "id", encoded = true) int id
     );
 
-    @GET("login")
+    @GET("apiuser/{username}/{password}")
     Call<Account> logIn(
-            @Query("username") String username,
-            @Query("password") String password
+            @Path(value = "username", encoded = true) String username,
+            @Path(value = "password", encoded = true) String password
     );
 
     @POST("createReservation")
     Call createReservation(
-            @Query("saunaID") int saunaID,
-            @Query("customerId") int customerID,
-            @Query("roomNumber") int roomNum,
-            @Query("from")String timeFrom,
-            @Query("to") String timeTo
+            @Query("SaunaID") int saunaID,
+            @Query("CustomerID") int customerID,
+            @Query("FromDateTime")String timeFrom,
+            @Query("ToDateTime") String timeTo
     );
 
-    @POST("createAccount")
+    @POST("APIUsers")
     Call createNewAccount(
-            @Query("username") String username,
-            @Query("password") String password,
-            @Query("rights") int rights
+            @Query("Username") String username,
+            @Query("Password") String password,
+            @Query("Rights") String rights
     );
 
-    @POST("createAccount")
-    Call createNewCustomerAccount(
+    @POST("APIUsers")
+    Call<Void> createNewCustomerAccount(
             @Query("username") String username,
             @Query("password") String password,
-            @Query("rights") int rights,
-            @Query("roomNumber") int roomNumber
+            @Query("rights") String rights
+
     );
 
     @POST("removeUser")
@@ -69,7 +71,7 @@ public interface InterfaceAPI {
 
     @POST("setRights")
     Call setRights(
-          @Query("rights") int rights,
+          @Query("rights") String rights,
           @Query("userID") int userID
     );
 

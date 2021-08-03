@@ -17,10 +17,8 @@ import org.junit.rules.TestRule;
 
 import java.util.List;
 
-import model.room.dao.DataPointDao;
 import model.room.dao.ReservationDao;
 import model.room.entity.Account.Reservation;
-import model.room.entity.Sauna.DataPoint;
 import model.room.roomdatabase.MyRoomDatabase;
 
 import static org.mockito.Mockito.mock;
@@ -61,21 +59,20 @@ public class ReservationDaoTest {
 
     @Test
     public void insertGetRemoveGet(){
-        DataPoint dp = new DataPoint(1,2,3,4,5);
-        Reservation book = new Reservation(1,11,12,4,"11:20","11:35");
-        dao.getReservationsByCustomerId(book.getCustomerId()).observeForever(observer);
+        Reservation book = new Reservation(11,12,"11:20","11:35");
+        dao.getReservationsByCustomerId(book.getUserID()).observeForever(observer);
         dao.insertReservation(book);
-        System.out.println(list.get(0).getBookTimeFrom());
+        System.out.println(list.get(0).getFromDateTime());
         dao.deleteAll();
         System.out.println(list.isEmpty());
     }
 
     @Test
     public void insertGetALLRemoveGet(){
-        Reservation book = new Reservation(1,11,12,4,"11:20","11:35");
+        Reservation book = new Reservation(11,12,"11:20","11:35");
         dao.getAllReservations().observeForever(observer);
         dao.insertReservation(book);
-        System.out.println(list.get(0).getBookTimeFrom());
+        System.out.println(list.get(0).getFromDateTime());
         dao.deleteAll();
         System.out.println(list.isEmpty());
     }

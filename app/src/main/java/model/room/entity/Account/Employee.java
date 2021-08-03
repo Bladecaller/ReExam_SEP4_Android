@@ -12,7 +12,7 @@ import model.room.entity.Sauna.Sauna;
 public class Employee extends Account {
     public boolean notifications = false;
 
-    public Employee(@NonNull int userID, String username, String password, int rights, String establishmentName) {
-        super(userID, username, password, rights, establishmentName);
+    public Employee(@NonNull int UserID, String Username, String Password,String Rights) {
+        super(UserID, Username, Password, Rights);
     }
 }

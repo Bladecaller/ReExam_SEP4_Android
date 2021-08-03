@@ -51,7 +51,7 @@ public class AccountRepositoryTest {
         repository.getCustomers().observeForever(observer);
         repository.emptyAndPopulateAccountsRepoAPI();
         Thread.sleep(20000);
-        System.out.println("ESTABLISHMENT  "+ list.get(0).getUserID());
+        System.out.println("TEST  "+ list.get(1).getRights());
         repository.getCustomers().removeObserver(observer);
 
     }
@@ -61,17 +61,29 @@ public class AccountRepositoryTest {
         repository.getEmployees().observeForever(observer1);
         repository.emptyAndPopulateAccountsRepoAPI();
         Thread.sleep(20000);
-        System.out.println("ESTABLISHMENT  "+ list1.get(0).getUserID());
+        System.out.println("TEST "+ list1.get(0).getRights());
         repository.getEmployees().removeObserver(observer1);
 
     }
+
     @Test
     public void populateAccBusinessAPI() throws InterruptedException {
         repository.getBusinessOwners().observeForever(observer2);
         repository.emptyAndPopulateAccountsRepoAPI();
-        Thread.sleep(20000);
-        System.out.println("ESTABLISHMENT  "+ list2.get(0).getUserID());
+        Thread.sleep(25000);
+        System.out.println("TEST  "+ list2.get(1).getRights());
+        System.out.println("TEST  "+ list2.get(1).getUsername());
+        System.out.println("TEST  "+ list2.get(0).getRights());
+        System.out.println("TEST  "+ list2.get(0).getUsername());
         repository.getBusinessOwners().removeObserver(observer2);
+    }
+
+    //@Test
+    public void addCustomerAccount(){
+        repository.getCustomers().observeForever(observer);
+        Customer cust = new Customer(10,"user10","user10","User");
+        repository.addACustomerAccountAPI(cust);
+
     }
 
 }

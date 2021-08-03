@@ -19,16 +19,15 @@ import model.room.entity.Account.BusinessOwner;
 import model.room.entity.Account.Customer;
 import model.room.entity.Account.Employee;
 import model.room.entity.Account.Reservation;
-import model.room.entity.Account.RightsEnumConverter;
+import model.room.entity.Converters;
 import model.room.entity.Sauna.DataPoint;
 import model.room.entity.Sauna.Sauna;
-import model.room.entity.Sauna.UnitEnumConverter;
 
 @Database(entities = {Account.class, BusinessOwner.class, Customer.class,
         Employee.class, Reservation.class, DataPoint.class, Sauna.class,
 },
         version = 1, exportSchema = false)
-@TypeConverters({RightsEnumConverter.class, UnitEnumConverter.class})
+@TypeConverters({Converters.class})
 public abstract class MyRoomDatabase extends RoomDatabase {
     public abstract AccountsDao accountsDao();
     public abstract SaunasDao saunaDao();
@@ -36,7 +35,7 @@ public abstract class MyRoomDatabase extends RoomDatabase {
     public abstract ReservationDao reservationDao();
 
     private static volatile MyRoomDatabase INSTANCE;
-    private static final int NUMBER_OF_THREADS = 7;
+    private static final int NUMBER_OF_THREADS = 9;
     public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 

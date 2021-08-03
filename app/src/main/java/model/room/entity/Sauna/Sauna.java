@@ -1,73 +1,41 @@
 package model.room.entity.Sauna;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.util.Date;
 import java.util.List;
+
 @Entity
 public class Sauna {
     @PrimaryKey
     @NonNull
-    private int id;
-    private int reservedForRoomNumber;
-    private String reservedTimeFrom;
-    private String reservedTimeTo;
-    private boolean reserved;
+    @ColumnInfo(name = "SaunaID")
+    private int SaunaID;
+    @ColumnInfo(name = "HumidityThreshold")
     private float humidityThreshold;
+    @ColumnInfo(name = "CO2Threshold")
     private float CO2Threshold;
+    @ColumnInfo(name = "TemperatureThreshold")
     private float temperatureThreshold;
+    @ColumnInfo(name = "Datapoints")
+    private List<DataPoint> Datapoints;
 
-    public Sauna(@NonNull int id,int reservedForRoomNumber, String reservedTimeFrom, String reservedTimeTo, boolean reserved, float humidityThreshold, float CO2Threshold, float temperatureThreshold){
-        this.id = id;
-        this.reservedForRoomNumber = reservedForRoomNumber;
-        this.reservedTimeFrom = reservedTimeFrom;
-        this.reservedTimeTo = reservedTimeTo;
-        this.reserved = reserved;
+    public Sauna(@NonNull int SaunaID, float humidityThreshold, float CO2Threshold, float temperatureThreshold,List<DataPoint>  Datapoints){
+        this.SaunaID = SaunaID;
         this.humidityThreshold = humidityThreshold;
         this.CO2Threshold = CO2Threshold;
         this.temperatureThreshold = temperatureThreshold;
+        this.Datapoints = Datapoints;
     }
 
-    public int getId() {
-        return id;
+    public int getSaunaID() {
+        return SaunaID;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getReservedForRoomNumber() {
-        return reservedForRoomNumber;
-    }
-
-    public void setReservedForRoomNumber(int reservedForRoomNumber) {
-        this.reservedForRoomNumber = reservedForRoomNumber;
-    }
-
-    public String getReservedTimeFrom() {
-        return reservedTimeFrom;
-    }
-
-    public void setReservedTimeFrom(String reservedTimeFrom) {
-        this.reservedTimeFrom = reservedTimeFrom;
-    }
-
-    public String getReservedTimeTo() {
-        return reservedTimeTo;
-    }
-
-    public void setReservedTimeTo(String reservedTimeTo) {
-        this.reservedTimeTo = reservedTimeTo;
-    }
-
-    public boolean isReserved() {
-        return reserved;
-    }
-
-    public void setReserved(boolean reserved) {
-        this.reserved = reserved;
+    public void setSaunaID(int saunaID) {
+        this.SaunaID = saunaID;
     }
 
     public float getHumidityThreshold() {
@@ -92,5 +60,12 @@ public class Sauna {
 
     public void setTemperatureThreshold(float temperatureThreshold) {
         this.temperatureThreshold = temperatureThreshold;
+    }
+    public List<DataPoint>  getDatapoints() {
+        return Datapoints;
+    }
+
+    public void setDatapoints(List<DataPoint>  datapoints) {
+        Datapoints = datapoints;
     }
 }

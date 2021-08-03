@@ -9,8 +9,8 @@ import model.room.entity.Sauna.Sauna;
 @Entity
 public class BusinessOwner extends Account{
 
-    public BusinessOwner(@NonNull int userID, String username, String password, int rights, String establishmentName) {
-        super(userID, username, password, rights, establishmentName);
+    public BusinessOwner(@NonNull int UserID, String Username, String Password,String Rights) {
+        super(UserID, Username, Password, Rights);
     }
 
 }

@@ -22,7 +22,7 @@ public interface ReservationDao {
     @Query("SELECT * FROM Reservation ")
     LiveData<List<Reservation>> getAllReservations();
 
-    @Query("SELECT * FROM Reservation WHERE customerId = (:customerId)")
+    @Query("SELECT * FROM Reservation WHERE UserID = (:customerId)")
     LiveData<List<Reservation>> getReservationsByCustomerId(int customerId);
 
 

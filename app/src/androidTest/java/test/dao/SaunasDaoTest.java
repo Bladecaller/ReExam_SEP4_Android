@@ -61,10 +61,10 @@ public class SaunasDaoTest {
 
     @Test
     public void insertGetRemoveGet(){
-        Sauna sauna = new Sauna(1,2,"11:10","12:00",true,12,12,4);
+        Sauna sauna = new Sauna(1,12,12,4,null);
         dao.getAllSaunas().observeForever(observer);
         dao.insert(sauna);
-        System.out.println(list.get(0).getReservedTimeTo());
+        System.out.println(list.get(0).getSaunaID());
         dao.deleteAll();
         System.out.println(list.isEmpty());
     }

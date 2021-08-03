@@ -1,65 +1,63 @@
 package model.room.entity.Account;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
 public abstract class Account {
+
     @PrimaryKey
     @NonNull
-    private int userID;
-    private String username;
-    private String password;
+    @ColumnInfo(name = "UserID")
+    private int UserID;
 
-    private int rights;
-    private String establishmentName;
+    @ColumnInfo(name = "Username")
+    private String Username;
 
-    public Account(@NonNull int userID, String username, String password,int rights, String establishmentName){
-        this.userID = userID;
-        this.username = username;
-        this.password = password;
-        this.rights = rights;
-        this.establishmentName = establishmentName;
+    @ColumnInfo(name = "Password")
+    private String Password;
+
+    @ColumnInfo(name = "Rights")
+    private String Rights;
+
+    public Account(@NonNull int UserID, String Username, String Password,String Rights){
+        this.UserID = UserID;
+        this.Username = Username;
+        this.Password = Password;
+        this.Rights = Rights;
     }
 
     public int getUserID() {
-        return userID;
+        return UserID;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setUserID(int UserID) {
+        this.UserID = UserID;
     }
 
     public String getUsername() {
-        return username;
+        return Username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String Username) {
+        this.Username = Username;
     }
 
     public String getPassword() {
-        return password;
+        return Password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String Password) {
+        this.Password = Password;
     }
 
-    public void setRights(int rights) {
-        this.rights = rights;
+    public void setRights(String Rights) {
+        this.Rights = Rights;
     }
 
-    public String getEstablishmentName() {
-        return establishmentName;
-    }
-
-    public void setEstablishmentName(String establishmentName) {
-        this.establishmentName = establishmentName;
-    }
-
-    public int getRights() {
-        return rights;
+    public String getRights() {
+        return Rights;
     }
 }

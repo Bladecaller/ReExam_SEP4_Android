@@ -13,6 +13,7 @@ import java.util.List;
 
 import model.room.entity.Account.Customer;
 import model.room.entity.Account.Reservation;
+import model.room.entity.Account.RightsEnum;
 import model.room.entity.Sauna.Sauna;
 import viewmodel.CustomerViewModel;
 
@@ -31,7 +32,7 @@ public class CustomerViewModelTest {
     @Before
     public void setUp() throws Exception {
         vm = new CustomerViewModel(ApplicationProvider.getApplicationContext());
-        vm.currentAccount = new Customer(11,"jack", "jackPass", 0,"here",11);
+        vm.currentAccount = new Customer(11,"jack", "jackPass", "User");
 
         observerReservation = reservations -> reservationList = reservations;
 

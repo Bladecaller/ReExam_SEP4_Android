@@ -1,17 +1,13 @@
 package model.room.repositories;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
-import java.util.Arrays;
 import java.util.List;
 
 import api.MyRetrofit;
-import model.room.dao.AccountsDao;
 import model.room.dao.DataPointDao;
-import model.room.entity.Account.Customer;
 import model.room.entity.Sauna.DataPoint;
 import model.room.entity.Sauna.Sauna;
 import model.room.roomdatabase.MyRoomDatabase;
@@ -30,22 +26,20 @@ public class DataPointRepository {
     }
 
     public void emptyAndPopulateDatapointRepoAPI(int saunaId){
-        Call<List<DataPoint>> call = retrofit.api.getAllDataPoints(saunaId);
-        call.enqueue(new Callback<List<DataPoint>>(){
+        Call<Sauna> call = retrofit.api.getAllDataPoints(saunaId);
+        call.enqueue(new Callback<Sauna>(){
             @Override
-            public void onResponse (Call <List<DataPoint>> call, Response<List<DataPoint>> response){
+            public void onResponse (Call <Sauna> call, Response<Sauna> response){
                 System.out.println("SUCCESS " + response.body());
                 emptyDataRepo();
-                List<DataPoint> temp;
-                temp = response.body();
-                for(DataPoint obj : temp){
+                for(DataPoint obj : response.body().getDatapoints()){
                     datapointInsert(obj);
-                    Log.d("RESPONSE API",obj.getTime());
+                    System.out.println("RESPONSE API " + obj.getDatapointID());
                 }
             }
 
             @Override
-            public void onFailure(Call<List<DataPoint>> call, Throwable t) {
+            public void onFailure(Call<Sauna> call, Throwable t) {
                 System.out.println("Failed at populateDatapointRepo");
             }
 
