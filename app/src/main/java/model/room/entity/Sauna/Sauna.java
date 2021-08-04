@@ -30,6 +30,7 @@ public class Sauna {
         this.Datapoints = Datapoints;
     }
 
+
     public int getSaunaID() {
         return SaunaID;
     }

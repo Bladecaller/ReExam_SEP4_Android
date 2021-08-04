@@ -2,6 +2,7 @@ package view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
@@ -23,6 +24,8 @@ import com.example.sep4_android.R;
 
 import java.util.List;
 
+import model.room.entity.Account.Account;
+import model.room.entity.Account.BusinessOwner;
 import model.room.entity.Sauna.Sauna;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,6 +34,7 @@ import view.activity.customer.HomeViewCu;
 import view.activity.employee.HomeViewEm;
 import view.activity.owner.HomeViewBo;
 import viewmodel.EmployeeViewModel;
+import viewmodel.LoginViewModel;
 
 public class LogInView extends AppCompatActivity {
 
@@ -40,7 +44,7 @@ public class LogInView extends AppCompatActivity {
     private InterfaceAPI api;
     private EditText usernameField, pwField;
     private String username, pw;
-    private EmployeeViewModel employeeViewModel;
+    private LoginViewModel loginViewModel;
 
 
     @Override
@@ -50,17 +54,19 @@ public class LogInView extends AppCompatActivity {
             getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
             getWindow().setExitTransition(new Explode());
         }
-        employeeViewModel = new EmployeeViewModel(this.getApplication());
+
         setContentView(R.layout.activity_log_in_view);
         usernameField = findViewById(R.id.usernameText);
-        //Log.d("EDIT TEXT ", username.toString());
-        //retrofit = new MyRetrofit();
+        pwField = findViewById(R.id.pwText);
+
         retrofit = new MyRetrofit();
         api = retrofit.api;
 
-
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         logInButton = findViewById(R.id.logInButton);
         pbar = findViewById(R.id.progressBar);
+
+
 
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.bgDark));
@@ -68,38 +74,41 @@ public class LogInView extends AppCompatActivity {
         logInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new CountDownTimer(2000,2000){
 
-                    @Override
-                    public void onTick(long millisUntilFinished) {
                         pbar.setVisibility(View.VISIBLE);
-                    }
 
-                    @Override
-                    public void onFinish() {
                         username = usernameField.getText().toString();
-                        employeeViewModel.getAllSaunas();
-                        switch (username){
+                        pw = pwField.getText().toString();
 
+                        if (username.equals("") || pw.equals("")){
+                            Toast.makeText(v.getContext(),"Fill In All The Fields",Toast.LENGTH_SHORT).show();
+                        }
+
+                        loginViewModel.login(username,pw);
+
+                        loginViewModel.getCurrentAccountType();
+                        String type = loginViewModel.getCurrentAccountType();
+
+                        switch (type){
                             case "":
-                                Toast.makeText(v.getContext(),"Fill In All The Fields",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(v.getContext(),"Error",Toast.LENGTH_SHORT).show();
                                 break;
 
                             case "Owner":
                                 openHomePageBo();
                                 break;
 
-                            case "Employee":
+                            case "Supervisor":
                                 openHomePageEm();
                                 break;
 
-                            case "Customer":
+                            case "User":
                                 openHomePageCu();
                                 break;
                         }
                         pbar.setVisibility(View.INVISIBLE);
-                    }
-                }.start();
+
+
             }
 
         });
