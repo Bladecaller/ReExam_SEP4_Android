@@ -31,7 +31,7 @@ public class LoginRepositoryTest {
     @Test
     public void loginAPI() throws InterruptedException {
         repository.login("bob", "bob");
-        Thread.sleep(20000);
+        Thread.sleep(2000);
         System.out.println(repository.currentAccount.getRights());
 
     }
