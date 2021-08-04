@@ -33,6 +33,7 @@ public class DataPointRepositoryTest {
         observer = new Observer<List<DataPoint>>() {
             @Override
             public void onChanged(List<DataPoint> dataPoints) {
+
                 list = dataPoints;
             }
         };

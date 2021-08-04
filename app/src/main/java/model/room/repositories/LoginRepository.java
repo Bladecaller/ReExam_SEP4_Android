@@ -2,9 +2,15 @@ package model.room.repositories;
 
 import android.app.Application;
 
+import androidx.lifecycle.LiveData;
+
+import java.util.List;
+
 import api.MyRetrofit;
+import model.room.dao.CurrentAccountDao;
 import model.room.entity.Account.Account;
 import model.room.entity.Account.BusinessOwner;
+import model.room.entity.Account.CurrentAccount;
 import model.room.entity.Account.Customer;
 import model.room.entity.Account.Employee;
 import model.room.roomdatabase.MyRoomDatabase;
@@ -14,14 +20,14 @@ import retrofit2.Response;
 
 public class LoginRepository {
     private MyRetrofit retrofit;
-    public Account currentAccount;
-    private static volatile LoginRepository INSTANCE;
+    public CurrentAccountDao currentAccountDao;
 
-    public static LoginRepository getLoginRepositoryInstance() { ;
-        if (INSTANCE == null){
-            INSTANCE = new LoginRepository();
-        }
-        return INSTANCE;
+
+    public LoginRepository(Application application) {
+        retrofit = new MyRetrofit();
+        MyRoomDatabase db = MyRoomDatabase.getDatabase(application);
+        currentAccountDao = db.currentAccountDao();
+
     }
 
     private LoginRepository(){
@@ -29,23 +35,43 @@ public class LoginRepository {
     }
 
     public void login(String username, String password){
-        Call<Account> call = retrofit.api.logIn(username,password);
-        call.enqueue(new Callback<Account>(){
+
+        Call<CurrentAccount> call = retrofit.api.logIn(username,password);
+        call.enqueue(new Callback<CurrentAccount>(){
             @Override
-            public void onResponse (Call <Account> call, Response<Account> response){
+            public void onResponse (Call <CurrentAccount> call, Response<CurrentAccount> response){
                 System.out.println("SUCCESS " + response.body());
-                currentAccount = response.body();
-                if(response.body() instanceof Customer) currentAccount.setRights("User");
-                if(response.body() instanceof Employee) currentAccount.setRights("Supervisor");
-                if(response.body() instanceof BusinessOwner) currentAccount.setRights("Owner");
+                System.out.println("SUCCESS " + response.body().getRights());
+                emptyRepo();
+                accountInsert(response.body());
             }
 
             @Override
-            public void onFailure(Call<Account> call, Throwable t) {
+            public void onFailure(Call<CurrentAccount> call, Throwable t) {
                 System.out.println("Failed at Login");
                 System.out.println(t.getMessage());
             }
 
         });
     }
+
+    public void accountInsert(CurrentAccount account) {
+        MyRoomDatabase.databaseWriteExecutor.execute(() -> {
+            currentAccountDao.insertAccount(account);
+        });
+    }
+
+    //delete all accounts
+    public void emptyRepo(){
+        MyRoomDatabase.databaseWriteExecutor.execute(() -> {
+            currentAccountDao.deleteAll();
+        });
+
+    }
+
+    // return a list of all accounts to the viewmodel
+    public LiveData<List<CurrentAccount>> getCurrentAccount(){
+        return currentAccountDao.getCurrentAccount();
+    }
+
 }

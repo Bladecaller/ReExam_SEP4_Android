@@ -32,7 +32,7 @@ public class LoginViewModelTest {
     public void loginAndCheckRights() throws InterruptedException {
         vm.login("bob", "bob");
         Thread.sleep(2000);
-        System.out.println("Test account type :"+vm.getCurrentAccountType());
+        //System.out.println("Test account type :"+vm.getCurrentAccountType());
     }
 
 }

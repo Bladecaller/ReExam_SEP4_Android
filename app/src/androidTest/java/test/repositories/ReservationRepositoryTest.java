@@ -40,7 +40,7 @@ public class ReservationRepositoryTest {
         repository.getAllReservations().observeForever(observer);
 
         repository.emptyAndPopulateReservationRepoAPI();
-        Thread.sleep(30000);
+        Thread.sleep(25000);
         System.out.println("TEST reservation size initial :"+list.size());
 
     }
@@ -49,12 +49,12 @@ public class ReservationRepositoryTest {
         repository.getAllReservations().observeForever(observer);
 
         repository.emptyAndPopulateReservationRepoAPI();
-        Thread.sleep(30000);
+        Thread.sleep(25000);
         System.out.println("TEST reservation size before adding a reservation "+list.size());
 
-        Reservation book = new Reservation(5,1,"14:26","16:00");
+        Reservation book = new Reservation(5,1,"14:29","16:00");
         repository.createReservationAPI(book);
-        Thread.sleep(30000);
+        Thread.sleep(25000);
         System.out.println("TEST reservation size after adding a reservation "+ list.size());
         repository.getAllReservations().removeObserver(observer);
     }

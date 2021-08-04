@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import model.room.entity.Account.Customer;
+import model.room.entity.Account.Employee;
 import model.room.entity.Account.Reservation;
 import model.room.entity.Sauna.Sauna;
 import model.room.repositories.AccountRepository;
@@ -41,7 +42,7 @@ public class EmployeeViewModel extends AndroidViewModel {
         repositorySauna.openDoorAPI(sauna);
     }
 
-    public void changeNotificationsStatus(){repositoryAccount.changeNotifications();};
+    public void changeNotificationsStatus(Employee currentAccount){repositoryAccount.changeNotifications(currentAccount);};
 
     public List<Integer> notificationCheck(){ return repositorySauna.checkNotificationsAPI();}
 }

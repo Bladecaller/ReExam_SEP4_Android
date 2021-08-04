@@ -6,6 +6,7 @@ import java.util.List;
 
 import model.room.entity.Account.Account;
 import model.room.entity.Account.BusinessOwner;
+import model.room.entity.Account.CurrentAccount;
 import model.room.entity.Account.Customer;
 import model.room.entity.Account.Employee;
 import model.room.entity.Account.Reservation;
@@ -38,7 +39,7 @@ public interface InterfaceAPI {
     );
 
     @GET("apiuser/{username}/{password}")
-    Call<Account> logIn(
+    Call<CurrentAccount> logIn(
             @Path(value = "username", encoded = true) String username,
             @Path(value = "password", encoded = true) String password
     );
