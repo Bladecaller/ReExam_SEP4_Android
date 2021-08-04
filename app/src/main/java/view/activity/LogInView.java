@@ -65,7 +65,34 @@ public class LogInView extends AppCompatActivity {
         loginViewModel.getCurrentAcc().observe(this, new Observer<List<CurrentAccount>>() {
             @Override
             public void onChanged(List<CurrentAccount> accounts) {
+
                 currentAccounts = accounts;
+                String type = null;
+
+                if(currentAccounts.size() != 0 ) type = currentAccounts.get(0).getRights();
+                System.out.println("SIZE IS "+ currentAccounts.size());
+                System.out.println("TYPE IS "+ type);
+                if(type==null){
+                    System.out.println("TYPE IS "+ " zero");
+                }else
+                    switch (type){
+                        case "":
+                            //Toast.makeText(loginViewModel.getApplication(),"Error",Toast.LENGTH_SHORT).show();
+                            break;
+
+                        case "Owner     ":
+                            openHomePageBo();
+                            break;
+
+                        case "Supervisor":
+                            openHomePageEm();
+                            break;
+
+                        case "User      ":
+                            openHomePageCu();
+                            break;
+                    }
+                pbar.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -91,33 +118,8 @@ public class LogInView extends AppCompatActivity {
 
                         loginViewModel.login(username,pw);
 
-                        String type = null;
 
-                        if(currentAccounts.size() != 0 ) type = currentAccounts.get(0).getRights();
-                        System.out.println("SIZE IS "+ currentAccounts.size());
-                        System.out.println("TYPE IS "+ type);
-                        if(type==null){
-                            System.out.println("TYPE IS "+ " zero");
-                        }else
-                            switch (type){
-                            case "":
-                                Toast.makeText(v.getContext(),"Error",Toast.LENGTH_SHORT).show();
-                                break;
-
-                            case "Owner     ":
-                                openHomePageBo();
-                                break;
-
-                            case "Supervisor":
-                                openHomePageEm();
-                                break;
-
-                            case "User      ":
-                                openHomePageCu();
-                                break;
-                        }
-                        pbar.setVisibility(View.INVISIBLE);
-                        loginViewModel.deleteAll();
+                        //loginViewModel.deleteAll();
             }
 
         });
