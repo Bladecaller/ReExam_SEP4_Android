@@ -5,21 +5,23 @@ package api;
 import java.util.List;
 
 import model.room.entity.Account.Account;
+import model.room.entity.Account.BusinessOwner;
 import model.room.entity.Account.Customer;
+import model.room.entity.Account.Employee;
 import model.room.entity.Account.Reservation;
 import model.room.entity.Account.RightsEnum;
 import model.room.entity.Sauna.DataPoint;
 import model.room.entity.Sauna.Sauna;
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface InterfaceAPI {
-
-    @POST("post")
-    Call<String> post(@Query("username") String name);
 
     @GET("APIUsers")
     Call<List<Account>> getAllAccounts();
@@ -41,53 +43,62 @@ public interface InterfaceAPI {
             @Path(value = "password", encoded = true) String password
     );
 
-    @POST("createReservation")
-    Call createReservation(
-            @Query("SaunaID") int saunaID,
-            @Query("CustomerID") int customerID,
-            @Query("FromDateTime")String timeFrom,
-            @Query("ToDateTime") String timeTo
+    @POST("APIReservations")
+    Call<Void> createReservation(
+            @Body Reservation reservation
     );
 
     @POST("APIUsers")
-    Call createNewAccount(
-            @Query("Username") String username,
-            @Query("Password") String password,
-            @Query("Rights") String rights
+    Call<Void> createNewBusinessOwnerAccount(
+            @Body BusinessOwner account
+    );
+
+    @POST("APIUsers")
+    Call<Void> createNewEmployeeAccount(
+            @Body Employee account
     );
 
     @POST("APIUsers")
     Call<Void> createNewCustomerAccount(
-            @Query("username") String username,
-            @Query("password") String password,
-            @Query("rights") String rights
+            @Body Customer account
 
     );
 
-    @POST("removeUser")
-    Call removeUser(
-            @Query("userID") int userID
+    @DELETE("APIUsers/{id}")
+    Call<Account> removeUser(
+            @Path(value = "id", encoded = true) int id
     );
 
-    @POST("setRights")
-    Call setRights(
-          @Query("rights") String rights,
-          @Query("userID") int userID
+    @PUT("APIUsers/{id}")
+    Call<Void> setRightsOfACustomer(
+            @Path(value = "id", encoded = true) int id,
+            @Body Customer account
     );
 
-    @GET("setThresholds")
-    Call setThresholds(
-            @Query("temperature") float temperature,
-            @Query("humidity") float humidity,
-            @Query("CO2") float CO2
+    @PUT("APIUsers/{id}")
+    Call<Void> setRightsOfAnEmployee(
+            @Path(value = "id", encoded = true) int id,
+            @Body Employee account
     );
 
-    @GET("notification")
+    @PUT("APIUsers/{id}")
+    Call<Void> setRightsOfABusinessOwner(
+            @Path(value = "id", encoded = true) int id,
+            @Body BusinessOwner account
+    );
+
+    @PUT("APISaunas/{id}")
+    Call<Void> setThresholds(
+            @Path(value = "id", encoded = true) int id,
+            @Body Sauna sauna
+    );
+
+    @GET("APINotificationHistories")
     Call<List<Integer>>  checkNotification();
 
-    @GET("openDoor")
-    Call <String> openDoor(
-            @Query("saunaId") int saunaId
+    @GET("hardwarecontroller/getopenthedoor/{id}")
+    Call<Void> openDoor(
+            @Path(value = "id", encoded = true) int id
     );
 
 }

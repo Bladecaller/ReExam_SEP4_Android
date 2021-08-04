@@ -11,6 +11,7 @@ import org.junit.rules.TestRule;
 
 import java.util.List;
 
+import model.room.entity.Account.Customer;
 import model.room.entity.Account.Reservation;
 import model.room.repositories.ReservationRepository;
 
@@ -39,8 +40,22 @@ public class ReservationRepositoryTest {
         repository.getAllReservations().observeForever(observer);
 
         repository.emptyAndPopulateReservationRepoAPI();
-        Thread.sleep(20000);
-        System.out.println(list.get(2).getToDateTime());
+        Thread.sleep(30000);
+        System.out.println("TEST reservation size initial :"+list.size());
 
+    }
+    @Test
+    public void addReservationAPI() throws InterruptedException{
+        repository.getAllReservations().observeForever(observer);
+
+        repository.emptyAndPopulateReservationRepoAPI();
+        Thread.sleep(30000);
+        System.out.println("TEST reservation size before adding a reservation "+list.size());
+
+        Reservation book = new Reservation(5,1,"14:26","16:00");
+        repository.createReservationAPI(book);
+        Thread.sleep(30000);
+        System.out.println("TEST reservation size after adding a reservation "+ list.size());
+        repository.getAllReservations().removeObserver(observer);
     }
 }

@@ -43,10 +43,7 @@ public class LoginRepository {
             @Override
             public void onFailure(Call<Account> call, Throwable t) {
                 System.out.println("Failed at Login");
-                System.out.println(t.getCause());
                 System.out.println(t.getMessage());
-                System.out.println(t.getStackTrace());
-
             }
 
         });

@@ -46,18 +46,18 @@ public class ReservationRepository {
     }
 
     public void createReservationAPI(Reservation reservation){
-        Call call = retrofit.api.createReservation(reservation.getUserID(),
-                reservation.getSaunaID(),
-                reservation.getFromDateTime(), reservation.getToDateTime());
+        Call call = retrofit.api.createReservation(reservation);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
+                System.out.println("SUCCESS create reservation " + response.body());
                 emptyAndPopulateReservationRepoAPI();
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
                 System.out.println("Failed at CreateReservation");
+                System.out.println(t.getMessage());
             }
         });
     }

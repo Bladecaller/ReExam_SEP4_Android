@@ -37,11 +37,12 @@ public class AccountRepository {
         call.enqueue(new Callback<List<Account>>(){
             @Override
             public void onResponse (Call <List<Account>> call, Response<List<Account>> response){
+                emptyAccountRepo();
                 System.out.println("SUCCESS " + response.body());
                 for(Account acc : response.body()){
-                    if(acc instanceof Customer) acc.setRights("User");
-                    if(acc instanceof Employee) acc.setRights("Supervisor");
-                    if(acc instanceof BusinessOwner) acc.setRights("Owner");
+                    if(acc.getClass() == Customer.class) acc.setRights("User");
+                    if(acc.getClass() == Employee.class) acc.setRights("Supervisor");
+                    if(acc.getClass() == BusinessOwner.class) acc.setRights("Owner");
                     accountInsert(acc);
                 }
             }
@@ -49,20 +50,19 @@ public class AccountRepository {
             @Override
             public void onFailure(Call<List<Account>> call, Throwable t) {
                 System.out.println("Failed at populateAccountsRepo");
-                System.out.println(t.getCause());
                 System.out.println(t.getMessage());
-                System.out.println(t.getStackTrace());
             }
 
         });
     }
 
     public void addACustomerAccountAPI(Customer account){
-        Call call = retrofit.api.createNewCustomerAccount(account.getUsername(),account.getPassword(), account.getRights());
+        Call call = retrofit.api.createNewCustomerAccount(account);//account.getUsername(),account.getPassword(), account.getRights());
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
                 System.out.println("SUCCESS " + response.body());
+                System.out.println(call.request().body());
                 emptyAndPopulateAccountsRepoAPI();
             }
 
@@ -75,10 +75,11 @@ public class AccountRepository {
     }
 
     public void addAEmployeeAccountAPI(Employee account){
-        Call call = retrofit.api.createNewAccount(account.getUsername(),account.getPassword(), account.getRights());
+        Call call = retrofit.api.createNewEmployeeAccount(account);//account.getUsername(),account.getPassword(), account.getRights());
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
+                System.out.println("SUCCESS " + response.body());
                 emptyAndPopulateAccountsRepoAPI();
             }
 
@@ -90,10 +91,11 @@ public class AccountRepository {
     }
 
     public void addABusinessOwnerAccountAPI(BusinessOwner account){
-        Call call = retrofit.api.createNewAccount(account.getUsername(),account.getPassword(), account.getRights());
+        Call call = retrofit.api.createNewBusinessOwnerAccount(account);//account.getUsername(),account.getPassword(), account.getRights());
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
+                System.out.println("SUCCESS " + response.body());
                 emptyAndPopulateAccountsRepoAPI();
             }
 
@@ -106,65 +108,65 @@ public class AccountRepository {
 
     public void removeASingleAccountAPI(int accountID){
         Call call = retrofit.api.removeUser(accountID);
-        call.enqueue(new Callback() {
+        call.enqueue(new Callback<Account>() {
             @Override
-            public void onResponse(Call call, Response response) {
+            public void onResponse(Call<Account> call, Response<Account> response) {
+                System.out.println("SUCCESS " + response.body());
+                System.out.println("SUCCESS " + response.message());
                 emptyAndPopulateAccountsRepoAPI();
             }
 
             @Override
-            public void onFailure(Call call, Throwable t) {
-                System.out.println("Failed at addASingleAccount");
+            public void onFailure(Call<Account> call, Throwable t) {
+                System.out.println("Failed at removeASingleAccount");
             }
         });
     }
 
-    public void setRightsAPI(int accountID, RightsEnum rightsEnum){
-        Call call = retrofit.api.setRights(rightsEnum.toString(), accountID);
+    public void setRightsAPI(Account account, RightsEnum enumm){
+        account.setRights(enumm.name());
+        Call call = null;
+        if (account.getClass() == Customer.class){
+            call = retrofit.api.setRightsOfACustomer(account.getUserID(),(Customer)account);
+        }
+        if (account.getClass() == Employee.class){
+            call = retrofit.api.setRightsOfAnEmployee(account.getUserID(),(Employee)account);
+        }
+        if (account.getClass() == BusinessOwner.class){
+            call = retrofit.api.setRightsOfABusinessOwner(account.getUserID(),(BusinessOwner)account);
+        }
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {
+                System.out.println("SUCCESS AT SetRights ?: " + response.message());
                 emptyAndPopulateAccountsRepoAPI();
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
                 System.out.println("Failed at setRights");
+                System.out.println(t.getMessage());
 
             }
         });
 
-    }
-
-    public void setThresholdsAPI(float CO2, float humidity, float temperature){
-        Call call = retrofit.api.setThresholds(temperature,humidity,CO2);
-        call.enqueue(new Callback() {
-            @Override
-            public void onResponse(Call call, Response response) {
-                //update the sauna repo when calling this
-            }
-
-            @Override
-            public void onFailure(Call call, Throwable t) {
-                System.out.println("Failed at setThresholds");
-            }
-        });
     }
     //-----------------------------------------------------------------------------------------------
 
     public void accountInsert(Account account) {
         MyRoomDatabase.databaseWriteExecutor.execute(() -> {
-            if(account instanceof Customer){
-                ((Customer) account).setRoomNumber(account.getUserID());
-                accountsDao.insertCustomer((Customer)account);
-            }
 
-            if(account instanceof Employee){
+            if(account.getClass() == Employee.class){
                 accountsDao.insertEmployee((Employee) account);
             }
 
-            if(account instanceof BusinessOwner){
+            if(account.getClass() == BusinessOwner.class){
                 accountsDao.insertBusinessOwner((BusinessOwner) account);
+            }
+
+            if(account.getClass() == Customer.class){
+                ((Customer) account).setRoomNumber(account.getUserID());
+                accountsDao.insertCustomer((Customer)account);
             }
         });
     }

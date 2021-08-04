@@ -26,14 +26,13 @@ public class LoginViewModelTest {
     @Before
     public void setUp() throws Exception {
         vm = new LoginViewModel(ApplicationProvider.getApplicationContext());
-
     }
 
     @Test
     public void loginAndCheckRights() throws InterruptedException {
-        vm.login("this", "that");
-        Thread.sleep(20000);
-        System.out.println(vm.getCurrentAccountType());
+        vm.login("bob", "bob");
+        Thread.sleep(2000);
+        System.out.println("Test account type :"+vm.getCurrentAccountType());
     }
 
 }
