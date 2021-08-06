@@ -22,15 +22,15 @@ import java.util.Objects;
 
 import adapter.PageTransformer;
 import adapter.SectionsPageAdapterEm;
+import model.room.entity.Account.CurrentAccount;
 import view.activity.LogInView;
-import view.activity.owner.SettingsViewBo;
 
 public class HomeViewEm extends AppCompatActivity {
 
 private ImageButton backBtn;
 private ImageButton settingsBtn;
 private TextView titleW;
-
+private String rights;
 
 
 
@@ -44,7 +44,7 @@ private TextView titleW;
         setContentView(R.layout.activity_home_view_bo);
         backBtn = findViewById(R.id.backBtnHome);
         settingsBtn = findViewById(R.id.settingsBtn);
-        titleW = findViewById(R.id.titleTxt);
+        titleW = findViewById(R.id.bookingTitleTxt);
         SectionsPageAdapterEm sectionsPagerAdapter = new SectionsPageAdapterEm(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
         PageTransformer pageT = new PageTransformer();
@@ -53,6 +53,9 @@ private TextView titleW;
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
         Objects.requireNonNull(tabs.getTabAt(0)).select();
+
+
+        rights = "Supervisor";
 
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.bgDark));
@@ -77,6 +80,7 @@ private TextView titleW;
 
     public void openSettings(){
         Intent intent = new Intent(this, SettingsViewEm.class);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         }
@@ -94,6 +98,8 @@ private TextView titleW;
             startActivity(intent);
         }
     }
-
+    public String getUserRights(){
+        return rights;
+    }
 
 }

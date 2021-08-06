@@ -23,13 +23,14 @@ import java.util.Objects;
 import adapter.PageTransformer;
 import adapter.SectionsPageAdapterCu;
 import view.activity.LogInView;
-import view.activity.owner.SettingsViewBo;
 
 public class HomeViewCu extends AppCompatActivity {
 
 private ImageButton backBtn;
 private ImageButton settingsBtn;
 private TextView titleW;
+private String rights;
+private int userID;
 
 
 
@@ -44,7 +45,7 @@ private TextView titleW;
         setContentView(R.layout.activity_home_view_bo);
         backBtn = findViewById(R.id.backBtnHome);
         settingsBtn = findViewById(R.id.settingsBtn);
-        titleW = findViewById(R.id.titleTxt);
+        titleW = findViewById(R.id.bookingTitleTxt);
         SectionsPageAdapterCu sectionsPagerAdapter = new SectionsPageAdapterCu(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
         PageTransformer pageT = new PageTransformer();
@@ -53,6 +54,11 @@ private TextView titleW;
         TabLayout tabs = findViewById(R.id.tabs);
         tabs.setupWithViewPager(viewPager);
         Objects.requireNonNull(tabs.getTabAt(0)).select();
+
+        Bundle extras = getIntent().getExtras();
+        rights = "User";
+        userID = extras.getInt("UserID");
+
 
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.bgDark));
@@ -95,5 +101,12 @@ private TextView titleW;
         }
     }
 
+    public String getUserRights(){
+        return rights;
+    }
+
+    public int getUserID(){
+        return userID;
+    }
 
 }

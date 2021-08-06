@@ -44,7 +44,7 @@ private TextView titleW;
         setContentView(R.layout.activity_home_view_bo);
         backBtn = findViewById(R.id.backBtnHome);
         settingsBtn = findViewById(R.id.settingsBtn);
-        titleW = findViewById(R.id.titleTxt);
+        titleW = findViewById(R.id.bookingTitleTxt);
         SectionsPageAdapterBo sectionsPagerAdapter = new SectionsPageAdapterBo(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
         PageTransformer pageT = new PageTransformer();

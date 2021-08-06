@@ -7,7 +7,7 @@
     android:background="@drawable/bg2_transparent">
 
     <TextView
-        android:id="@+id/titleTxt"
+        android:id="@+id/bookingTitleTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/allerta"

@@ -37,10 +37,12 @@ public class LogInView extends AppCompatActivity {
     private MyRetrofit retrofit;
     private InterfaceAPI api;
     private String accountType;
+    private int userID;
     private EditText usernameField, pwField;
     private String username, pw;
     private LoginViewModel loginViewModel;
     private List<CurrentAccount> currentAccounts;
+
 
 
     @Override
@@ -69,11 +71,17 @@ public class LogInView extends AppCompatActivity {
 
                 currentAccounts = accounts;
                 String type = null;
+                int id = 0;
 
-                if(currentAccounts.size() != 0 ) type = currentAccounts.get(0).getRights();
+                if(currentAccounts.size() != 0 ) {
+                    type = currentAccounts.get(0).getRights();
+                    id = currentAccounts.get(0).getUserID();
+                }
+
                 System.out.println("SIZE IS "+ currentAccounts.size());
                 System.out.println("TYPE IS "+ type);
                 accountType = type;
+                userID = id;
                 if(type==null){
                     System.out.println("TYPE IS "+ " zero");
                 }else
@@ -137,6 +145,7 @@ public class LogInView extends AppCompatActivity {
     public void openHomePageCu(){
         Intent intent = new Intent(this, HomeViewCu.class);
         intent.putExtra("Rights",accountType);
+        intent.putExtra("UserID",userID);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         }

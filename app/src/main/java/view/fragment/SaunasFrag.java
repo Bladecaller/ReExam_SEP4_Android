@@ -24,7 +24,9 @@ import adapter.SaunaAdapter;
 import model.room.entity.Sauna.Sauna;
 import view.activity.SaunaView;
 import view.activity.customer.BookingViewCu;
+import view.activity.customer.HomeViewCu;
 import view.activity.employee.BookingViewEm;
+import view.activity.employee.HomeViewEm;
 import viewmodel.SaunaViewModel;
 
 /**
@@ -64,6 +66,7 @@ public class SaunasFrag extends Fragment implements SaunaAdapter.OnSaunaListener
     private List<Sauna> list;
     private ArrayList<Integer> imgList;
     private String type;
+    private int userID;
 
 
     public static SaunasFrag newInstance(String param1, String param2) {
@@ -106,9 +109,18 @@ public class SaunasFrag extends Fragment implements SaunaAdapter.OnSaunaListener
         imgList.add(R.drawable.sauna_1_c);
         imgList.add(R.drawable.sauna_2_c);
 
-        Bundle extras = getActivity().getIntent().getExtras();
-        type = String.valueOf(extras.getInt("Sauna"));
+        try {
+            HomeViewCu activity = (HomeViewCu) getActivity();
+            type = activity.getUserRights();
+            userID = activity.getUserID();
+        } catch (ClassCastException e){
+            HomeViewEm activity = (HomeViewEm) getActivity();
+            type = activity.getUserRights();
+        }
 
+
+
+        list = mSauna.getAllSaunas().getValue();
         mSauna.getAllSaunas().observe(getViewLifecycleOwner(), new Observer<List<Sauna>>() {
             @Override
             public void onChanged(List<Sauna> saunas) {
@@ -127,13 +139,13 @@ public class SaunasFrag extends Fragment implements SaunaAdapter.OnSaunaListener
     public void initRecyclerView(){
         RecyclerView.LayoutManager linearLayoutMananger = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutMananger);
-        adapter = new SaunaAdapter(getContext(),list,imgList,this);
+        adapter = new SaunaAdapter(getContext(),list,imgList,this,this);
         recyclerView.setAdapter(adapter);
 
     }
     public void update(){
 
-        adapter = new SaunaAdapter(getContext(),list,imgList,this);
+        adapter = new SaunaAdapter(getContext(),list,imgList,this,this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -146,17 +158,18 @@ public class SaunasFrag extends Fragment implements SaunaAdapter.OnSaunaListener
 
     @Override
     public void onButtonClick(int position) {
-        switch (type){
+       switch (type){
 
             case "Supervisor":
-                Intent intent = new Intent(getContext(), BookingViewCu.class);
-                intent.putExtra("Sauna",1);
+                Intent intent = new Intent(getContext(), BookingViewEm.class);
+                intent.putExtra("SaunaID",list.get(position).getSaunaID());
                 startActivity(intent);
                 break;
 
-            case "User      ":
-                intent = new Intent(getContext(), BookingViewEm.class);
-                intent.putExtra("Sauna",1);
+            case "User":
+                intent = new Intent(getContext(), BookingViewCu.class);
+                intent.putExtra("SaunaID",list.get(position).getSaunaID());
+                intent.putExtra("UserID",userID);
                 startActivity(intent);
                 break;
         }

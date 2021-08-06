@@ -38,8 +38,8 @@
             android:textStyle="bold"
             tools:layout_editor_absoluteY="323dp" />
 
-        <Switch
-            android:id="@+id/switch1"
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchEm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|end"
