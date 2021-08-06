@@ -36,7 +36,7 @@ public class SaunaRepositoryTest {
     }
 
 
-    @Test
+    //@Test
     public void populateAllSaunasAPI() throws InterruptedException {
         repository.getAllSaunas().observeForever(observer);
 
@@ -45,21 +45,21 @@ public class SaunaRepositoryTest {
         System.out.println("TEST initial size populate :"+list.size());
 
     }
-    @Test
+    //@Test
     public void openDoor(){
-        Sauna s = new Sauna(1,1,1,1,null);
+        Sauna s = new Sauna(1,1,1,1,2,null);
         repository.openDoorAPI(s);
     }
-    @Test
+    //@Test
     public void setThresholds() throws InterruptedException {
         repository.getAllSaunas().observeForever(observer);
 
         repository.emptyAndPopulateSaunasRepoAPI();
-        Thread.sleep(30000);
+        Thread.sleep(40000);
         System.out.println("TEST TEMP threshold before :"+list.get(list.size()-1).getTemperatureThreshold());
 
-        repository.setThresholdsAPI(5,5,5,list.get(list.size()-1));
-        Thread.sleep(30000);
+        repository.setThresholdsAPI(2,2,2,list.get(list.size()-1));
+        Thread.sleep(40000);
         System.out.println("TEST TEMP threshold after :"+list.get(list.size()-1).getTemperatureThreshold());
     }
     @Test

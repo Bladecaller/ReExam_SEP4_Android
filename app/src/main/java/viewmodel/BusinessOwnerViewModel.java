@@ -32,21 +32,35 @@ public class BusinessOwnerViewModel extends AndroidViewModel {
     public void setRights(Account account, RightsEnum enumm){
         repositoryAccount.setRightsAPI(account, enumm);
     }
-    public LiveData<List<Customer>> getCustomerAccounts(){return repositoryAccount.getCustomers();}
-    public LiveData<List<Employee>> getEmployeeAccounts(){return repositoryAccount.getEmployees();}
-    public LiveData<List<BusinessOwner>> getBusinessOwnerAccounts(){return repositoryAccount.getBusinessOwners();}
+
+    public LiveData<List<Customer>> getCustomerAccounts(){
+        return repositoryAccount.getCustomers();
+    }
+
+    public LiveData<List<Employee>> getEmployeeAccounts(){
+        return repositoryAccount.getEmployees();
+    }
+
+    public LiveData<List<BusinessOwner>> getBusinessOwnerAccounts(){
+        return repositoryAccount.getBusinessOwners();
+    }
+
     public void addCustomerAccount(Customer account){
         repositoryAccount.addACustomerAccountAPI(account);
     }
+
     public void addEmployeeAccount(Employee account){
         repositoryAccount.addAEmployeeAccountAPI(account);
     }
+
     public void addBusinessOwnerAccount(BusinessOwner account){
         repositoryAccount.addABusinessOwnerAccountAPI(account);
     }
+
     public void removeAccount(int id){
         repositoryAccount.removeASingleAccountAPI(id);
     }
+
     public void setThresholds(float CO2, float humidity, float temp, Sauna sauna){
         repositorySauna.setThresholdsAPI(CO2, humidity, temp, sauna);
         repositorySauna.emptyAndPopulateSaunasRepoAPI();

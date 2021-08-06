@@ -28,6 +28,7 @@ public class CustomerViewModel extends AndroidViewModel {
     public LiveData<List<Sauna>> getAllSaunas() {
         return repositorySauna.getAllSaunas();
     }
+
     public void book(Reservation reservation){
         repositoryReservation.createReservationAPI(reservation);
     }

@@ -61,7 +61,7 @@ public class SaunasDaoTest {
 
     @Test
     public void insertGetRemoveGet(){
-        Sauna sauna = new Sauna(1,12,12,4,null);
+        Sauna sauna = new Sauna(1,12,12,4,2,null);
         dao.getAllSaunas().observeForever(observer);
         dao.insert(sauna);
         System.out.println(list.get(0).getSaunaID());
