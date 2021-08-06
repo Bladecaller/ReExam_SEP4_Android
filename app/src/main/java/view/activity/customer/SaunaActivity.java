@@ -31,7 +31,8 @@ public class SaunaActivity extends AppCompatActivity {
     private List<DataPoint> datapointList;
     private List<String> co2,humidity, temperature;
     private ArrayList<String> xAxis;
-    private ArrayList<Entry> yAxisCO2,yAxisTemp,yAxisHum;
+    private ArrayList<String> yAxisCO2,yAxisTemp,yAxisHum;
+    private TextView txtCO2,txtHum,txtTemp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,9 @@ public class SaunaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sauna);
         saunaName = findViewById(R.id.saunaName);
         graph = findViewById(R.id.lineChart);
+        txtCO2 = findViewById(R.id.cO2Val);
+        txtHum = findViewById(R.id.humVal);
+        txtTemp = findViewById(R.id.tempVal);
 
         mSauna = new ViewModelProvider(this).get(SaunaViewModel.class);
 
@@ -47,22 +51,31 @@ public class SaunaActivity extends AppCompatActivity {
         name = String.valueOf(extras.getInt("Sauna"));
         saunaName.setText("Sauna " + name);
 
-        mSauna.getAllDatapointsForASauna(extras.getInt("Sauna")).observe(this, new Observer<List<DataPoint>>() {
+       /* mSauna.getAllDatapointsForASauna(extras.getInt("Sauna")).observe(this, new Observer<List<DataPoint>>() {
             @Override
             public void onChanged(List<DataPoint> dataPoints) {
                 datapointList = dataPoints;
 
                 for (int i =0; i < datapointList.size(); i++){
                     xAxis.add(datapointList.get(i).getDateTime());
-                    yAxisCO2.add(new Entry(Float.parseFloat(datapointList.get(i).getCo2()),Float.parseFloat(xAxis.get(i))));
-                    yAxisHum.add(new Entry(Float.parseFloat(datapointList.get(i).getHumidity()),Float.parseFloat(xAxis.get(i))));
-                    yAxisTemp.add(new Entry(Float.parseFloat(datapointList.get(i).getTemperature()),Float.parseFloat(xAxis.get(i))));
+                    yAxisCO2.add(datapointList.get(i).getCo2());
+                    yAxisTemp.add(datapointList.get(i).getTemperature());
+                    yAxisHum.add(datapointList.get(i).getHumidity());
+
+                    txtCO2.setText(yAxisCO2.get(0));
+                    txtTemp.setText(yAxisTemp.get(0));
+                    txtHum.setText(yAxisHum.get(0));
+
+                    *//*yAxisCO2.add(new Entry(Float.parseFloat(xAxis.get(i)),Float.parseFloat(datapointList.get(i).getCo2())));
+                    yAxisHum.add(new Entry(Float.parseFloat(xAxis.get(i)),Float.parseFloat(datapointList.get(i).getHumidity())));
+                    yAxisTemp.add(new Entry(Float.parseFloat(xAxis.get(i)),Float.parseFloat(datapointList.get(i).getTemperature())));*//*
+
                 }
 
             }
-        });
+        });*/
 
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+        /*ArrayList<ILineDataSet> dataSets = new ArrayList<>();
 
         LineDataSet datasetCO2 = new LineDataSet(yAxisCO2,"CO2");
         datasetCO2.setDrawCircles(false);
@@ -80,7 +93,7 @@ public class SaunaActivity extends AppCompatActivity {
         dataSets.add(datasetHum);
         dataSets.add(datasetTemp);
 
-        graph.setData(new LineData(dataSets));
+        graph.setData(new LineData(dataSets));*/
 
 
     }

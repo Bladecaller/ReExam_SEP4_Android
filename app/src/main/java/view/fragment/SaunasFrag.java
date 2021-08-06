@@ -108,6 +108,7 @@ public class SaunasFrag extends Fragment implements SaunaAdapter.OnSaunaListener
             @Override
             public void onChanged(List<Sauna> saunas) {
                 list = saunas;
+                initRecyclerView();
                 update();
             }
         });
