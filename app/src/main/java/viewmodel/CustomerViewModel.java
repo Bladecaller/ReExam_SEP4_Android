@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import model.room.entity.Account.Account;
+import model.room.entity.Account.Customer;
 import model.room.entity.Account.Reservation;
 import model.room.entity.Sauna.Sauna;
 import model.room.repositories.LoginRepository;
@@ -17,7 +18,6 @@ import model.room.repositories.SaunaRepository;
 public class CustomerViewModel extends AndroidViewModel {
     public SaunaRepository repositorySauna;
     public ReservationRepository repositoryReservation;
-    public Account currentAccount = LoginRepository.getLoginRepositoryInstance().currentAccount;
 
     public CustomerViewModel (Application application) {
         super(application);
@@ -31,11 +31,8 @@ public class CustomerViewModel extends AndroidViewModel {
     public void book(Reservation reservation){
         repositoryReservation.createReservationAPI(reservation);
     }
-    public LiveData<List<Reservation>> getPersonalReservations(){
+
+    public LiveData<List<Reservation>> getPersonalReservations(Customer currentAccount){
         return repositoryReservation.getReservationsForCurrentAccount(currentAccount.getUserID());
     }
-    public Account getCurrentAccount(){
-        return  currentAccount;
-    }
-
 }

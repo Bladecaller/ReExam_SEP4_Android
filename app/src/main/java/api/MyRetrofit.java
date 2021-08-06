@@ -26,9 +26,9 @@ public class MyRetrofit{
     public InterfaceAPI api;
     public Gson gson;
     final RuntimeTypeAdapterFactory<Account> typeFactory = RuntimeTypeAdapterFactory
-            .of(Account.class, "Rights") // Here you specify which is the parent class and what field particularizes the child class.
-            .registerSubtype(Customer.class, "User      ") // if the flag equals the class name, you can skip the second parameter. This is only necessary, when the "type" field does not equal the class name.
+            .of(Account.class, "Rights")
             .registerSubtype(Employee.class, "Supervisor")
+            .registerSubtype(Customer.class, "User      ")
             .registerSubtype(BusinessOwner.class, "Owner     ");
 
     public MyRetrofit(){

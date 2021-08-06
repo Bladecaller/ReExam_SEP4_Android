@@ -17,6 +17,7 @@ import java.util.List;
 import model.room.entity.Account.BusinessOwner;
 import model.room.entity.Account.Customer;
 import model.room.entity.Account.Employee;
+import model.room.entity.Account.RightsEnum;
 import model.room.entity.Sauna.DataPoint;
 import model.room.repositories.AccountRepository;
 import model.room.repositories.DataPointRepository;
@@ -50,8 +51,11 @@ public class AccountRepositoryTest {
     public void populateAccCustomerAPI() throws InterruptedException {
         repository.getCustomers().observeForever(observer);
         repository.emptyAndPopulateAccountsRepoAPI();
-        Thread.sleep(20000);
-        System.out.println("TEST  "+ list.get(1).getRights());
+        Thread.sleep(25000);
+        System.out.println("TEST size initial customer"+ list.size());
+        for(Customer cust : list){
+            System.out.println(cust.getUsername()+ " rights: " +cust.getRights());
+        }
         repository.getCustomers().removeObserver(observer);
 
     }
@@ -61,7 +65,10 @@ public class AccountRepositoryTest {
         repository.getEmployees().observeForever(observer1);
         repository.emptyAndPopulateAccountsRepoAPI();
         Thread.sleep(20000);
-        System.out.println("TEST "+ list1.get(0).getRights());
+        System.out.println("TEST size initial employee "+ list1.size());
+        for(Employee cust : list1){
+            System.out.println(cust.getUsername()+ " rights: " +cust.getRights());
+        }
         repository.getEmployees().removeObserver(observer1);
 
     }
@@ -71,19 +78,50 @@ public class AccountRepositoryTest {
         repository.getBusinessOwners().observeForever(observer2);
         repository.emptyAndPopulateAccountsRepoAPI();
         Thread.sleep(25000);
-        System.out.println("TEST  "+ list2.get(1).getRights());
-        System.out.println("TEST  "+ list2.get(1).getUsername());
-        System.out.println("TEST  "+ list2.get(0).getRights());
-        System.out.println("TEST  "+ list2.get(0).getUsername());
+        System.out.println("TEST size initial owner  "+ list2.size());
+        for(BusinessOwner cust : list2){
+            System.out.println(cust.getUsername()+ " rights: " +cust.getRights());
+        }
         repository.getBusinessOwners().removeObserver(observer2);
     }
 
-    //@Test
-    public void addCustomerAccount(){
+    @Test
+    public void addCustomerAccount() throws InterruptedException {
+
         repository.getCustomers().observeForever(observer);
-        Customer cust = new Customer(10,"user10","user10","User");
+        repository.emptyAndPopulateAccountsRepoAPI();
+        Thread.sleep(15000);
+        System.out.println("TEST size before adding  "+ list.size());
+
+        Customer cust = new Customer(10,"user14","user14","User");
         repository.addACustomerAccountAPI(cust);
-
+        Thread.sleep(15000);
+        System.out.println("TEST size after adding  "+ list.size());
+        repository.getCustomers().removeObserver(observer);
     }
+    @Test
+    public void removeAccount() throws  InterruptedException{
 
+        repository.getCustomers().observeForever(observer);
+        repository.emptyAndPopulateAccountsRepoAPI();
+        Thread.sleep(15000);
+        System.out.println("TEST size before remove  "+ list.size());
+
+        repository.removeASingleAccountAPI(10);
+        Thread.sleep(15000);
+        System.out.println("TEST size after remove  "+ list.size());
+        repository.getCustomers().removeObserver(observer);
+    }
+    @Test
+    public void setRights() throws  InterruptedException{
+        repository.getCustomers().observeForever(observer);
+
+        repository.emptyAndPopulateAccountsRepoAPI();
+        Thread.sleep(30000);
+        System.out.println("Test size before setting rights to another type :"+ list.size());
+
+        repository.setRightsAPI(list.get(list.size()-1), RightsEnum.Supervisor);
+        Thread.sleep(30000);
+        System.out.println("Test size after setting rights to another type :"+list.size());
+    }
 }

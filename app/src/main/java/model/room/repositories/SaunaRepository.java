@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -51,41 +52,32 @@ public class SaunaRepository {
         });
     }
 
-    public String openDoorAPI(Sauna sauna){
-        final String[] temp = {null};
-        Call <String> call = retrofit.api.openDoor(sauna.getSaunaID());
-        call.enqueue(new Callback<String>() {
+    public void openDoorAPI(Sauna sauna){
+        Call call = retrofit.api.openDoor(sauna.getSaunaID());
+        call.enqueue(new Callback() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                temp[0] = response.body();
+            public void onResponse(Call call, Response response) {
+                System.out.println("SUCCESS AT OPEN DOOR ?: " + response.message());
+
             }
 
             @Override
             public void onFailure(Call call, Throwable t) {
-                temp[0] = "Failed opening door";
                 System.out.println("Failed at OpenDoor");
             }
         });
-        return temp[0];
     }
 
-    public List<Sauna> checkNotificationsAPI(){
-        final Integer[] temp = {null};
-        List<Sauna> notifiedSaunas = null;
+    public List<Integer> checkNotificationsAPI(){
+        List<Integer> ints = new ArrayList<>();
         Call<List<Integer>> call = retrofit.api.checkNotification();
         call.enqueue(new Callback<List<Integer>>() {
             @Override
             public void onResponse(Call<List<Integer>> call, Response<List<Integer>> response) {
+                System.out.println("SUCCESS AT NOTIFICATIONS CHECK ?: " + response.message());
                 emptyAndPopulateSaunasRepoAPI();
-                List<Integer> temp;
-                Integer[] array = retrofit.gson.fromJson(response.body().toString(), Integer[].class);
-                temp = Arrays.asList(array);
-                for(Integer obj : temp){
-                    for(Sauna sauna: getAllSaunas().getValue()) {
-                        if (obj.intValue() == sauna.getSaunaID()) {
-                            notifiedSaunas.add(sauna);
-                        }
-                    }
+                for(Integer intObj: response.body()){
+                    ints.add(intObj);
                 }
             }
 
@@ -94,7 +86,25 @@ public class SaunaRepository {
 
             }
         });
-        return notifiedSaunas;
+        return ints;
+    }
+    public void setThresholdsAPI(float CO2, float humidity, float temperature,Sauna sauna){
+        sauna.setCO2Threshold(CO2);
+        sauna.setHumidityThreshold(humidity);
+        sauna.setTemperatureThreshold(temperature);
+        Call call = retrofit.api.setThresholds(sauna.getSaunaID(), sauna);
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                System.out.println("SUCCESS AT SET THRESHOLDS? :" + response.message());
+                emptyAndPopulateSaunasRepoAPI();
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                System.out.println("Failed at setThresholds");
+            }
+        });
     }
     //-------------Sauna-------------------------------------------------------------------------------------
 

@@ -32,7 +32,7 @@ public class CustomerViewModelTest {
     @Before
     public void setUp() throws Exception {
         vm = new CustomerViewModel(ApplicationProvider.getApplicationContext());
-        vm.currentAccount = new Customer(11,"jack", "jackPass", "User");
+       // vm.currentAccount = new Customer(11,"jack", "jackPass", "User");
 
         observerReservation = reservations -> reservationList = reservations;
 
@@ -40,13 +40,13 @@ public class CustomerViewModelTest {
     }
     @Test
     public void getReservationsForCustomer() throws InterruptedException {
-        vm.getPersonalReservations().observeForever(observerReservation);
+       // vm.getPersonalReservations().observeForever(observerReservation);
         vm.repositoryReservation.emptyAndPopulateReservationRepoAPI();
 
         Thread.sleep(10000);
         System.out.println("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL "+ reservationList.size());
         Thread.sleep(2000);
-        vm.getPersonalReservations().removeObserver(observerReservation);
+        //vm.getPersonalReservations().removeObserver(observerReservation);
     }
 
     @Test

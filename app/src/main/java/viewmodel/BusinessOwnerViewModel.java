@@ -10,10 +10,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+import model.room.entity.Account.Account;
 import model.room.entity.Account.BusinessOwner;
 import model.room.entity.Account.Customer;
 import model.room.entity.Account.Employee;
 import model.room.entity.Account.RightsEnum;
+import model.room.entity.Sauna.Sauna;
 import model.room.repositories.AccountRepository;
 import model.room.repositories.SaunaRepository;
 
@@ -27,8 +29,8 @@ public class BusinessOwnerViewModel extends AndroidViewModel {
         repositorySauna = new SaunaRepository(application);
     }
 
-    public void setRights(RightsEnum rights, int accountID){
-        repositoryAccount.setRightsAPI(accountID, rights);
+    public void setRights(Account account, RightsEnum enumm){
+        repositoryAccount.setRightsAPI(account, enumm);
     }
     public LiveData<List<Customer>> getCustomerAccounts(){return repositoryAccount.getCustomers();}
     public LiveData<List<Employee>> getEmployeeAccounts(){return repositoryAccount.getEmployees();}
@@ -45,8 +47,8 @@ public class BusinessOwnerViewModel extends AndroidViewModel {
     public void removeAccount(int id){
         repositoryAccount.removeASingleAccountAPI(id);
     }
-    public void setThresholds(float CO2,float humidity,float temp){
-        repositoryAccount.setThresholdsAPI(CO2, humidity, temp);
+    public void setThresholds(float CO2, float humidity, float temp, Sauna sauna){
+        repositorySauna.setThresholdsAPI(CO2, humidity, temp, sauna);
         repositorySauna.emptyAndPopulateSaunasRepoAPI();
     }
 }
