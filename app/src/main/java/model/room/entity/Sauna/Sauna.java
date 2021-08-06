@@ -13,6 +13,8 @@ public class Sauna {
     @NonNull
     @ColumnInfo(name = "SaunaID")
     private int SaunaID;
+    @ColumnInfo(name = "EstablishmentID")
+    private int EstablishmentID;
     @ColumnInfo(name = "HumidityThreshold")
     private float humidityThreshold;
     @ColumnInfo(name = "CO2Threshold")
@@ -22,11 +24,12 @@ public class Sauna {
     @ColumnInfo(name = "Datapoints")
     private List<DataPoint> Datapoints;
 
-    public Sauna(@NonNull int SaunaID, float humidityThreshold, float CO2Threshold, float temperatureThreshold,List<DataPoint>  Datapoints){
+    public Sauna(@NonNull int SaunaID, float humidityThreshold, float CO2Threshold, float temperatureThreshold,int EstablishmentID,List<DataPoint>  Datapoints){
         this.SaunaID = SaunaID;
         this.humidityThreshold = humidityThreshold;
         this.CO2Threshold = CO2Threshold;
         this.temperatureThreshold = temperatureThreshold;
+        this.EstablishmentID = EstablishmentID;
         this.Datapoints = Datapoints;
     }
 
@@ -67,5 +70,13 @@ public class Sauna {
 
     public void setDatapoints(List<DataPoint>  datapoints) {
         Datapoints = datapoints;
+    }
+
+    public int getEstablishmentID() {
+        return EstablishmentID;
+    }
+
+    public void setEstablishmentID(int establishmentID) {
+        EstablishmentID = establishmentID;
     }
 }

@@ -195,10 +195,10 @@ public class AccountRepository {
 
     //--------Notifications-------------------------------------------------------------------------------------
     public void changeNotifications(Employee currentAccount){
-            if(currentAccount.notifications==false){
-                currentAccount.notifications=true;
+            if(currentAccount.getNotifications()==false){
+                currentAccount.setNotifications(true);
             } else{
-               currentAccount.notifications=false;
+               currentAccount.setNotifications(false);
             }
     }
 }

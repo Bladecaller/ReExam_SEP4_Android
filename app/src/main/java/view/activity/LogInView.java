@@ -114,12 +114,7 @@ public class LogInView extends AppCompatActivity {
                         if (username.equals("") || pw.equals("")){
                             Toast.makeText(v.getContext(),"Fill In All The Fields",Toast.LENGTH_SHORT).show();
                         }
-                        loginViewModel.deleteAll();
-
                         loginViewModel.login(username,pw);
-
-
-                        //loginViewModel.deleteAll();
             }
 
         });

@@ -30,10 +30,6 @@ public class LoginRepository {
 
     }
 
-    private LoginRepository(){
-        retrofit = new MyRetrofit();
-    }
-
     public void login(String username, String password){
 
         Call<CurrentAccount> call = retrofit.api.logIn(username,password);
