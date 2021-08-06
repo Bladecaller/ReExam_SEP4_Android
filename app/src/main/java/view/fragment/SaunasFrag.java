@@ -22,7 +22,7 @@ import java.util.List;
 
 import adapter.SaunaAdapter;
 import model.room.entity.Sauna.Sauna;
-import view.activity.customer.SaunaActivityCu;
+import view.activity.customer.SaunaActivity;
 import viewmodel.SaunaViewModel;
 
 /**
@@ -55,7 +55,7 @@ public class SaunasFrag extends Fragment implements SaunaAdapter.OnSaunaListener
      */
     // TODO: Rename and change types and number of parameters
     private TextView textView;
-    private Button bookingBtn,updateBtn;
+    private Button bookingBtn;
     private SaunaViewModel mSauna;
     private RecyclerView recyclerView;
     private SaunaAdapter adapter;
@@ -91,7 +91,6 @@ public class SaunasFrag extends Fragment implements SaunaAdapter.OnSaunaListener
 
 
         bookingBtn = view.findViewById(R.id.btnBook1);
-        updateBtn = view.findViewById(R.id.updateBtn);
         imgList = new ArrayList<>();
 
         imgList.add(R.drawable.sauna_1_c);
@@ -113,12 +112,6 @@ public class SaunasFrag extends Fragment implements SaunaAdapter.OnSaunaListener
             }
         });
 
-        updateBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                update();
-            }
-        });
 
         initRecyclerView();
 
@@ -141,7 +134,7 @@ public class SaunasFrag extends Fragment implements SaunaAdapter.OnSaunaListener
 
     @Override
     public void onSaunaClick(int position) {
-        Intent intent = new Intent(this.getContext(), SaunaActivityCu.class);
+        Intent intent = new Intent(this.getContext(), SaunaActivity.class);
         intent.putExtra("Sauna",list.get(position).getSaunaID());
         startActivity(intent);
     }

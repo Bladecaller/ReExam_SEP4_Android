@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name="view.activity.customer.SaunaActivityCu"></activity>
+        <activity android:name="view.activity.customer.SaunaActivity"></activity>
         <activity android:name="view.activity.owner.SettingsViewBo" />
         <activity android:name="view.activity.customer.SettingsViewCu" />
         <activity android:name="view.activity.employee.SettingsViewEm" />
