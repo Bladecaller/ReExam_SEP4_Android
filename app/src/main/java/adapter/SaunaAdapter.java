@@ -26,8 +26,10 @@ public class SaunaAdapter extends RecyclerView.Adapter<SaunaAdapter.ViewHolder>{
     private List<Sauna> saunas;
     Context mContext;
     private ArrayList<Integer> image;
+    private OnSaunaListener mOnSaunaListener;
 
-    public SaunaAdapter(Context context, List<Sauna> itemList,ArrayList<Integer> imgList){
+    public SaunaAdapter(Context context, List<Sauna> itemList,ArrayList<Integer> imgList,OnSaunaListener onSaunaListener){
+        this.mOnSaunaListener = onSaunaListener;
         this.mContext = context;
         this.saunas = itemList;
         this.image = imgList;
@@ -40,8 +42,7 @@ public class SaunaAdapter extends RecyclerView.Adapter<SaunaAdapter.ViewHolder>{
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
         View mItemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_sauna,parent,false);
 
-
-        return new ViewHolder(mItemView,this);
+        return new ViewHolder(mItemView,this,mOnSaunaListener);
 
     }
 
@@ -61,18 +62,30 @@ public class SaunaAdapter extends RecyclerView.Adapter<SaunaAdapter.ViewHolder>{
         return saunas.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         SaunaAdapter adapter;
         private Button bookBtn;
         private ImageView img;
+        OnSaunaListener listener;
 
-        public ViewHolder(@NonNull @NotNull View itemView, SaunaAdapter adapter){
+        public ViewHolder(@NonNull @NotNull View itemView, SaunaAdapter adapter,OnSaunaListener listener){
             super(itemView);
 
             this.adapter = adapter;
+            this.listener = listener;
             bookBtn = itemView.findViewById(R.id.btnBook1);
             img = itemView.findViewById(R.id.saunaIMG);
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            listener.onSaunaClick(getAdapterPosition());
+        }
+    }
+
+    public interface OnSaunaListener{
+        void onSaunaClick(int position);
     }
 }
 

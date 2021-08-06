@@ -1,5 +1,6 @@
 package view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -21,6 +22,7 @@ import java.util.List;
 
 import adapter.SaunaAdapter;
 import model.room.entity.Sauna.Sauna;
+import view.activity.customer.SaunaActivityCu;
 import viewmodel.SaunaViewModel;
 
 /**
@@ -28,7 +30,7 @@ import viewmodel.SaunaViewModel;
  * Use the {@link SaunasFrag#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SaunasFrag extends Fragment {
+public class SaunasFrag extends Fragment implements SaunaAdapter.OnSaunaListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -107,12 +109,19 @@ public class SaunasFrag extends Fragment {
             @Override
             public void onChanged(List<Sauna> saunas) {
                 list = saunas;
-                initRecyclerView();
+                update();
+            }
+        });
+
+        updateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 update();
             }
         });
 
         initRecyclerView();
+
 
         return view;
     }
@@ -120,13 +129,20 @@ public class SaunasFrag extends Fragment {
     public void initRecyclerView(){
         RecyclerView.LayoutManager linearLayoutMananger = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutMananger);
-        adapter = new SaunaAdapter(getContext(),list,imgList);
+        adapter = new SaunaAdapter(getContext(),list,imgList,this);
         recyclerView.setAdapter(adapter);
 
     }
     public void update(){
 
-        adapter = new SaunaAdapter(getContext(),list,imgList);
+        adapter = new SaunaAdapter(getContext(),list,imgList,this);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onSaunaClick(int position) {
+        Intent intent = new Intent(this.getContext(), SaunaActivityCu.class);
+        intent.putExtra("Sauna",list.get(position).getSaunaID());
+        startActivity(intent);
     }
 }
