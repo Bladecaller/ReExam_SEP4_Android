@@ -22,7 +22,9 @@ import java.util.List;
 
 import adapter.SaunaAdapter;
 import model.room.entity.Sauna.Sauna;
-import view.activity.customer.SaunaActivity;
+import view.activity.SaunaView;
+import view.activity.customer.BookingViewCu;
+import view.activity.employee.BookingViewEm;
 import viewmodel.SaunaViewModel;
 
 /**
@@ -30,7 +32,7 @@ import viewmodel.SaunaViewModel;
  * Use the {@link SaunasFrag#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SaunasFrag extends Fragment implements SaunaAdapter.OnSaunaListener {
+public class SaunasFrag extends Fragment implements SaunaAdapter.OnSaunaListener, SaunaAdapter.OnButtonListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,6 +63,7 @@ public class SaunasFrag extends Fragment implements SaunaAdapter.OnSaunaListener
     private SaunaAdapter adapter;
     private List<Sauna> list;
     private ArrayList<Integer> imgList;
+    private String type;
 
 
     public static SaunasFrag newInstance(String param1, String param2) {
@@ -90,7 +93,7 @@ public class SaunasFrag extends Fragment implements SaunaAdapter.OnSaunaListener
         mSauna = new ViewModelProvider(this).get(SaunaViewModel.class);
 
 
-        bookingBtn = view.findViewById(R.id.btnBook1);
+        bookingBtn = view.findViewById(R.id.btnBooking);
         imgList = new ArrayList<>();
 
         imgList.add(R.drawable.sauna_1_c);
@@ -103,6 +106,8 @@ public class SaunasFrag extends Fragment implements SaunaAdapter.OnSaunaListener
         imgList.add(R.drawable.sauna_1_c);
         imgList.add(R.drawable.sauna_2_c);
 
+        Bundle extras = getActivity().getIntent().getExtras();
+        type = String.valueOf(extras.getInt("Sauna"));
 
         mSauna.getAllSaunas().observe(getViewLifecycleOwner(), new Observer<List<Sauna>>() {
             @Override
@@ -115,7 +120,6 @@ public class SaunasFrag extends Fragment implements SaunaAdapter.OnSaunaListener
 
 
         initRecyclerView();
-
 
         return view;
     }
@@ -135,8 +139,26 @@ public class SaunasFrag extends Fragment implements SaunaAdapter.OnSaunaListener
 
     @Override
     public void onSaunaClick(int position) {
-        Intent intent = new Intent(this.getContext(), SaunaActivity.class);
+        Intent intent = new Intent(this.getContext(), SaunaView.class);
         intent.putExtra("Sauna",list.get(position).getSaunaID());
         startActivity(intent);
+    }
+
+    @Override
+    public void onButtonClick(int position) {
+        switch (type){
+
+            case "Supervisor":
+                Intent intent = new Intent(getContext(), BookingViewCu.class);
+                intent.putExtra("Sauna",1);
+                startActivity(intent);
+                break;
+
+            case "User      ":
+                intent = new Intent(getContext(), BookingViewEm.class);
+                intent.putExtra("Sauna",1);
+                startActivity(intent);
+                break;
+        }
     }
 }

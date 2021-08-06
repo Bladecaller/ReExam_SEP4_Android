@@ -36,6 +36,7 @@ public class LogInView extends AppCompatActivity {
     private ProgressBar pbar;
     private MyRetrofit retrofit;
     private InterfaceAPI api;
+    private String accountType;
     private EditText usernameField, pwField;
     private String username, pw;
     private LoginViewModel loginViewModel;
@@ -72,6 +73,7 @@ public class LogInView extends AppCompatActivity {
                 if(currentAccounts.size() != 0 ) type = currentAccounts.get(0).getRights();
                 System.out.println("SIZE IS "+ currentAccounts.size());
                 System.out.println("TYPE IS "+ type);
+                accountType = type;
                 if(type==null){
                     System.out.println("TYPE IS "+ " zero");
                 }else
@@ -123,6 +125,7 @@ public class LogInView extends AppCompatActivity {
     }
     public void openHomePageBo(){
         Intent intent = new Intent(this, HomeViewBo.class);
+        intent.putExtra("Rights",accountType);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         }
@@ -133,6 +136,7 @@ public class LogInView extends AppCompatActivity {
     }
     public void openHomePageCu(){
         Intent intent = new Intent(this, HomeViewCu.class);
+        intent.putExtra("Rights",accountType);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         }
@@ -144,6 +148,7 @@ public class LogInView extends AppCompatActivity {
 
     public void openHomePageEm(){
         Intent intent = new Intent(this, HomeViewEm.class);
+        intent.putExtra("Rights",accountType);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         }

@@ -4,44 +4,84 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="view.activity.customer.SaunaActivity">
+    android:background="@color/bgDark"
+    tools:context="view.activity.SaunaView">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:background="@drawable/bg_transparent"
+    <TextView
+        android:id="@+id/saunaName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/allerta"
+        android:text=""
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/saunaName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/allerta"
-            android:text=""
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.1" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/lineChart"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/tempCard"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="10dp"
+        app:cardBackgroundColor="@color/bgDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/saunaName">
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChartTemp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/transparent">
+
+        </com.github.mikephil.charting.charts.LineChart>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/humCard"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        app:cardBackgroundColor="@color/bgDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tempCard">
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChartHum"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </com.github.mikephil.charting.charts.LineChart>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/co2Card"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        app:cardBackgroundColor="@color/bgDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+        app:layout_constraintTop_toBottomOf="@+id/humCard">
 
-    </com.github.mikephil.charting.charts.LineChart>
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lineChartCO2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </com.github.mikephil.charting.charts.LineChart>
+
+
+    </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardViewTitle"
@@ -51,7 +91,7 @@
         app:cardBackgroundColor="@color/accent3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lineChart">
+        app:layout_constraintTop_toBottomOf="@+id/co2Card">
 
 
         <TextView
@@ -75,13 +115,13 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
         app:cardBackgroundColor="@color/accent3"
         app:cardCornerRadius="35dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardViewTitle">
+        app:layout_constraintTop_toBottomOf="@+id/cardView2">
 
 
         <TextView
@@ -118,7 +158,7 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
         app:cardBackgroundColor="@color/accent3"
         app:cardCornerRadius="35dp"
@@ -161,14 +201,13 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
         app:cardBackgroundColor="@color/accent3"
         app:cardCornerRadius="35dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView1">
+        app:layout_constraintTop_toBottomOf="@+id/cardViewTitle">
 
 
         <TextView

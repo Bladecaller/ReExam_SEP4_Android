@@ -49,7 +49,14 @@ public class SaunaAdapter extends RecyclerView.Adapter<SaunaAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
         Sauna current = saunas.get(position);
+
         holder.img.setImageResource(image.get(position));
+        holder.bookBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.getAdapterPosition();
+            }
+        });
 
     }
 
@@ -68,12 +75,13 @@ public class SaunaAdapter extends RecyclerView.Adapter<SaunaAdapter.ViewHolder>{
         private ImageView img;
         OnSaunaListener listener;
 
+
         public ViewHolder(@NonNull @NotNull View itemView, SaunaAdapter adapter,OnSaunaListener listener){
             super(itemView);
 
             this.adapter = adapter;
             this.listener = listener;
-            bookBtn = itemView.findViewById(R.id.btnBook1);
+            bookBtn = itemView.findViewById(R.id.btnBooking);
             img = itemView.findViewById(R.id.saunaIMG);
             itemView.setOnClickListener(this);
         }
@@ -82,10 +90,15 @@ public class SaunaAdapter extends RecyclerView.Adapter<SaunaAdapter.ViewHolder>{
         public void onClick(View v) {
             listener.onSaunaClick(getAdapterPosition());
         }
+
     }
 
     public interface OnSaunaListener{
         void onSaunaClick(int position);
+    }
+
+    public interface OnButtonListener{
+        void onButtonClick(int position);
     }
 }
 

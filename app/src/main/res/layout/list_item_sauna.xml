@@ -27,7 +27,7 @@
             android:scaleType="fitStart" />
 
         <Button
-            android:id="@+id/btnBook1"
+            android:id="@+id/btnBooking"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_gravity="bottom|end"
