@@ -120,7 +120,7 @@ public class AccountRepositoryTest {
         Thread.sleep(30000);
         System.out.println("Test size before setting rights to another type :"+ list.size());
 
-        repository.setRightsAPI(list.get(list.size()-1), RightsEnum.Supervisor);
+        repository.setRightsAPI(list.get(list.size()-1), "Supervisor");
         Thread.sleep(30000);
         System.out.println("Test size after setting rights to another type :"+list.size());
     }

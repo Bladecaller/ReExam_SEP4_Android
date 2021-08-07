@@ -53,8 +53,8 @@ public class SaunaRepository {
         });
     }
 
-    public void openDoorAPI(Sauna sauna){
-        Call call = retrofit.api.openDoor(sauna.getSaunaID());
+    public void openDoorAPI(int id){
+        Call call = retrofit.api.openDoor(id);
         call.enqueue(new Callback() {
             @Override
             public void onResponse(Call call, Response response) {

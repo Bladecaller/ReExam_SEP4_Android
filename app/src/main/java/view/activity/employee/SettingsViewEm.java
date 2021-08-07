@@ -85,7 +85,7 @@ public class SettingsViewEm extends AppCompatActivity {
                         @Override
                         public void run() {
                             mModel.checkforNotifications();
-                            if(saunaIDs.isEmpty() == false){
+                            if(!saunaIDs.isEmpty()){
                                 System.out.println("NOTIFIED SAUNA : "+ saunaIDs.size());
                                 System.out.println("NOTIFIED SAUNA : "+ saunaIDs.get(0).getSaunaID());
                                 manager.notify(0, builder.build());

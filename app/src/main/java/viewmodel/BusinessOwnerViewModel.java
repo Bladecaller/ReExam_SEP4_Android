@@ -29,8 +29,8 @@ public class BusinessOwnerViewModel extends AndroidViewModel {
         repositorySauna = new SaunaRepository(application);
     }
 
-    public void setRights(Account account, RightsEnum enumm){
-        repositoryAccount.setRightsAPI(account, enumm);
+    public void setRights(Account account, String rights){
+        repositoryAccount.setRightsAPI(account, rights);
     }
 
     public LiveData<List<Customer>> getCustomerAccounts(){

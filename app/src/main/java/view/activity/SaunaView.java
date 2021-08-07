@@ -8,7 +8,10 @@ import androidx.lifecycle.ViewModelProvider;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sep4_android.R;
 import com.github.mikephil.charting.charts.LineChart;
@@ -35,6 +38,7 @@ public class SaunaView extends AppCompatActivity {
     private LineChart graphCO2,graphTemp, graphHum;
     private SaunaViewModel mSauna;
     private List<DataPoint> datapointList;
+    private Button openBtn;
     private List<String> co2,humidity, temperature;
     private ArrayList<String> xAxis = new ArrayList<>();
     private ArrayList<String> yAxisHum = new ArrayList<>();
@@ -43,6 +47,7 @@ public class SaunaView extends AppCompatActivity {
     private ArrayList<Entry> yAxisHumEntry = new ArrayList<>();
     private ArrayList<Entry> yAxisCO2Entry = new ArrayList<>();
     private ArrayList<Entry> yAxisTempEntry = new ArrayList<>();
+    private String userRights;
 
     private TextView txtCO2,txtHum,txtTemp;
 
@@ -57,6 +62,7 @@ public class SaunaView extends AppCompatActivity {
         txtCO2 = findViewById(R.id.cO2Val);
         txtHum = findViewById(R.id.humVal);
         txtTemp = findViewById(R.id.tempVal);
+        openBtn = findViewById(R.id.openDoorBtn);
 
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.bgDark));
@@ -68,6 +74,8 @@ public class SaunaView extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         String name;
         name = String.valueOf(extras.getInt("Sauna"));
+        userRights = String.valueOf(extras.getString("UserID"));
+
         saunaName.setText("Sauna " + name);
         datapointList = mSauna.getAllDatapointsForASauna(extras.getInt("Sauna")).getValue();
         mSauna.getAllDatapointsForASauna(extras.getInt("Sauna")).observe(this, new Observer<List<DataPoint>>() {
@@ -193,11 +201,26 @@ public class SaunaView extends AppCompatActivity {
             }
         });
 
+        switch (userRights){
 
+            case "Supervisor" :
+                openBtn.setVisibility(View.VISIBLE);
+                break;
 
+            case "User" :
 
+            case "" :
+                openBtn.setVisibility(View.INVISIBLE);
+                break;
+        }
 
-
+        openBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSauna.spinServo(extras.getInt("Sauna"));
+                Toast.makeText(v.getContext(),"Door Opened",Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 }

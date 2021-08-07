@@ -121,8 +121,8 @@ public class AccountRepository {
         });
     }
 
-    public void setRightsAPI(Account account, RightsEnum enumm){
-        account.setRights(enumm.name());
+    public void setRightsAPI(Account account, String rights){
+        account.setRights(rights);
         Call call = null;
         if (account.getClass() == Customer.class){
             call = retrofit.api.setRightsOfACustomer(account.getUserID(),(Customer)account);

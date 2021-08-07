@@ -92,7 +92,7 @@ public class SaunasFrag extends Fragment implements SaunaAdapter.OnSaunaListener
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_saunas, container, false);
-        recyclerView = view.findViewById(R.id.rViewSauna);
+        recyclerView = view.findViewById(R.id.rViewSaunas);
         mSauna = new ViewModelProvider(this).get(SaunaViewModel.class);
 
 
@@ -153,6 +153,7 @@ public class SaunasFrag extends Fragment implements SaunaAdapter.OnSaunaListener
     public void onSaunaClick(int position) {
         Intent intent = new Intent(this.getContext(), SaunaView.class);
         intent.putExtra("Sauna",list.get(position).getSaunaID());
+        intent.putExtra("UserID",type);
         startActivity(intent);
     }
 
@@ -163,6 +164,7 @@ public class SaunasFrag extends Fragment implements SaunaAdapter.OnSaunaListener
             case "Supervisor":
                 Intent intent = new Intent(getContext(), BookingViewEm.class);
                 intent.putExtra("SaunaID",list.get(position).getSaunaID());
+                intent.putExtra("UserID","Supervisor");
                 startActivity(intent);
                 break;
 

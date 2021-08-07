@@ -39,8 +39,8 @@ public class EmployeeViewModel extends AndroidViewModel {
         repositoryReservation.createReservationAPI(reservation);
     }
 
-    public void openDoor(Sauna sauna){
-        repositorySauna.openDoorAPI(sauna);
+    public void openDoor(int id){
+        repositorySauna.openDoorAPI(id);
     }
 
     public void checkforNotifications(){repositorySauna.checkNotificationsAPI();}

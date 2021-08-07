@@ -29,7 +29,7 @@ public class SaunaViewModel extends AndroidViewModel {
         repositoryData.emptyAndPopulateDatapointRepoAPI(saunaID);
         return repositoryData.getAllDataPoints();
     }
-    public void spinServo(Sauna sauna){
-        repositorySauna.openDoorAPI(sauna);
+    public void spinServo(int id){
+        repositorySauna.openDoorAPI(id);
     }
 }
