@@ -55,7 +55,13 @@ public class UserViewBo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mViewModel.setRights(account,userSpinner.getSelectedItem().toString());
+            }
+        });
 
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mViewModel.removeAccount(account.getUserID());
             }
         });
 

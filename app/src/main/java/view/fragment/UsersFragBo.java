@@ -1,5 +1,6 @@
 package view.fragment;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.sep4_android.R;
 
@@ -62,6 +65,11 @@ public class UsersFragBo extends Fragment implements UserAdapter.OnButtonListene
     private List<Customer> customerList;
     private BusinessOwnerViewModel mViewModel;
     private UserAdapter adapter;
+    private Button createBtn, createNewUserBtn;
+    private AlertDialog.Builder dialogBuilder;
+    private AlertDialog dialog;
+    private String rights;
+    private EditText idField, nameField, pwField, rightsField;
 
     public static UsersFragBo newInstance(String param1, String param2) {
         UsersFragBo fragment = new UsersFragBo();
@@ -87,17 +95,26 @@ public class UsersFragBo extends Fragment implements UserAdapter.OnButtonListene
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_users_frag_bo, container, false);
         recyclerView = view.findViewById(R.id.rViewUsers);
+        createBtn = view.findViewById(R.id.createNewUser);
         mViewModel = new ViewModelProvider(this).get(BusinessOwnerViewModel.class);
         accountList = new ArrayList<>();
 
         customerList = new ArrayList<>();
         employeeList = new ArrayList<>();
 
-
         mViewModel.getCustomerAccounts().observe(getViewLifecycleOwner(), new Observer<List<Customer>>() {
             @Override
             public void onChanged(List<Customer> customers) {
+                List<Account> toRemove = new ArrayList<>();
                 customerList = customers;
+                for(Customer cus: customers){
+                    for(Account acc: accountList){
+                        if(cus.getUserID() == acc.getUserID()){
+                            toRemove.add(acc);
+                        }
+                    }
+                }
+                accountList.removeAll(toRemove);
                 accountList.addAll(customerList);
                 update();
             }
@@ -106,14 +123,31 @@ public class UsersFragBo extends Fragment implements UserAdapter.OnButtonListene
         mViewModel.getEmployeeAccounts().observe(getViewLifecycleOwner(), new Observer<List<Employee>>() {
             @Override
             public void onChanged(List<Employee> employees) {
+                List<Account> toRemove = new ArrayList<>();
                 employeeList = employees;
+                for(Employee emp: employees){
+                    for(Account acc: accountList){
+                        if(emp.getUserID() == acc.getUserID()){
+                            toRemove.add(acc);
+                        }
+                    }
+                }
+                accountList.removeAll(toRemove);
                 accountList.addAll(employeeList);
                 update();
-
             }
         });
 
         initRecyclerView();
+
+        createBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreateNewUserDialog();
+            }
+        });
+
+
 
         return view;
     }
@@ -132,12 +166,51 @@ public class UsersFragBo extends Fragment implements UserAdapter.OnButtonListene
         recyclerView.setAdapter(adapter);
     }
 
+
     @Override
     public void OnButtonClick(int position) {
         Intent intent = new Intent(getContext(), UserViewBo.class);
         intent.putExtra("UserID",accountList.get(position).getUserID());
         intent.putExtra("UserAccount",accountList.get(position));
         startActivity(intent);
+    }
+
+    public void CreateNewUserDialog(){
+        dialogBuilder = new AlertDialog.Builder(this.getContext());
+        final View popup = getLayoutInflater().inflate(R.layout.popup,null);
+
+        idField = popup.findViewById(R.id.idTxt);
+        nameField = popup.findViewById(R.id.nameTxt);
+        pwField = popup.findViewById(R.id.pwTxt);
+        rightsField = popup.findViewById(R.id.newrightsTxt);
+        createNewUserBtn = popup.findViewById(R.id.createUserBtn);
+        rights = "";
+
+        dialogBuilder.setView(popup);
+        dialog = dialogBuilder.create();
+        dialog.show();
+
+        createNewUserBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rights = rightsField.getText().toString();
+                System.out.println(rights);
+
+                switch (rights){
+                    case "User":
+                        Customer customer = new Customer(Integer.parseInt(idField.getText().toString()),nameField.getText().toString(),pwField.getText().toString(),rights);
+                        mViewModel.addCustomerAccount(customer);
+                        dialog.dismiss();
+                        break;
+
+                    case "Supervisor":
+                        Employee employee = new Employee(Integer.parseInt(idField.getText().toString()),nameField.getText().toString(),pwField.getText().toString(),rights);
+                        mViewModel.addEmployeeAccount(employee);
+                        dialog.dismiss();
+                        break;
+                }
+            }
+        });
     }
 
 }

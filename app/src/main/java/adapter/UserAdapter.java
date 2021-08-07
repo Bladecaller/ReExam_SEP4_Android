@@ -41,6 +41,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>  {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Account current = users.get(position);
         holder.tName.setText(current.getUsername());
+        holder.tRights.setText(current.getRights());
         holder.editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +62,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>  {
     class ViewHolder extends RecyclerView.ViewHolder{
         UserAdapter adapter;
         private TextView tName;
+        private TextView tRights;
         private Button editBtn;
 
         public ViewHolder(@NonNull @NotNull View itemView,UserAdapter adapter) {
@@ -69,6 +71,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>  {
             this.adapter = adapter;
             editBtn = itemView.findViewById(R.id.btnEdit);
             tName = itemView.findViewById(R.id.username);
+            tRights = itemView.findViewById(R.id.rights);
         }
     }
 
