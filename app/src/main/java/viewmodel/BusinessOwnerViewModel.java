@@ -65,4 +65,8 @@ public class BusinessOwnerViewModel extends AndroidViewModel {
         repositorySauna.setThresholdsAPI(CO2, humidity, temp, sauna);
         repositorySauna.emptyAndPopulateSaunasRepoAPI();
     }
+
+    public LiveData<List<Sauna>> getSaunas(){
+        return repositorySauna.getAllSaunas();
+    }
 }

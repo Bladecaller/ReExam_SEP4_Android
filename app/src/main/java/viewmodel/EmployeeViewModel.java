@@ -10,6 +10,7 @@ import java.util.List;
 import model.room.entity.Account.Customer;
 import model.room.entity.Account.Employee;
 import model.room.entity.Account.Reservation;
+import model.room.entity.IntegerEntity;
 import model.room.entity.Sauna.Sauna;
 import model.room.repositories.AccountRepository;
 import model.room.repositories.ReservationRepository;
@@ -42,7 +43,7 @@ public class EmployeeViewModel extends AndroidViewModel {
         repositorySauna.openDoorAPI(sauna);
     }
 
-    public void changeNotificationsStatus(Employee currentAccount){repositoryAccount.changeNotifications(currentAccount);};
+    public void checkforNotifications(){repositorySauna.checkNotificationsAPI();}
 
-    public List<Integer> notificationCheck(){ return repositorySauna.checkNotificationsAPI();}
+    public LiveData<List<IntegerEntity>> getAllNotifiedSaunas(){ return repositorySauna.getAllIntegerEntities();}
 }

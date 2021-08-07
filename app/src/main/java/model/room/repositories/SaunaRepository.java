@@ -11,6 +11,7 @@ import java.util.List;
 
 import api.MyRetrofit;
 import model.room.dao.SaunasDao;
+import model.room.entity.IntegerEntity;
 import model.room.entity.Sauna.Sauna;
 import model.room.roomdatabase.MyRoomDatabase;
 import retrofit2.Call;
@@ -68,16 +69,16 @@ public class SaunaRepository {
         });
     }
 
-    public List<Integer> checkNotificationsAPI(){
-        List<Integer> ints = new ArrayList<>();
+    public void checkNotificationsAPI(){
         Call<List<Integer>> call = retrofit.api.checkNotification();
         call.enqueue(new Callback<List<Integer>>() {
             @Override
             public void onResponse(Call<List<Integer>> call, Response<List<Integer>> response) {
                 System.out.println("SUCCESS AT NOTIFICATIONS CHECK ?: " + response.message());
-                emptyAndPopulateSaunasRepoAPI();
+                emptyIntegerRepo();
                 for(Integer intObj: response.body()){
-                    ints.add(intObj);
+                    IntegerEntity ent = new IntegerEntity(intObj+1,intObj);
+                    saunaIdInsert(ent);
                 }
             }
 
@@ -86,7 +87,6 @@ public class SaunaRepository {
 
             }
         });
-        return ints;
     }
     public void setThresholdsAPI(float CO2, float humidity, float temperature,Sauna sauna){
         sauna.setCO2Threshold(CO2);
@@ -124,5 +124,24 @@ public class SaunaRepository {
     //return all saunas
     public LiveData<List<Sauna>> getAllSaunas(){
         return saunasDao.getAllSaunas();
+    }
+    //--------------IntegerEntity---------------------------------------------------------------------------------
+
+    public void saunaIdInsert(IntegerEntity entity){
+        MyRoomDatabase.databaseWriteExecutor.execute(() -> {
+            saunasDao.insertSaunaID(entity);
+        });
+    }
+
+    //delete all saunas
+    public void emptyIntegerRepo(){
+        MyRoomDatabase.databaseWriteExecutor.execute(() -> {
+            saunasDao.deleteIntegersAll();
+        });
+    }
+
+    //return all saunas
+    public LiveData<List<IntegerEntity>> getAllIntegerEntities(){
+        return saunasDao.getAllnotifiedSaunaIDs();
     }
 }

@@ -22,11 +22,12 @@ import model.room.entity.Account.Customer;
 import model.room.entity.Account.Employee;
 import model.room.entity.Account.Reservation;
 import model.room.entity.Converters;
+import model.room.entity.IntegerEntity;
 import model.room.entity.Sauna.DataPoint;
 import model.room.entity.Sauna.Sauna;
 
 @Database(entities = {CurrentAccount.class, Account.class, BusinessOwner.class, Customer.class,
-        Employee.class, Reservation.class, DataPoint.class, Sauna.class,
+        Employee.class, Reservation.class, DataPoint.class, Sauna.class, IntegerEntity.class
 },
         version = 1, exportSchema = false)
 @TypeConverters({Converters.class})

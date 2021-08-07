@@ -12,6 +12,7 @@ import org.junit.rules.TestRule;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.room.entity.IntegerEntity;
 import model.room.entity.Sauna.Sauna;
 import model.room.repositories.SaunaRepository;
 
@@ -62,11 +63,12 @@ public class SaunaRepositoryTest {
         Thread.sleep(40000);
         System.out.println("TEST TEMP threshold after :"+list.get(list.size()-1).getTemperatureThreshold());
     }
-    @Test
+    //@Test
     public void notifications() throws InterruptedException {
-        List<Integer> listInt = new ArrayList<>();
-        listInt = repository.checkNotificationsAPI();
-        Thread.sleep(10_000);
-        System.out.println("Saunas over the top :"+ listInt.size());
+        //List<IntegerEntity> listInt = new ArrayList<>();
+        //repository.checkNotificationsAPI();
+        //listInt = repository
+        //Thread.sleep(10_000);
+        //System.out.println("Saunas over the top :"+ listInt.size());
     }
 }

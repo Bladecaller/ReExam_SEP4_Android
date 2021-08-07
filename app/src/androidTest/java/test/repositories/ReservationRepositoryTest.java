@@ -52,7 +52,7 @@ public class ReservationRepositoryTest {
         Thread.sleep(25000);
         System.out.println("TEST reservation size before adding a reservation "+list.size());
 
-        Reservation book = new Reservation(5,1,"14:29","16:00");
+        Reservation book = new Reservation(5,1,"14:30","16:00");
         repository.createReservationAPI(book);
         Thread.sleep(25000);
         System.out.println("TEST reservation size after adding a reservation "+ list.size());

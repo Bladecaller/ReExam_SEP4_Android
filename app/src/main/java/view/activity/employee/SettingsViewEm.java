@@ -21,15 +21,19 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sep4_android.R;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import model.room.entity.Account.CurrentAccount;
 import model.room.entity.Account.Employee;
+import model.room.entity.IntegerEntity;
 import view.activity.employee.HomeViewEm;
 import viewmodel.EmployeeViewModel;
 
@@ -38,6 +42,7 @@ public class SettingsViewEm extends AppCompatActivity {
     private EmployeeViewModel mModel;
     private ImageButton backBtn;
     private SwitchCompat notificationsSwitch;
+    private List<IntegerEntity> saunaIDs = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,7 @@ public class SettingsViewEm extends AppCompatActivity {
             getWindow().requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS);
             getWindow().setExitTransition(new Explode());
         }
+        mModel = new ViewModelProvider(this).get(EmployeeViewModel.class);
         setContentView(R.layout.activity_settings_view_em);
         backBtn = findViewById(R.id.backBtnSettings);
         notificationsSwitch = findViewById(R.id.switchEm);
@@ -61,9 +67,15 @@ public class SettingsViewEm extends AppCompatActivity {
 
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
+        mModel.getAllNotifiedSaunas().observe(this, new Observer<List<IntegerEntity>>() {
+            @Override
+            public void onChanged(List<IntegerEntity> accounts) {
+                saunaIDs = accounts;
+            }
+        });
 
 
-        mModel = new ViewModelProvider(this).get(EmployeeViewModel.class);
+
 
         notificationsSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -72,13 +84,16 @@ public class SettingsViewEm extends AppCompatActivity {
                     new Timer().scheduleAtFixedRate(new TimerTask() {
                         @Override
                         public void run() {
-                            mModel.notificationCheck();
-                            manager.notify(0, builder.build());
+                            mModel.checkforNotifications();
+                            if(saunaIDs.isEmpty() == false){
+                                System.out.println("NOTIFIED SAUNA : "+ saunaIDs.size());
+                                System.out.println("NOTIFIED SAUNA : "+ saunaIDs.get(0).getSaunaID());
+                                manager.notify(0, builder.build());
+                                for(IntegerEntity ent: saunaIDs){saunaIDs.remove(ent);}
+                            }
                         }
                     }, 0, 10000);//put here time 1000 milliseconds=1 second
                 }
-
-
             }
         });
 
