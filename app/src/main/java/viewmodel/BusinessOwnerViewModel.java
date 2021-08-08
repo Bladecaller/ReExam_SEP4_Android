@@ -34,10 +34,12 @@ public class BusinessOwnerViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Customer>> getCustomerAccounts(){
+        repositoryAccount.emptyAndPopulateAccountsRepoAPI();
         return repositoryAccount.getCustomers();
     }
 
     public LiveData<List<Employee>> getEmployeeAccounts(){
+        repositoryAccount.emptyAndPopulateAccountsRepoAPI();
         return repositoryAccount.getEmployees();
     }
 

@@ -28,7 +28,6 @@ import viewmodel.BusinessOwnerViewModel;
 
 public class SettingsViewBo extends AppCompatActivity {
 
-    private ImageButton backBtn;
     private Button tBtn;
     private EditText co2Field,tempField,humField;
     private BusinessOwnerViewModel mModel;
@@ -42,7 +41,6 @@ public class SettingsViewBo extends AppCompatActivity {
             getWindow().setExitTransition(new Explode());
         }
         setContentView(R.layout.activity_settings_view);
-        backBtn = findViewById(R.id.backBtnSettings);
         tBtn = findViewById(R.id.thresholdBtn);
         co2Field = findViewById(R.id.thresholdValCO2);
         tempField = findViewById(R.id.thresholdValTemp);
@@ -72,25 +70,9 @@ public class SettingsViewBo extends AppCompatActivity {
             }
         });
 
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GoBack();
-            }
-        });
 
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.bgDark));
-        }
-    }
-
-    public void GoBack(){
-        Intent intent = new Intent(this, HomeViewBo.class);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-        }
-        else {
-            startActivity(intent);
         }
     }
 }

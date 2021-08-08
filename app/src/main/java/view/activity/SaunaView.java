@@ -81,29 +81,33 @@ public class SaunaView extends AppCompatActivity {
         mSauna.getAllDatapointsForASauna(extras.getInt("Sauna")).observe(this, new Observer<List<DataPoint>>() {
             @Override
             public void onChanged(List<DataPoint> dataPoints) {
-                datapointList = dataPoints;
+                if(dataPoints.size() > 0){
+                    datapointList = dataPoints;
 
-                float c;
-                float h;
-                float t;
+                    float c;
+                    float h;
+                    float t;
 
-                for (int i =0; i < datapointList.size(); i++){
-                    xAxis.add(datapointList.get(i).getDateTime());
-                    yAxisCO2.add(datapointList.get(i).getCo2());
-                    yAxisTemp.add(datapointList.get(i).getTemperature());
-                    yAxisHum.add(datapointList.get(i).getHumidity());
+                    for (int i =0; i < datapointList.size(); i++){
+                        xAxis.add(datapointList.get(i).getDateTime());
+                        yAxisCO2.add(datapointList.get(i).getCo2());
+                        yAxisTemp.add(datapointList.get(i).getTemperature());
+                        yAxisHum.add(datapointList.get(i).getHumidity());
 
-                    c = Float.parseFloat(datapointList.get(i).getCo2().trim().replace(",","."));
-                    yAxisCO2Entry.add(i,new Entry(i,c));
+                        c = Float.parseFloat(datapointList.get(i).getCo2().trim().replace(",","."));
+                        yAxisCO2Entry.add(i,new Entry(i,c));
 
-                    h = Float.parseFloat(datapointList.get(i).getHumidity().trim().replace(",","."));
-                    yAxisHumEntry.add(i,new Entry(i,h));
+                        h = Float.parseFloat(datapointList.get(i).getHumidity().trim().replace(",","."));
+                        yAxisHumEntry.add(i,new Entry(i,h));
 
-                    t = Float.parseFloat(datapointList.get(i).getTemperature().trim().replace(",","."));
-                    yAxisTempEntry.add(i,new Entry(i,t));
+                        t = Float.parseFloat(datapointList.get(i).getTemperature().trim().replace(",","."));
+                        yAxisTempEntry.add(i,new Entry(i,t));
 
+
+                    }
 
                 }
+
                 txtCO2.setText(yAxisCO2.get(yAxisCO2.size()-1).trim().replace(",",".")+" ppm");
                 txtHum.setText(yAxisHum.get(yAxisHum.size()-1).replace(",",".") + " %");
                 txtTemp.setText(yAxisTemp.get(yAxisTemp.size()-1).replace(",",".") +"\u00B0");

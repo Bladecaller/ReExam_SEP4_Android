@@ -120,19 +120,17 @@ public class SaunasFrag extends Fragment implements SaunaAdapter.OnSaunaListener
 
 
 
-        list = mSauna.getAllSaunas().getValue();
+        list = new ArrayList<>();
         mSauna.getAllSaunas().observe(getViewLifecycleOwner(), new Observer<List<Sauna>>() {
             @Override
             public void onChanged(List<Sauna> saunas) {
                 list = saunas;
-                initRecyclerView();
                 update();
             }
         });
 
 
         initRecyclerView();
-
         return view;
     }
 

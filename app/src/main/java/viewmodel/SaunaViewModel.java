@@ -22,7 +22,9 @@ public class SaunaViewModel extends AndroidViewModel {
        repositoryData = new DataPointRepository(application);
     }
 
-    public LiveData<List<Sauna>> getAllSaunas() { return repositorySauna.getAllSaunas(); }
+    public LiveData<List<Sauna>> getAllSaunas() {
+        repositorySauna.emptyAndPopulateSaunasRepoAPI();
+        return repositorySauna.getAllSaunas(); }
 
     public LiveData<List<DataPoint>> getAllDatapointsForASauna(int saunaID){
 

@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.transition.Explode;
 import android.view.View;
 import android.view.Window;
@@ -31,6 +32,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import model.room.entity.Account.Account;
 import model.room.entity.Account.CurrentAccount;
 import model.room.entity.Account.Employee;
 import model.room.entity.IntegerEntity;
@@ -40,7 +42,7 @@ import viewmodel.EmployeeViewModel;
 public class SettingsViewEm extends AppCompatActivity {
 
     private EmployeeViewModel mModel;
-    private ImageButton backBtn;
+
     private SwitchCompat notificationsSwitch;
     private List<IntegerEntity> saunaIDs = new ArrayList<>();
 
@@ -53,7 +55,7 @@ public class SettingsViewEm extends AppCompatActivity {
         }
         mModel = new ViewModelProvider(this).get(EmployeeViewModel.class);
         setContentView(R.layout.activity_settings_view_em);
-        backBtn = findViewById(R.id.backBtnSettings);
+
         notificationsSwitch = findViewById(R.id.switchEm);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
@@ -62,7 +64,7 @@ public class SettingsViewEm extends AppCompatActivity {
         builder.setSmallIcon(R.drawable.icon_sauna_filled_white);
 
         Intent notificationIntent = new Intent(this,SettingsViewEm.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(this,0,notificationIntent,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent contentIntent = PendingIntent.getActivity(this,2,notificationIntent,PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(contentIntent);
 
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -84,38 +86,38 @@ public class SettingsViewEm extends AppCompatActivity {
                     new Timer().scheduleAtFixedRate(new TimerTask() {
                         @Override
                         public void run() {
+
                             mModel.checkforNotifications();
                             if(!saunaIDs.isEmpty()){
+                                List<IntegerEntity> toRemove = new ArrayList<>();
                                 System.out.println("NOTIFIED SAUNA : "+ saunaIDs.size());
                                 System.out.println("NOTIFIED SAUNA : "+ saunaIDs.get(0).getSaunaID());
-                                manager.notify(0, builder.build());
-                                for(IntegerEntity ent: saunaIDs){saunaIDs.remove(ent);}
+
+
+                                for(IntegerEntity ent: saunaIDs){
+                                    toRemove.add(ent);
+                                }
+                                saunaIDs.removeAll(toRemove);
+
                             }
+
                         }
+
                     }, 0, 10000);//put here time 1000 milliseconds=1 second
-                }
+
+                }manager.notify(2, builder.build());
             }
         });
 
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GoBack();
-            }
-        });
 
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.bgDark));
         }
     }
 
-    public void GoBack(){
-        Intent intent = new Intent(this, HomeViewEm.class);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-        }
-        else {
-            startActivity(intent);
-        }
+
+    public void ToastMsg(){
+        Toast toast = Toast.makeText(this,"Sauna ",Toast.LENGTH_LONG );
+        toast.show();
     }
 }

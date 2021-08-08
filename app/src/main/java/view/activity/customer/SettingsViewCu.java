@@ -18,7 +18,7 @@ import view.activity.customer.HomeViewCu;
 
 public class SettingsViewCu extends AppCompatActivity {
 
-    private ImageButton backBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,27 +28,11 @@ public class SettingsViewCu extends AppCompatActivity {
             getWindow().setExitTransition(new Explode());
         }
         setContentView(R.layout.activity_settings_view_cu);
-        backBtn = findViewById(R.id.backBtnSettings);
 
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GoBack();
-            }
-        });
 
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.bgDark));
         }
     }
 
-    public void GoBack(){
-        Intent intent = new Intent(this, HomeViewCu.class);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-        }
-        else {
-            startActivity(intent);
-        }
-    }
 }

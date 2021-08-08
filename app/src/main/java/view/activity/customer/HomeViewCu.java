@@ -26,7 +26,7 @@ import view.activity.LogInView;
 
 public class HomeViewCu extends AppCompatActivity {
 
-private ImageButton backBtn;
+
 private ImageButton settingsBtn;
 private TextView titleW;
 private String rights;
@@ -43,7 +43,6 @@ private int userID;
             getWindow().setExitTransition(new Explode());
         }
         setContentView(R.layout.activity_home_view_bo);
-        backBtn = findViewById(R.id.backBtnHome);
         settingsBtn = findViewById(R.id.settingsBtn);
         titleW = findViewById(R.id.bookingTitleTxt);
         SectionsPageAdapterCu sectionsPagerAdapter = new SectionsPageAdapterCu(this, getSupportFragmentManager());
@@ -63,12 +62,7 @@ private int userID;
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.bgDark));
         }
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GoBack();
-            }
-        });
+
 
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,15 +85,6 @@ private int userID;
         }
     }
 
-    public void GoBack(){
-        Intent intent = new Intent(this, LogInView.class);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-        }
-        else {
-            startActivity(intent);
-        }
-    }
 
     public String getUserRights(){
         return rights;
