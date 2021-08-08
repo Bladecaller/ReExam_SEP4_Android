@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="view.fragment.HomeFragBo"
+        android:name="view.fragment.HomeFrag"
         android:label="Home"
-        tools:layout="@layout/fragment_home_frag_bo" />
+        tools:layout="@layout/fragment_home_frag" />
 
     <fragment
         android:id="@+id/navigation_sauna"

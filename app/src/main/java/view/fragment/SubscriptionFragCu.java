@@ -3,12 +3,24 @@ package view.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.sep4_android.R;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import adapter.BookingAdapter;
+import model.room.entity.Account.Reservation;
+import view.activity.customer.HomeViewCu;
+import viewmodel.CustomerViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,6 +51,13 @@ public class SubscriptionFragCu extends Fragment {
      * @return A new instance of fragment SubscriptionFragCu.
      */
     // TODO: Rename and change types and number of parameters
+
+    private RecyclerView recyclerView;
+    private BookingAdapter adapter;
+    private List<Reservation> reservationList;
+    private CustomerViewModel mViewModel;
+    private int userID;
+
     public static SubscriptionFragCu newInstance(String param1, String param2) {
         SubscriptionFragCu fragment = new SubscriptionFragCu();
         Bundle args = new Bundle();
@@ -61,6 +80,39 @@ public class SubscriptionFragCu extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_subscription_frag_cu, container, false);
+        View view = inflater.inflate(R.layout.fragment_subscription_frag_cu, container, false);
+        recyclerView = view.findViewById(R.id.recyclerReservations);
+        HomeViewCu activity = (HomeViewCu) getActivity();
+
+        userID = activity.getUserID();
+        reservationList = new ArrayList<>();
+
+        mViewModel = new ViewModelProvider(this).get(CustomerViewModel.class);
+
+        mViewModel.getPersonalReservations(userID).observe(getViewLifecycleOwner(), new Observer<List<Reservation>>() {
+            @Override
+            public void onChanged(List<Reservation> reservations) {
+                reservationList = reservations;
+                System.out.println(reservationList.size()+"_____________________________________________________");
+                update();
+            }
+        });
+
+
+        initRecyclerView();
+        return view;
+    }
+
+    public void initRecyclerView(){
+        RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        adapter = new BookingAdapter(getContext(),reservationList);
+        recyclerView.setAdapter(adapter);
+
+    }
+
+    public void update(){
+        adapter = new BookingAdapter(getContext(),reservationList);
+        recyclerView.setAdapter(adapter);
     }
 }

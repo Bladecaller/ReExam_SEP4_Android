@@ -16,10 +16,9 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.sep4_android.R;
 
-import view.fragment.HomeFragBo;
+import view.fragment.HomeFrag;
 import view.fragment.SaunasFrag;
 import view.fragment.SubscriptionFragCu;
-import view.fragment.UsersFragBo;
 
 
 public class SectionsPageAdapterCu extends FragmentPagerAdapter {
@@ -41,7 +40,7 @@ public class SectionsPageAdapterCu extends FragmentPagerAdapter {
         Fragment frag = null;
         switch(position){
             case 0:
-                frag = new HomeFragBo() ;
+                frag = new HomeFrag() ;
                 break;
             case 1:
                 frag = new SaunasFrag();

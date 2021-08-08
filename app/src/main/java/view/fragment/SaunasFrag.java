@@ -137,8 +137,8 @@ public class SaunasFrag extends Fragment implements SaunaAdapter.OnSaunaListener
     }
 
     public void initRecyclerView(){
-        RecyclerView.LayoutManager linearLayoutMananger = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(linearLayoutMananger);
+        RecyclerView.LayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
         adapter = new SaunaAdapter(getContext(),list,imgList,this,this);
         recyclerView.setAdapter(adapter);
 

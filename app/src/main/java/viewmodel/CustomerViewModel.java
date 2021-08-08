@@ -33,7 +33,7 @@ public class CustomerViewModel extends AndroidViewModel {
         repositoryReservation.createReservationAPI(reservation);
     }
 
-    public LiveData<List<Reservation>> getPersonalReservations(Customer currentAccount){
-        return repositoryReservation.getReservationsForCurrentAccount(currentAccount.getUserID());
+    public LiveData<List<Reservation>> getPersonalReservations(int customerId){
+        return repositoryReservation.getReservationsForCurrentAccount(customerId);
     }
 }
