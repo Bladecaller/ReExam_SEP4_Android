@@ -90,10 +90,9 @@ public class SettingsViewEm extends AppCompatActivity {
                             mModel.checkforNotifications();
                             if(!saunaIDs.isEmpty()){
                                 List<IntegerEntity> toRemove = new ArrayList<>();
-                                System.out.println("NOTIFIED SAUNA : "+ saunaIDs.size());
-                                System.out.println("NOTIFIED SAUNA : "+ saunaIDs.get(0).getSaunaID());
-
-
+                                for (IntegerEntity inte: saunaIDs){
+                                    System.out.println("Sauna " +inte.getSaunaID() + "needs attention");
+                                }
                                 for(IntegerEntity ent: saunaIDs){
                                     toRemove.add(ent);
                                 }
