@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.sep4_android.R;
 
@@ -55,6 +56,7 @@ public class UserViewBo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mViewModel.setRights(account,userSpinner.getSelectedItem().toString());
+                Toast.makeText(v.getContext(),"Rights of "+account.getUsername() +" changed to "+ userSpinner.getSelectedItem().toString(),Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -62,6 +64,7 @@ public class UserViewBo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mViewModel.removeAccount(account.getUserID());
+                Toast.makeText(v.getContext(),account.getUsername() +" deleted",Toast.LENGTH_SHORT).show();
             }
         });
 
