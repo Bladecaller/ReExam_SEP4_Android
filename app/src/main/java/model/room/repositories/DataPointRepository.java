@@ -32,9 +32,9 @@ public class DataPointRepository {
             public void onResponse (Call <Sauna> call, Response<Sauna> response){
                 System.out.println("SUCCESS " + response.body());
                 emptyDataRepo();
-                for(DataPoint obj : response.body().getDatapoints()){
-                    datapointInsert(obj);
-                    System.out.println("RESPONSE API " + obj.getDatapointID());
+                for(int i =1; i<=11;i++){
+                    datapointInsert(response.body().getDatapoints().get(response.body().getDatapoints().size()-i));
+                    System.out.println("RESPONSE API " + response.body().getDatapoints().get(response.body().getDatapoints().size()-i).getDatapointID());
                 }
             }
 

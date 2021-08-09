@@ -83,12 +83,14 @@ public class SaunaView extends AppCompatActivity {
             public void onChanged(List<DataPoint> dataPoints) {
                 if(dataPoints.size() > 0){
                     datapointList = dataPoints;
+                    System.out.println("DATA SIZE IS " +dataPoints.size());
 
                     float c;
                     float h;
                     float t;
 
                     for (int i =0; i < datapointList.size(); i++){
+                        System.out.println("DATA SIZE IS " +dataPoints.size());
                         xAxis.add(datapointList.get(i).getDateTime());
                         yAxisCO2.add(datapointList.get(i).getCo2());
                         yAxisTemp.add(datapointList.get(i).getTemperature());
@@ -106,11 +108,11 @@ public class SaunaView extends AppCompatActivity {
 
                     }
 
-                }
 
-                txtCO2.setText(yAxisCO2.get(yAxisCO2.size()-1).trim().replace(",",".")+" ppm");
-                txtHum.setText(yAxisHum.get(yAxisHum.size()-1).replace(",",".") + " %");
-                txtTemp.setText(yAxisTemp.get(yAxisTemp.size()-1).replace(",",".") +"\u00B0");
+
+                txtCO2.setText(yAxisCO2.get(0).trim().replace(",",".")+" ppm");
+                txtHum.setText(yAxisHum.get(0).replace(",",".") + " %");
+                txtTemp.setText(yAxisTemp.get(0).replace(",",".") +"\u00B0");
 
 
                 Description dCO2 = graphCO2.getDescription();
@@ -202,6 +204,7 @@ public class SaunaView extends AppCompatActivity {
                 graphTemp.setData(new LineData(datasetTemp));
                 graphTemp.setDrawBorders(false);
                 graphTemp.setDrawGridBackground(false);
+            }
             }
         });
 
