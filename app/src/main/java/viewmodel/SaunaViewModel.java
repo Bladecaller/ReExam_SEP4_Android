@@ -14,12 +14,12 @@ import model.room.repositories.SaunaRepository;
 
 public class SaunaViewModel extends AndroidViewModel {
     private SaunaRepository repositorySauna;
-    public DataPointRepository repositoryData;
+    private DataPointRepository repositoryData;
 
     public SaunaViewModel (Application application) {
         super(application);
-       repositorySauna = new SaunaRepository(application);
-       repositoryData = new DataPointRepository(application);
+        repositorySauna = new SaunaRepository(application);
+        repositoryData = new DataPointRepository(application);
     }
 
     public LiveData<List<Sauna>> getAllSaunas() {
@@ -27,10 +27,10 @@ public class SaunaViewModel extends AndroidViewModel {
         return repositorySauna.getAllSaunas(); }
 
     public LiveData<List<DataPoint>> getAllDatapointsForASauna(int saunaID){
-
         repositoryData.emptyAndPopulateDatapointRepoAPI(saunaID);
         return repositoryData.getAllDataPoints();
     }
+
     public void spinServo(int id){
         repositorySauna.openDoorAPI(id);
     }

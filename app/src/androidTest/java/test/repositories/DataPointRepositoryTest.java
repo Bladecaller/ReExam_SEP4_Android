@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -48,12 +49,7 @@ public class DataPointRepositoryTest {
 
         repository.emptyAndPopulateDatapointRepoAPI(1);
         Thread.sleep(20000);
-        System.out.println("SUCCESSSSSSS   "+list.get(30).getDatapointID());
-        System.out.println("SUCCESSSSSSS   "+list.get(30).getCo2());
-        System.out.println("SUCCESSSSSSS   "+list.get(30).getHumidity());
-        System.out.println("SUCCESSSSSSS   "+list.get(30).getSaunaID());
-        System.out.println("SUCCESSSSSSS   "+list.get(30).getTemperature());
-        System.out.println("SUCCESSSSSSS   "+list.get(30).getDateTime());
+        Assert.assertEquals(false,list.isEmpty());
 
     }
 }

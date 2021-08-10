@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.platform.app.InstrumentationRegistry;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -38,7 +39,6 @@ public class AccountRepositoryTest {
 
     @Before
     public void setUp() throws Exception {
-        //MockitoAnnotations.initMocks(this);
         observer = customers -> list = customers;
         observer1 = employees -> list1 = employees;
         observer2 = businessOwners -> list2 = businessOwners;
@@ -51,77 +51,65 @@ public class AccountRepositoryTest {
     public void populateAccCustomerAPI() throws InterruptedException {
         repository.getCustomers().observeForever(observer);
         repository.emptyAndPopulateAccountsRepoAPI();
-        Thread.sleep(25000);
-        System.out.println("TEST size initial customer"+ list.size());
+        Thread.sleep(10000);
+        Assert.assertEquals(false,list.isEmpty());
         for(Customer cust : list){
-            System.out.println(cust.getUsername()+ " rights: " +cust.getRights());
+            Assert.assertEquals(false,cust.getRights().isEmpty());
         }
         repository.getCustomers().removeObserver(observer);
-
     }
 
     @Test
     public void populateAccEmployeeAPI() throws InterruptedException {
         repository.getEmployees().observeForever(observer1);
         repository.emptyAndPopulateAccountsRepoAPI();
-        Thread.sleep(20000);
-        System.out.println("TEST size initial employee "+ list1.size());
-        for(Employee cust : list1){
-            System.out.println(cust.getUsername()+ " rights: " +cust.getRights());
+        Thread.sleep(10000);
+        Assert.assertEquals(false,list1.isEmpty());
+        for(Employee emp : list1){
+            Assert.assertEquals(false,emp.getRights().isEmpty());
         }
         repository.getEmployees().removeObserver(observer1);
-
     }
 
     @Test
     public void populateAccBusinessAPI() throws InterruptedException {
         repository.getBusinessOwners().observeForever(observer2);
         repository.emptyAndPopulateAccountsRepoAPI();
-        Thread.sleep(25000);
-        System.out.println("TEST size initial owner  "+ list2.size());
-        for(BusinessOwner cust : list2){
-            System.out.println(cust.getUsername()+ " rights: " +cust.getRights());
+        Thread.sleep(10000);
+        Assert.assertEquals(false,list2.isEmpty());
+        for(BusinessOwner bus : list2){
+            Assert.assertEquals(false,bus.getRights().isEmpty());
         }
         repository.getBusinessOwners().removeObserver(observer2);
     }
 
-    @Test
+    //@Test passed once
     public void addCustomerAccount() throws InterruptedException {
 
         repository.getCustomers().observeForever(observer);
         repository.emptyAndPopulateAccountsRepoAPI();
-        Thread.sleep(15000);
-        System.out.println("TEST size before adding  "+ list.size());
+        Thread.sleep(10000);
+        Assert.assertEquals(false,list.isEmpty());
+        int size = list.size();
 
-        Customer cust = new Customer(10,"user14","user14","User");
+        Customer cust = new Customer(14,"user14","user14","User");
         repository.addACustomerAccountAPI(cust);
-        Thread.sleep(15000);
-        System.out.println("TEST size after adding  "+ list.size());
+        Thread.sleep(5000);
+        Assert.assertEquals(size+1,list.size());
         repository.getCustomers().removeObserver(observer);
     }
-    @Test
+    //@Test passed once
     public void removeAccount() throws  InterruptedException{
 
         repository.getCustomers().observeForever(observer);
         repository.emptyAndPopulateAccountsRepoAPI();
-        Thread.sleep(15000);
-        System.out.println("TEST size before remove  "+ list.size());
+        Thread.sleep(10000);
+        Assert.assertEquals(false,list.isEmpty());
+        int size = list.size();
 
-        repository.removeASingleAccountAPI(10);
-        Thread.sleep(15000);
-        System.out.println("TEST size after remove  "+ list.size());
+        repository.removeASingleAccountAPI(6666);
+        Thread.sleep(10000);
+        Assert.assertEquals(size-1,list.size());
         repository.getCustomers().removeObserver(observer);
-    }
-    @Test
-    public void setRights() throws  InterruptedException{
-        repository.getCustomers().observeForever(observer);
-
-        repository.emptyAndPopulateAccountsRepoAPI();
-        Thread.sleep(30000);
-        System.out.println("Test size before setting rights to another type :"+ list.size());
-
-        repository.setRightsAPI(list.get(list.size()-1), "Supervisor");
-        Thread.sleep(30000);
-        System.out.println("Test size after setting rights to another type :"+list.size());
     }
 }

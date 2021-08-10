@@ -10,6 +10,7 @@ import androidx.room.Room;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -64,9 +65,9 @@ public class AccountsDaoTest {
         Customer cust = new Customer(0,"lily", "lilipass", "User");
         dao.getAllCustomers().observeForever(observer);
         dao.insertCustomer(cust);
-        System.out.println(list.get(0).getUsername());
+        Assert.assertEquals("lily",list.get(0).getUsername());
         dao.deleteAllCustomers();
-        System.out.println(list.isEmpty());
+        Assert.assertEquals(true,list.isEmpty());
 
     }
 }

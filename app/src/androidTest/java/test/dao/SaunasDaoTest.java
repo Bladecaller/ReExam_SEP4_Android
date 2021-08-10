@@ -9,6 +9,7 @@ import androidx.room.Room;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -38,8 +39,6 @@ public class SaunasDaoTest {
 
     @Before
     public void setUp() throws Exception {
-        //observer = mock(Observer.class);
-
         observer = new Observer<List<Sauna>>() {
             @Override
             public void onChanged(List<Sauna> saunas) {
@@ -64,8 +63,8 @@ public class SaunasDaoTest {
         Sauna sauna = new Sauna(1,12,12,4,2,null);
         dao.getAllSaunas().observeForever(observer);
         dao.insert(sauna);
-        System.out.println(list.get(0).getSaunaID());
+        Assert.assertEquals(1,list.get(0).getSaunaID());
         dao.deleteAll();
-        System.out.println(list.isEmpty());
+        Assert.assertEquals(true,list.isEmpty());
     }
 }

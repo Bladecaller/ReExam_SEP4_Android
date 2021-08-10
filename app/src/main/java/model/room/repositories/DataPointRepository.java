@@ -17,7 +17,7 @@ import retrofit2.Response;
 
 public class DataPointRepository {
     private MyRetrofit retrofit;
-    public DataPointDao dataPointDao;
+    private DataPointDao dataPointDao;
 
     public DataPointRepository(Application application) {
         retrofit = new MyRetrofit();
@@ -34,7 +34,6 @@ public class DataPointRepository {
                 emptyDataRepo();
                 for(int i =1; i<=11;i++){
                     datapointInsert(response.body().getDatapoints().get(response.body().getDatapoints().size()-i));
-                    System.out.println("RESPONSE API " + response.body().getDatapoints().get(response.body().getDatapoints().size()-i).getDatapointID());
                 }
             }
 

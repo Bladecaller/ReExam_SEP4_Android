@@ -9,6 +9,7 @@ import androidx.room.Room;
 import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -62,18 +63,8 @@ public class ReservationDaoTest {
         Reservation book = new Reservation(11,12,"11:20","11:35");
         dao.getReservationsByCustomerId(book.getUserID()).observeForever(observer);
         dao.insertReservation(book);
-        System.out.println(list.get(0).getFromDateTime());
+        Assert.assertEquals("11:20",list.get(0).getFromDateTime());
         dao.deleteAll();
-        System.out.println(list.isEmpty());
-    }
-
-    @Test
-    public void insertGetALLRemoveGet(){
-        Reservation book = new Reservation(11,12,"11:20","11:35");
-        dao.getAllReservations().observeForever(observer);
-        dao.insertReservation(book);
-        System.out.println(list.get(0).getFromDateTime());
-        dao.deleteAll();
-        System.out.println(list.isEmpty());
+        Assert.assertEquals(true,list.isEmpty());
     }
 }

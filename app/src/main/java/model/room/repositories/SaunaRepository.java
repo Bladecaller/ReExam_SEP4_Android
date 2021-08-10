@@ -20,7 +20,6 @@ import retrofit2.Response;
 
 public class SaunaRepository {
     private MyRetrofit retrofit;
-
     private SaunasDao saunasDao;
 
     public SaunaRepository(Application application) {
@@ -40,16 +39,12 @@ public class SaunaRepository {
                     saunaInsert(obj);
                     Log.d("RESPONSE API",Float.toString(obj.getCO2Threshold()));
                 }
-
-
             }
-
             @Override
             public void onFailure(Call<List<Sauna>> call, Throwable t) {
                 System.out.println("Failed at populateSaunasRepo");
 
             }
-
         });
     }
 
@@ -59,9 +54,7 @@ public class SaunaRepository {
             @Override
             public void onResponse(Call call, Response response) {
                 System.out.println("SUCCESS AT OPEN DOOR ?: " + response.message());
-
             }
-
             @Override
             public void onFailure(Call call, Throwable t) {
                 System.out.println("Failed at OpenDoor");
@@ -81,13 +74,13 @@ public class SaunaRepository {
                     saunaIdInsert(ent);
                 }
             }
-
             @Override
             public void onFailure(Call<List<Integer>> call, Throwable t) {
 
             }
         });
     }
+
     public void setThresholdsAPI(float CO2, float humidity, float temperature,Sauna sauna){
         sauna.setCO2Threshold(CO2);
         sauna.setHumidityThreshold(humidity);
@@ -99,7 +92,6 @@ public class SaunaRepository {
                 System.out.println("SUCCESS AT SET THRESHOLDS? :" + response.message());
                 emptyAndPopulateSaunasRepoAPI();
             }
-
             @Override
             public void onFailure(Call call, Throwable t) {
                 System.out.println("Failed at setThresholds");

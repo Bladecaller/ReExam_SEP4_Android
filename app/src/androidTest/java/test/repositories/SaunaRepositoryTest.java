@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.Observer;
 import androidx.test.core.app.ApplicationProvider;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -23,7 +24,9 @@ public class SaunaRepositoryTest {
 
     SaunaRepository repository;
     Observer<List<Sauna>> observer;
+    Observer<List<IntegerEntity>> observer2;
     List<Sauna> list;
+    List<IntegerEntity> list2;
 
     @Before
     public void setUp() throws Exception {
@@ -33,25 +36,32 @@ public class SaunaRepositoryTest {
                 list = saunas;
             }
         };
+        observer2 = new Observer<List<IntegerEntity>>() {
+            @Override
+            public void onChanged(List<IntegerEntity> ent) {
+                list2 = ent;
+            }
+        };
         repository = new SaunaRepository(ApplicationProvider.getApplicationContext());
     }
 
 
-    //@Test
+    @Test
     public void populateAllSaunasAPI() throws InterruptedException {
         repository.getAllSaunas().observeForever(observer);
 
         repository.emptyAndPopulateSaunasRepoAPI();
-        Thread.sleep(30000);
-        System.out.println("TEST initial size populate :"+list.size());
+        Thread.sleep(25000);
+        Assert.assertEquals(false,list.isEmpty());
 
     }
-    //@Test
+    @Test
     public void openDoor(){
-        Sauna s = new Sauna(1,1,1,1,2,null);
-        repository.openDoorAPI(s);
+        repository.openDoorAPI(1);
+        // not getting an error counts as a pass
     }
-    //@Test
+
+    //@Test tested and passed but dont want to mess around with the API data
     public void setThresholds() throws InterruptedException {
         repository.getAllSaunas().observeForever(observer);
 
@@ -63,12 +73,14 @@ public class SaunaRepositoryTest {
         Thread.sleep(40000);
         System.out.println("TEST TEMP threshold after :"+list.get(list.size()-1).getTemperatureThreshold());
     }
-    //@Test
+
+    @Test
     public void notifications() throws InterruptedException {
-        //List<IntegerEntity> listInt = new ArrayList<>();
-        //repository.checkNotificationsAPI();
-        //listInt = repository
-        //Thread.sleep(10_000);
-        //System.out.println("Saunas over the top :"+ listInt.size());
+        repository.getAllIntegerEntities().observeForever(observer2);
+        repository.checkNotificationsAPI();
+        Thread.sleep(25000);
+        //Assert.assertEquals(false,list2.isEmpty());
+        System.out.println("Saunas over the top :"+ list2.size());
+        //this list size varies
     }
 }

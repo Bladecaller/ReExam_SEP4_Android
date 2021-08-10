@@ -77,11 +77,6 @@ public class ReservationRepository {
         });
     }
 
-    //return all reservations
-    public LiveData<List<Reservation>> getAllReservations(){
-        return reservationDao.getAllReservations();
-    }
-
     // return all reservations for a specific customer
     public LiveData<List<Reservation>> getReservationsForCurrentAccount(int accId){
         return reservationDao.getReservationsByCustomerId(accId);

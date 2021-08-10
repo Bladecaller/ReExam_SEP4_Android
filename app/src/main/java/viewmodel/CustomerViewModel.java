@@ -16,8 +16,8 @@ import model.room.repositories.ReservationRepository;
 import model.room.repositories.SaunaRepository;
 
 public class CustomerViewModel extends AndroidViewModel {
-    public SaunaRepository repositorySauna;
-    public ReservationRepository repositoryReservation;
+    private SaunaRepository repositorySauna;
+    private ReservationRepository repositoryReservation;
 
     public CustomerViewModel (Application application) {
         super(application);

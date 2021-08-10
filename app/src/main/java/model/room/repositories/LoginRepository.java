@@ -8,11 +8,7 @@ import java.util.List;
 
 import api.MyRetrofit;
 import model.room.dao.CurrentAccountDao;
-import model.room.entity.Account.Account;
-import model.room.entity.Account.BusinessOwner;
 import model.room.entity.Account.CurrentAccount;
-import model.room.entity.Account.Customer;
-import model.room.entity.Account.Employee;
 import model.room.roomdatabase.MyRoomDatabase;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,7 +16,7 @@ import retrofit2.Response;
 
 public class LoginRepository {
     private MyRetrofit retrofit;
-    public CurrentAccountDao currentAccountDao;
+    private CurrentAccountDao currentAccountDao;
 
 
     public LoginRepository(Application application) {
@@ -38,7 +34,6 @@ public class LoginRepository {
             public void onResponse (Call <CurrentAccount> call, Response<CurrentAccount> response){
                 System.out.println("SUCCESS " + response.body());
                 System.out.println("SUCCESS " + response.body().getRights());
-                emptyRepo();
                 accountInsert(response.body());
             }
 
@@ -66,8 +61,8 @@ public class LoginRepository {
     }
 
     // return a list of all accounts to the viewmodel
-    public LiveData<List<CurrentAccount>> getCurrentAccount(){
-        return currentAccountDao.getCurrentAccount();
+    public LiveData<List<CurrentAccount>> getCurrentAccountList(){
+        return currentAccountDao.getCurrentAccountList();
     }
 
 }

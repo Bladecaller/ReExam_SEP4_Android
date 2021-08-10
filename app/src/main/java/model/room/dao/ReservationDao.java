@@ -19,9 +19,6 @@ public interface ReservationDao {
     @Query("DELETE FROM Reservation")
     void deleteAll();
 
-    @Query("SELECT * FROM Reservation ")
-    LiveData<List<Reservation>> getAllReservations();
-
     @Query("SELECT * FROM Reservation WHERE UserID = (:customerId)")
     LiveData<List<Reservation>> getReservationsByCustomerId(int customerId);
 

@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.Observer;
 import androidx.test.core.app.ApplicationProvider;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -42,10 +43,11 @@ public class LoginRepositoryTest {
 
     @Test
     public void loginAPI() throws InterruptedException {
-        repository.getCurrentAccount().observeForever(observer);
-        repository.login("user9", "user9");
-        Thread.sleep(6000);
-        System.out.println("NEW LOGIN TEST " + list.get(0).getRights());
+        repository.getCurrentAccountList().observeForever(observer);
+        repository.login("Owner", "Owner");
+        Thread.sleep(1000);
+        Assert.assertEquals("Owner",list.get(0).getRights().trim());
+        repository.getCurrentAccountList().removeObserver(observer);
 
     }
 }

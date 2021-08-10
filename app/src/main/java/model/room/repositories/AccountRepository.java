@@ -21,7 +21,7 @@ import retrofit2.Response;
 
 public class AccountRepository {
     private MyRetrofit retrofit;
-    public AccountsDao accountsDao;
+    private AccountsDao accountsDao;
 
     public AccountRepository(Application application) {
         retrofit = new MyRetrofit();
@@ -194,11 +194,11 @@ public class AccountRepository {
     }
 
     //--------Notifications-------------------------------------------------------------------------------------
-    public void changeNotifications(Employee currentAccount){
-            if(currentAccount.getNotifications()==false){
-                currentAccount.setNotifications(true);
+    public void changeNotifications(Employee account){
+            if(account.getNotifications()==false){
+                account.setNotifications(true);
             } else{
-               currentAccount.setNotifications(false);
+                account.setNotifications(false);
             }
     }
 }

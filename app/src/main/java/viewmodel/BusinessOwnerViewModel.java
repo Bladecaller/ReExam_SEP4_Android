@@ -20,7 +20,7 @@ import model.room.repositories.AccountRepository;
 import model.room.repositories.SaunaRepository;
 
 public class BusinessOwnerViewModel extends AndroidViewModel {
-    public AccountRepository repositoryAccount;
+    private AccountRepository repositoryAccount;
     private SaunaRepository repositorySauna;
 
     public BusinessOwnerViewModel(@NonNull @NotNull Application application) {

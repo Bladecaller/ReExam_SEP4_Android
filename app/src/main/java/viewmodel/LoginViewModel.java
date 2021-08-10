@@ -28,6 +28,7 @@ public class LoginViewModel extends AndroidViewModel {
     }
 
     public void login(String username, String password){
+        loginRepo.emptyRepo();
         loginRepo.login(username,password);
         accRepo.emptyAndPopulateAccountsRepoAPI();
         saunaRepo.emptyAndPopulateSaunasRepoAPI();
@@ -35,6 +36,6 @@ public class LoginViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<CurrentAccount>> getCurrentAcc() {
-        return loginRepo.getCurrentAccount();
+        return loginRepo.getCurrentAccountList();
     }
 }

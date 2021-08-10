@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.Observer;
 import androidx.test.core.app.ApplicationProvider;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -37,25 +38,22 @@ public class ReservationRepositoryTest {
 
     @Test
     public void populateReservationsAPI() throws InterruptedException {
-        repository.getAllReservations().observeForever(observer);
-
+        repository.getReservationsForCurrentAccount(1).observeForever(observer);
         repository.emptyAndPopulateReservationRepoAPI();
         Thread.sleep(25000);
-        System.out.println("TEST reservation size initial :"+list.size());
-
+        Assert.assertEquals(false,list.isEmpty());
     }
-    @Test
+    //@Test one time test
     public void addReservationAPI() throws InterruptedException{
-        repository.getAllReservations().observeForever(observer);
-
+        repository.getReservationsForCurrentAccount(1).observeForever(observer);
         repository.emptyAndPopulateReservationRepoAPI();
-        Thread.sleep(25000);
-        System.out.println("TEST reservation size before adding a reservation "+list.size());
-
-        Reservation book = new Reservation(5,1,"14:30","16:00");
+        Thread.sleep(15000);
+        Assert.assertEquals(false,list.isEmpty());
+        int size = list.size();
+        Reservation book = new Reservation(1,3,"14:30","16:00");
         repository.createReservationAPI(book);
-        Thread.sleep(25000);
-        System.out.println("TEST reservation size after adding a reservation "+ list.size());
-        repository.getAllReservations().removeObserver(observer);
+        Thread.sleep(15000);
+        Assert.assertEquals(size+1,list.size());
+        repository.getReservationsForCurrentAccount(1).removeObserver(observer);
     }
 }

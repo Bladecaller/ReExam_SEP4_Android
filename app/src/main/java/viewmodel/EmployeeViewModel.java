@@ -17,9 +17,9 @@ import model.room.repositories.ReservationRepository;
 import model.room.repositories.SaunaRepository;
 
 public class EmployeeViewModel extends AndroidViewModel {
-    public SaunaRepository repositorySauna;
-    public ReservationRepository repositoryReservation;
-    public AccountRepository repositoryAccount;
+    private SaunaRepository repositorySauna;
+    private ReservationRepository repositoryReservation;
+    private AccountRepository repositoryAccount;
 
     public EmployeeViewModel (Application application) {
         super(application);
@@ -43,7 +43,11 @@ public class EmployeeViewModel extends AndroidViewModel {
         repositorySauna.openDoorAPI(id);
     }
 
-    public void checkforNotifications(){repositorySauna.checkNotificationsAPI();}
+    public void checkforNotifications(){
+        repositorySauna.checkNotificationsAPI();
+    }
 
-    public LiveData<List<IntegerEntity>> getAllNotifiedSaunas(){ return repositorySauna.getAllIntegerEntities();}
+    public LiveData<List<IntegerEntity>> getAllNotifiedSaunas(){
+        return repositorySauna.getAllIntegerEntities();
+    }
 }
