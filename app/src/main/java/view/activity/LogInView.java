@@ -34,16 +34,12 @@ public class LogInView extends AppCompatActivity {
 
     private Button logInButton;
     private ProgressBar pbar;
-    private MyRetrofit retrofit;
-    private InterfaceAPI api;
-    private String accountType;
+    private String rights;
     private int userID;
     private EditText usernameField, pwField;
     private String username, pw;
     private LoginViewModel loginViewModel;
     private List<CurrentAccount> currentAccounts;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,14 +52,9 @@ public class LogInView extends AppCompatActivity {
         usernameField = findViewById(R.id.usernameText);
         pwField = findViewById(R.id.pwText);
 
-        retrofit = new MyRetrofit();
-        api = retrofit.api;
-
         loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         logInButton = findViewById(R.id.logInButton);
         pbar = findViewById(R.id.progressBar);
-
-
 
         loginViewModel.getCurrentAcc().observe(this, new Observer<List<CurrentAccount>>() {
             @Override
@@ -77,17 +68,14 @@ public class LogInView extends AppCompatActivity {
                     type = currentAccounts.get(0).getRights();
                     id = currentAccounts.get(0).getUserID();
                 }
-
-                System.out.println("SIZE IS "+ currentAccounts.size());
-                System.out.println("TYPE IS "+ type);
-                accountType = type;
+                rights = type;
                 userID = id;
+
                 if(type==null){
                     System.out.println("TYPE IS "+ " zero");
                 }else
-                    switch (type){
+                    switch (rights){
                         case "":
-                            //Toast.makeText(loginViewModel.getApplication(),"Error",Toast.LENGTH_SHORT).show();
                             break;
 
                         case "Owner     ":
@@ -106,9 +94,6 @@ public class LogInView extends AppCompatActivity {
             }
         });
 
-
-
-
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.bgDark));
         }
@@ -123,17 +108,18 @@ public class LogInView extends AppCompatActivity {
 
                         if (username.equals("") || pw.equals("")){
                             Toast.makeText(v.getContext(),"Fill In All The Fields",Toast.LENGTH_SHORT).show();
+                            pbar.setVisibility(View.INVISIBLE);
                         }
-                        loginViewModel.login(username,pw);
+                        else {
+                            loginViewModel.login(username,pw);
+                        }
+
             }
-
         });
-
-
     }
     public void openHomePageBo(){
         Intent intent = new Intent(this, HomeViewBo.class);
-        intent.putExtra("Rights",accountType);
+        intent.putExtra("Rights", rights);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         }
@@ -144,7 +130,7 @@ public class LogInView extends AppCompatActivity {
     }
     public void openHomePageCu(){
         Intent intent = new Intent(this, HomeViewCu.class);
-        intent.putExtra("Rights",accountType);
+        intent.putExtra("Rights", rights);
         intent.putExtra("UserID",userID);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
@@ -154,16 +140,14 @@ public class LogInView extends AppCompatActivity {
         }
 
     }
-
     public void openHomePageEm(){
         Intent intent = new Intent(this, HomeViewEm.class);
-        intent.putExtra("Rights",accountType);
+        intent.putExtra("Rights", rights);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         }
         else {
             startActivity(intent);
         }
-
     }
 }

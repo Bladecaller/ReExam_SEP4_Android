@@ -18,7 +18,7 @@ import viewmodel.LoginViewModel;
 
 public class BookingViewCu extends AppCompatActivity {
     private TextView titleTxt;
-    private String name;
+    private String rights;
     private int userID, saunaID;
     private EditText fromTxt, toTxt;
     private Button bookBtn;
@@ -35,13 +35,11 @@ public class BookingViewCu extends AppCompatActivity {
         toTxt = findViewById(R.id.toTime);
         bookBtn = findViewById(R.id.bookNowbtn);
 
-
-
         Bundle extras = getIntent().getExtras();
         saunaID = extras.getInt("SaunaID");
-        name = String.valueOf(extras.getInt("SaunaID"));
+        rights = String.valueOf(extras.getInt("SaunaID"));
         userID = extras.getInt("UserID");
-        titleTxt.setText("Sauna " + name);
+        titleTxt.setText("Sauna " + rights);
 
         customerViewModel = new ViewModelProvider(this).get(CustomerViewModel.class);
 

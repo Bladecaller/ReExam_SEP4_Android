@@ -21,10 +21,10 @@ import model.room.entity.Account.Account;
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>  {
     private List<Account> users;
     Context mContext;
-    private OnButtonListener mOnBtnListener;
+    private OnButtonListener mOnButtonListener;
 
-    public UserAdapter(Context context, List<Account> itemList,OnButtonListener listener){
-        this.mOnBtnListener = listener;
+    public UserAdapter(Context context, List<Account> itemList,OnButtonListener onButtonListener){
+        this.mOnButtonListener = onButtonListener;
         this.mContext = context;
         this.users = itemList;
     }
@@ -45,7 +45,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>  {
         holder.editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mOnBtnListener.OnButtonClick(holder.getAdapterPosition());
+                mOnButtonListener.OnButtonClick(holder.getAdapterPosition());
             }
         });
 

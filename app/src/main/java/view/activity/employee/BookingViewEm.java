@@ -28,7 +28,6 @@ import viewmodel.EmployeeViewModel;
 public class BookingViewEm extends AppCompatActivity {
 
     private TextView titleTxt;
-    private String name;
     private int userID, saunaID;
     private EditText fromTxt, toTxt;
     private Button bookBtn;
@@ -54,10 +53,8 @@ public class BookingViewEm extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         saunaID = extras.getInt("SaunaID");
-        name = String.valueOf(extras.getInt("SaunaID"));
-        titleTxt.setText("Sauna " + name);
 
-
+        titleTxt.setText("Sauna " + String.valueOf(saunaID));
 
         employeeViewModel = new ViewModelProvider(this).get(EmployeeViewModel.class);
         employeeViewModel.getCustomers().observe(this, new Observer<List<Customer>>() {
@@ -73,10 +70,6 @@ public class BookingViewEm extends AppCompatActivity {
                 spinner.setAdapter(adapter);
             }
         });
-
-
-
-
         bookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

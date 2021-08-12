@@ -18,8 +18,6 @@ import view.activity.customer.HomeViewCu;
 
 public class SettingsViewCu extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

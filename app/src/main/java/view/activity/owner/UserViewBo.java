@@ -15,17 +15,14 @@ import com.example.sep4_android.R;
 import java.util.ArrayList;
 
 import model.room.entity.Account.Account;
-import model.room.entity.Account.RightsEnum;
-import model.room.entity.Sauna.Sauna;
 import viewmodel.BusinessOwnerViewModel;
-import viewmodel.SaunaViewModel;
 
 public class UserViewBo extends AppCompatActivity {
 
     private Button deleteBtn,changeBtn;
     private Spinner userSpinner;
     private ArrayList<String> rightsList;
-    private BusinessOwnerViewModel mViewModel;
+    private BusinessOwnerViewModel businessOwnerViewModel;
     private Account account;
     private String userID;
 
@@ -51,11 +48,11 @@ public class UserViewBo extends AppCompatActivity {
         userID = String.valueOf(extras.getInt("UserID"));
         account = (Account) extras.getSerializable("UserAccount");
 
-        mViewModel = new ViewModelProvider(this).get(BusinessOwnerViewModel.class);
+        businessOwnerViewModel = new ViewModelProvider(this).get(BusinessOwnerViewModel.class);
         changeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewModel.setRights(account,userSpinner.getSelectedItem().toString());
+                businessOwnerViewModel.setRights(account,userSpinner.getSelectedItem().toString());
                 Toast.makeText(v.getContext(),"Rights of "+account.getUsername() +" changed to "+ userSpinner.getSelectedItem().toString(),Toast.LENGTH_SHORT).show();
             }
         });
@@ -63,12 +60,10 @@ public class UserViewBo extends AppCompatActivity {
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewModel.removeAccount(account.getUserID());
+                businessOwnerViewModel.removeAccount(account.getUserID());
                 Toast.makeText(v.getContext(),account.getUsername() +" deleted",Toast.LENGTH_SHORT).show();
             }
         });
-
-
 
     }
 }

@@ -28,7 +28,6 @@ public class HomeViewCu extends AppCompatActivity {
 
 
 private ImageButton settingsBtn;
-private TextView titleW;
 private String rights;
 private int userID;
 
@@ -44,8 +43,9 @@ private int userID;
         }
         setContentView(R.layout.activity_home_view_bo);
         settingsBtn = findViewById(R.id.settingsBtn);
-        titleW = findViewById(R.id.bookingTitleTxt);
-        SectionsPageAdapterCu sectionsPagerAdapter = new SectionsPageAdapterCu(this, getSupportFragmentManager());
+
+        SectionsPageAdapterCu sectionsPagerAdapter = new SectionsPageAdapterCu(this,
+                getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
         PageTransformer pageT = new PageTransformer();
         viewPager.setPageTransformer(true,pageT);
@@ -84,7 +84,6 @@ private int userID;
             startActivity(intent);
         }
     }
-
 
     public String getUserRights(){
         return rights;

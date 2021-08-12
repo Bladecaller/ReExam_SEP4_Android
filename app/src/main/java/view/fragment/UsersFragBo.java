@@ -21,49 +21,30 @@ import com.example.sep4_android.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import adapter.SaunaAdapter;
 import adapter.UserAdapter;
 import model.room.entity.Account.Account;
-import model.room.entity.Account.BusinessOwner;
 import model.room.entity.Account.Customer;
 import model.room.entity.Account.Employee;
 import view.activity.owner.UserViewBo;
 import viewmodel.BusinessOwnerViewModel;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link UsersFragBo#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class UsersFragBo extends Fragment implements UserAdapter.OnButtonListener {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     public UsersFragBo() {
-        // Required empty public constructor
+
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment UsersFragBo.
-     */
-    // TODO: Rename and change types and number of parameters
     private RecyclerView recyclerView;
     private List<Account> accountList;
     private List<Employee> employeeList;
     private List<Customer> customerList;
-    private BusinessOwnerViewModel mViewModel;
+    private BusinessOwnerViewModel businessOwnerViewModel;
     private UserAdapter adapter;
     private Button createBtn, createNewUserBtn;
     private AlertDialog.Builder dialogBuilder;
@@ -92,17 +73,17 @@ public class UsersFragBo extends Fragment implements UserAdapter.OnButtonListene
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_users_frag_bo, container, false);
         recyclerView = view.findViewById(R.id.rViewUsers);
         createBtn = view.findViewById(R.id.createNewUser);
-        mViewModel = new ViewModelProvider(this).get(BusinessOwnerViewModel.class);
+        businessOwnerViewModel = new ViewModelProvider(this).get(BusinessOwnerViewModel.class);
         accountList = new ArrayList<>();
 
         customerList = new ArrayList<>();
         employeeList = new ArrayList<>();
 
-        mViewModel.getCustomerAccounts().observe(getViewLifecycleOwner(), new Observer<List<Customer>>() {
+        businessOwnerViewModel.getCustomerAccounts().observe(getViewLifecycleOwner(), new Observer<List<Customer>>() {
             @Override
             public void onChanged(List<Customer> customers) {
                 List<Account> toRemove = new ArrayList<>();
@@ -120,7 +101,7 @@ public class UsersFragBo extends Fragment implements UserAdapter.OnButtonListene
             }
         });
 
-        mViewModel.getEmployeeAccounts().observe(getViewLifecycleOwner(), new Observer<List<Employee>>() {
+        businessOwnerViewModel.getEmployeeAccounts().observe(getViewLifecycleOwner(), new Observer<List<Employee>>() {
             @Override
             public void onChanged(List<Employee> employees) {
                 List<Account> toRemove = new ArrayList<>();
@@ -137,7 +118,6 @@ public class UsersFragBo extends Fragment implements UserAdapter.OnButtonListene
                 update();
             }
         });
-
         initRecyclerView();
 
         createBtn.setOnClickListener(new View.OnClickListener() {
@@ -146,9 +126,6 @@ public class UsersFragBo extends Fragment implements UserAdapter.OnButtonListene
                 CreateNewUserDialog();
             }
         });
-
-
-
         return view;
     }
 
@@ -157,15 +134,12 @@ public class UsersFragBo extends Fragment implements UserAdapter.OnButtonListene
         recyclerView.setLayoutManager(linearLayoutMananger);
         adapter = new UserAdapter(getContext(),accountList,this);
         recyclerView.setAdapter(adapter);
-
     }
 
     public void update(){
-
         adapter = new UserAdapter(getContext(),accountList,this);
         recyclerView.setAdapter(adapter);
     }
-
 
     @Override
     public void OnButtonClick(int position) {
@@ -194,18 +168,16 @@ public class UsersFragBo extends Fragment implements UserAdapter.OnButtonListene
             @Override
             public void onClick(View v) {
                 rights = rightsField.getText().toString();
-                System.out.println(rights);
-
                 switch (rights){
                     case "User":
                         Customer customer = new Customer(Integer.parseInt(idField.getText().toString()),nameField.getText().toString(),pwField.getText().toString(),rights);
-                        mViewModel.addCustomerAccount(customer);
+                        businessOwnerViewModel.addCustomerAccount(customer);
                         dialog.dismiss();
                         break;
 
                     case "Supervisor":
                         Employee employee = new Employee(Integer.parseInt(idField.getText().toString()),nameField.getText().toString(),pwField.getText().toString(),rights);
-                        mViewModel.addEmployeeAccount(employee);
+                        businessOwnerViewModel.addEmployeeAccount(employee);
                         dialog.dismiss();
                         break;
                 }

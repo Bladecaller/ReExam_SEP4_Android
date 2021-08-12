@@ -28,11 +28,7 @@ import view.activity.LogInView;
 public class HomeViewEm extends AppCompatActivity {
 
 private ImageButton settingsBtn;
-private TextView titleW;
 private String rights;
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +38,6 @@ private String rights;
         }
         setContentView(R.layout.activity_home_view_bo);
         settingsBtn = findViewById(R.id.settingsBtn);
-        titleW = findViewById(R.id.bookingTitleTxt);
         SectionsPageAdapterEm sectionsPagerAdapter = new SectionsPageAdapterEm(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
         PageTransformer pageT = new PageTransformer();
@@ -52,23 +47,17 @@ private String rights;
         tabs.setupWithViewPager(viewPager);
         Objects.requireNonNull(tabs.getTabAt(0)).select();
 
-
         rights = "Supervisor";
 
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.bgDark));
         }
-
-
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openSettings();
             }
         });
-
-
-
     }
 
     public void openSettings(){
@@ -85,5 +74,4 @@ private String rights;
     public String getUserRights(){
         return rights;
     }
-
 }

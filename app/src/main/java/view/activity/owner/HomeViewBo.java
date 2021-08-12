@@ -29,10 +29,6 @@ public class HomeViewBo extends AppCompatActivity {
 
 
 private ImageButton settingsBtn;
-private TextView titleW;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +40,6 @@ private TextView titleW;
         setContentView(R.layout.activity_home_view_bo);
 
         settingsBtn = findViewById(R.id.settingsBtn);
-        titleW = findViewById(R.id.bookingTitleTxt);
         SectionsPageAdapterBo sectionsPagerAdapter = new SectionsPageAdapterBo(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
         PageTransformer pageT = new PageTransformer();
@@ -58,16 +53,12 @@ private TextView titleW;
             getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.bgDark));
         }
 
-
         settingsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openSettings();
             }
         });
-
-
-
     }
 
     public void openSettings(){
@@ -79,6 +70,4 @@ private TextView titleW;
             startActivity(intent);
         }
     }
-
-
 }

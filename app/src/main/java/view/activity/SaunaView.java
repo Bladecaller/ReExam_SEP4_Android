@@ -22,7 +22,6 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,10 +35,9 @@ public class SaunaView extends AppCompatActivity {
 
     private TextView saunaName;
     private LineChart graphCO2,graphTemp, graphHum;
-    private SaunaViewModel mSauna;
+    private SaunaViewModel saunaViewModel;
     private List<DataPoint> datapointList;
     private Button openBtn;
-    private List<String> co2,humidity, temperature;
     private ArrayList<String> xAxis = new ArrayList<>();
     private ArrayList<String> yAxisHum = new ArrayList<>();
     private ArrayList<String> yAxisCO2 = new ArrayList<>();
@@ -47,7 +45,7 @@ public class SaunaView extends AppCompatActivity {
     private ArrayList<Entry> yAxisHumEntry = new ArrayList<>();
     private ArrayList<Entry> yAxisCO2Entry = new ArrayList<>();
     private ArrayList<Entry> yAxisTempEntry = new ArrayList<>();
-    private String userRights;
+    private String rights;
 
     private TextView txtCO2,txtHum,txtTemp;
 
@@ -68,17 +66,18 @@ public class SaunaView extends AppCompatActivity {
             getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.bgDark));
         }
 
-        mSauna = new ViewModelProvider(this).get(SaunaViewModel.class);
-
+        saunaViewModel = new ViewModelProvider(this).get(SaunaViewModel.class);
 
         Bundle extras = getIntent().getExtras();
         String name;
         name = String.valueOf(extras.getInt("Sauna"));
-        userRights = String.valueOf(extras.getString("UserID"));
+        rights = String.valueOf(extras.getString("UserID"));
 
         saunaName.setText("Sauna " + name);
-        datapointList = mSauna.getAllDatapointsForASauna(extras.getInt("Sauna")).getValue();
-        mSauna.getAllDatapointsForASauna(extras.getInt("Sauna")).observe(this, new Observer<List<DataPoint>>() {
+
+        datapointList = saunaViewModel.getAllDatapointsForASauna(extras.getInt("Sauna")).getValue();
+
+        saunaViewModel.getAllDatapointsForASauna(extras.getInt("Sauna")).observe(this, new Observer<List<DataPoint>>() {
             @Override
             public void onChanged(List<DataPoint> dataPoints) {
                 if(dataPoints.size() > 0){
@@ -104,118 +103,108 @@ public class SaunaView extends AppCompatActivity {
 
                         t = Float.parseFloat(datapointList.get(i).getTemperature().trim().replace(",","."));
                         yAxisTempEntry.add(i,new Entry(i,t));
-
-
                     }
 
+                    txtCO2.setText(yAxisCO2.get(0).trim().replace(",",".")+" ppm");
+                    txtHum.setText(yAxisHum.get(0).replace(",",".") + " %");
+                    txtTemp.setText(yAxisTemp.get(0).replace(",",".") +"\u00B0");
 
+                    Description dCO2 = graphCO2.getDescription();
+                    Legend legendCO2 = graphCO2.getLegend();
+                    XAxis xCO2 = graphCO2.getXAxis();
+                    YAxis yCO2 = graphCO2.getAxisLeft();
+                    YAxis yRCO2 = graphCO2.getAxisRight();
 
-                txtCO2.setText(yAxisCO2.get(0).trim().replace(",",".")+" ppm");
-                txtHum.setText(yAxisHum.get(0).replace(",",".") + " %");
-                txtTemp.setText(yAxisTemp.get(0).replace(",",".") +"\u00B0");
+                    Description dHum = graphHum.getDescription();
+                    Legend legendHum = graphHum.getLegend();
+                    XAxis xHum = graphHum.getXAxis();
+                    YAxis yHum = graphHum.getAxisLeft();
+                    YAxis yRHum = graphHum.getAxisRight();
 
+                    Description dTemp = graphTemp.getDescription();
+                    Legend legendTemp = graphTemp.getLegend();
+                    XAxis xTemp = graphTemp.getXAxis();
+                    YAxis yTemp = graphTemp.getAxisLeft();
+                    YAxis yRTemp = graphTemp.getAxisRight();
 
-                Description dCO2 = graphCO2.getDescription();
-                Legend legendCO2 = graphCO2.getLegend();
-                XAxis xCO2 = graphCO2.getXAxis();
-                YAxis yCO2 = graphCO2.getAxisLeft();
-                YAxis yRCO2 = graphCO2.getAxisRight();
+                    LineDataSet datasetCO2 = new LineDataSet(yAxisCO2Entry,"CO2");
+                    datasetCO2.setDrawCircles(false);
+                    datasetCO2.setColor(0xFF4F9FFF);
+                    datasetCO2.setValueTextColor(Color.WHITE);
+                    datasetCO2.setDrawHorizontalHighlightIndicator(false);
+                    datasetCO2.setDrawVerticalHighlightIndicator(false);
+                    dCO2.setText("");
+                    legendCO2.setTextColor(Color.WHITE);
+                    xCO2.setDrawAxisLine(false);
+                    xCO2.setDrawGridLines(false);
+                    xCO2.setDrawGridLinesBehindData(false);
+                    xCO2.setDrawLabels(false);
+                    yCO2.setDrawAxisLine(false);
+                    yCO2.setDrawGridLines(false);
+                    yCO2.setDrawLabels(false);
+                    yRCO2.setDrawAxisLine(false);
+                    yRCO2.setDrawGridLines(false);
+                    yRCO2.setDrawLabels(false);
 
-                Description dHum = graphHum.getDescription();
-                Legend legendHum = graphHum.getLegend();
-                XAxis xHum = graphHum.getXAxis();
-                YAxis yHum = graphHum.getAxisLeft();
-                YAxis yRHum = graphHum.getAxisRight();
+                    LineDataSet datasetHum = new LineDataSet(yAxisHumEntry,"Humidity");
+                    datasetHum.setDrawCircles(false);
+                    datasetHum.setColor(0xFF28D501);
+                    datasetHum.setValueTextColor(Color.WHITE);
+                    datasetHum.setDrawHorizontalHighlightIndicator(false);
+                    datasetHum.setDrawVerticalHighlightIndicator(false);
+                    dHum.setText("");
+                    legendHum.setTextColor(Color.WHITE);
+                    xHum.setDrawAxisLine(false);
+                    xHum.setDrawGridLines(false);
+                    xHum.setDrawGridLinesBehindData(false);
+                    xHum.setDrawLabels(false);
+                    yHum.setDrawAxisLine(false);
+                    yHum.setDrawGridLines(false);
+                    yHum.setDrawLabels(false);
+                    yRHum.setDrawAxisLine(false);
+                    yRHum.setDrawGridLines(false);
+                    yRHum.setDrawLabels(false);
 
-                Description dTemp = graphTemp.getDescription();
-                Legend legendTemp = graphTemp.getLegend();
-                XAxis xTemp = graphTemp.getXAxis();
-                YAxis yTemp = graphTemp.getAxisLeft();
-                YAxis yRTemp = graphTemp.getAxisRight();
+                    LineDataSet datasetTemp = new LineDataSet(yAxisTempEntry,"Temperature");
+                    datasetTemp.setDrawCircles(false);
+                    datasetTemp.setColor(0xFFFF505A);
+                    datasetTemp.setValueTextColor(Color.WHITE);
+                    datasetTemp.setDrawHorizontalHighlightIndicator(false);
+                    datasetTemp.setDrawVerticalHighlightIndicator(false);
+                    dTemp.setText("");
+                    legendTemp.setTextColor(Color.WHITE);
+                    xTemp.setDrawAxisLine(false);
+                    xTemp.setDrawGridLines(false);
+                    xTemp.setDrawGridLinesBehindData(false);
+                    xTemp.setDrawLabels(false);
+                    yTemp.setDrawAxisLine(false);
+                    yTemp.setDrawGridLines(false);
+                    yTemp.setDrawLabels(false);
+                    yRTemp.setDrawAxisLine(false);
+                    yRTemp.setDrawGridLines(false);
+                    yRTemp.setDrawLabels(false);
 
-                LineDataSet datasetCO2 = new LineDataSet(yAxisCO2Entry,"CO2");
-                datasetCO2.setDrawCircles(false);
-                datasetCO2.setColor(0xFF4F9FFF);
-                datasetCO2.setValueTextColor(Color.WHITE);
-                datasetCO2.setDrawHorizontalHighlightIndicator(false);
-                datasetCO2.setDrawVerticalHighlightIndicator(false);
-                dCO2.setText("");
-                legendCO2.setTextColor(Color.WHITE);
-                xCO2.setDrawAxisLine(false);
-                xCO2.setDrawGridLines(false);
-                xCO2.setDrawGridLinesBehindData(false);
-                xCO2.setDrawLabels(false);
-                yCO2.setDrawAxisLine(false);
-                yCO2.setDrawGridLines(false);
-                yCO2.setDrawLabels(false);
-                yRCO2.setDrawAxisLine(false);
-                yRCO2.setDrawGridLines(false);
-                yRCO2.setDrawLabels(false);
+                    graphCO2.setData(new LineData(datasetCO2));
+                    graphCO2.setDrawBorders(false);
+                    graphCO2.setDrawGridBackground(false);
 
+                    graphHum.setData(new LineData(datasetHum));
+                    graphHum.setDrawBorders(false);
+                    graphHum.setDrawGridBackground(false);
 
-                LineDataSet datasetHum = new LineDataSet(yAxisHumEntry,"Humidity");
-                datasetHum.setDrawCircles(false);
-                datasetHum.setColor(0xFF28D501);
-                datasetHum.setValueTextColor(Color.WHITE);
-                datasetHum.setDrawHorizontalHighlightIndicator(false);
-                datasetHum.setDrawVerticalHighlightIndicator(false);
-                dHum.setText("");
-                legendHum.setTextColor(Color.WHITE);
-                xHum.setDrawAxisLine(false);
-                xHum.setDrawGridLines(false);
-                xHum.setDrawGridLinesBehindData(false);
-                xHum.setDrawLabels(false);
-                yHum.setDrawAxisLine(false);
-                yHum.setDrawGridLines(false);
-                yHum.setDrawLabels(false);
-                yRHum.setDrawAxisLine(false);
-                yRHum.setDrawGridLines(false);
-                yRHum.setDrawLabels(false);
-
-                LineDataSet datasetTemp = new LineDataSet(yAxisTempEntry,"Temperature");
-                datasetTemp.setDrawCircles(false);
-                datasetTemp.setColor(0xFFFF505A);
-                datasetTemp.setValueTextColor(Color.WHITE);
-                datasetTemp.setDrawHorizontalHighlightIndicator(false);
-                datasetTemp.setDrawVerticalHighlightIndicator(false);
-                dTemp.setText("");
-                legendTemp.setTextColor(Color.WHITE);
-                xTemp.setDrawAxisLine(false);
-                xTemp.setDrawGridLines(false);
-                xTemp.setDrawGridLinesBehindData(false);
-                xTemp.setDrawLabels(false);
-                yTemp.setDrawAxisLine(false);
-                yTemp.setDrawGridLines(false);
-                yTemp.setDrawLabels(false);
-                yRTemp.setDrawAxisLine(false);
-                yRTemp.setDrawGridLines(false);
-                yRTemp.setDrawLabels(false);
-
-
-
-                graphCO2.setData(new LineData(datasetCO2));
-                graphCO2.setDrawBorders(false);
-                graphCO2.setDrawGridBackground(false);
-
-                graphHum.setData(new LineData(datasetHum));
-                graphHum.setDrawBorders(false);
-                graphHum.setDrawGridBackground(false);
-
-                graphTemp.setData(new LineData(datasetTemp));
-                graphTemp.setDrawBorders(false);
-                graphTemp.setDrawGridBackground(false);
-            }
+                    graphTemp.setData(new LineData(datasetTemp));
+                    graphTemp.setDrawBorders(false);
+                    graphTemp.setDrawGridBackground(false);
+                }
             }
         });
 
-        switch (userRights){
-
+        switch (rights){
             case "Supervisor" :
                 openBtn.setVisibility(View.VISIBLE);
                 break;
 
             case "User" :
-
             case "" :
                 openBtn.setVisibility(View.INVISIBLE);
                 break;
@@ -224,10 +213,9 @@ public class SaunaView extends AppCompatActivity {
         openBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSauna.spinServo(extras.getInt("Sauna"));
+                saunaViewModel.spinServo(extras.getInt("Sauna"));
                 Toast.makeText(v.getContext(),"Door Opened",Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }

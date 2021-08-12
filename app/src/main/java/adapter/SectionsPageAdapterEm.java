@@ -25,7 +25,7 @@ public class SectionsPageAdapterEm extends FragmentPagerAdapter {
     @StringRes
 
     private int [] imageId = {R.drawable.icon_home_white_large,R.drawable.icon_sauna_filled_white};
-    private String [] titleID ={"Home","Saunas","Booking","Users"};
+    private String [] titleID ={"Home","Saunas"};
     private final Context mContext;
 
 

@@ -18,15 +18,14 @@ import com.example.sep4_android.R;
 
 import view.fragment.HomeFrag;
 import view.fragment.SaunasFrag;
-import view.fragment.SubscriptionFragCu;
+import view.fragment.BookingsFragCu;
 
 
 public class SectionsPageAdapterCu extends FragmentPagerAdapter {
 
     @StringRes
 
-    private int [] imageId = {R.drawable.icon_home_white_large,R.drawable.icon_sauna_filled_white,R.drawable.icon_subcription};
-    private String [] titleID ={"Home","Saunas","Booking","Users"};
+    private int [] imageID = {R.drawable.icon_home_white_large,R.drawable.icon_sauna_filled_white,R.drawable.icon_subcription};
     private final Context mContext;
 
 
@@ -45,9 +44,8 @@ public class SectionsPageAdapterCu extends FragmentPagerAdapter {
             case 1:
                 frag = new SaunasFrag();
                 break;
-
             case 2:
-                frag = new SubscriptionFragCu();
+                frag = new BookingsFragCu();
                 break;
 
         }
@@ -58,7 +56,7 @@ public class SectionsPageAdapterCu extends FragmentPagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        Drawable image = mContext.getDrawable(imageId[position]);
+        Drawable image = mContext.getDrawable(imageID[position]);
 
         image.setBounds(0, 0, 80, 80);
         SpannableString sb = new SpannableString(" ");
@@ -71,8 +69,8 @@ public class SectionsPageAdapterCu extends FragmentPagerAdapter {
     public int getCount() {
 
         int count = 0;
-        for (int i = 0; i< imageId.length; i++){
-            if (imageId[i] !=0)
+        for (int i = 0; i< imageID.length; i++){
+            if (imageID[i] !=0)
                 count++;
         }
         return count;
